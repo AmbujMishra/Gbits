@@ -278,10 +278,10 @@ public class Gbits extends ApplicationAdapter {
 		      //if(Gdx.input.isKeyPressed(Keys.DOWN)) bit.y -= 400 * Gdx.graphics.getDeltaTime();
 
 		      // make sure bit stays within the screen bounds
-		     if(bit.getX()< 0) bit.setX(0);
-		     if(bit.getX() > 800 - 64) bit.setX(800 - 64);
-		    if(bit.getY()< 0) bit.setY(0);
-		    if(bit.getY() > 400 - 64) bit.setY(400 - 64);
+		     //if(bit.getX()< 0) bit.setX(0);
+		     //if(bit.getX() > 800 - 64) bit.setX(800 - 64);
+		    //if(bit.getY()< 0) bit.setY(0);
+		    //if(bit.getY() > 400 - 64) bit.setY(400 - 64);
 		      
 		}
 		private void handleTilt()
@@ -304,14 +304,38 @@ public class Gbits extends ApplicationAdapter {
 		tilt=4
 		*/	
 		if (ydeg>10)
+		{
 		tilt=3;		//up
+		if (xdeg< -10) 
+		tilt=1;  //up right
+		if (xdeg>10)
+		tilt=2	  //up left
+		}
 		if (ydeg< -10)
+		{
 		tilt=4;		//down
+		if (xdeg<-10)
+		tilt=1;		//down right
+		if (xdeg>10)
+		tilt=2		//down left
+		}
 		if(xdeg>10)
+		{
 		tilt=2;		//left
+		if (ydeg>10)
+		tilt=3;		//left up
+		if(ydeg<-10)
+		tilt=4;		// left down
+		}
 		if (xdeg< -10)
+		{
 		tilt=1;		//right
-		if (xdeg > -3 && xdeg< 3 && ydeg > -3 && ydeg <3)
+		if (ydeg>10)
+		tilt=3;		//right  up
+		if(ydeg<-10)
+		tilt=4;		//right down
+		}
+		if (xdeg > -5 && xdeg< 5 && ydeg > -5 && ydeg <5)
 			tilt=0;
 		}
 		private void setbits(int tilt)
