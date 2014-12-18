@@ -45,6 +45,40 @@ public class bitStore {
 		return bitM.get(key);
 	}
 	
+	// getter method for bit equivalent bit0=0, bit1=1, blank=2
+	public String getbitTypeEquivalentString(bitType [] t)
+	{
+		
+		String seq=null;
+		for (int i=0;i<t.length;i++)
+		{
+		if(t[i]==bitStore.bitType.bit0)
+		seq=seq+0;
+		else if (t[i]==bitStore.bitType.bit1)
+		seq=seq+1;
+		else 
+		seq=seq+2;
+		}
+		return seq;
+	}
+	
+	// reverse method for getbitTypeEquivalentString
+	public bitType [] getEquivalentbitTypefromString(String seq)
+	{
+		bitType b[]=new bitType[seq.length()];
+		for (int i=0;i<seq.length();i++)
+		{
+			if (seq.charAt(i)==0)
+			b[i]=bitStore.bitType.bit0;
+			else if (seq.charAt(i)==1)
+			b[i]=bitStore.bitType.bit1;
+			else
+			b[i]=bitStore.bitType.nobit;
+		}
+		return b;
+		
+	}
+	
 	//getter method to get Map
 	public Map<String, bitType> getbitMap()
 	{
