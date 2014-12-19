@@ -45,11 +45,28 @@ private String processSeq(String shiftseq, int blankcount) {
 	return finalseq;
 		
 	}
-// write logic for bit crashing
 
-	private String reprocesssSeq(String finalseq, int finalblankcount) {
+
+	private String reprocesssSeq(String seq, int blankcount) {
 	
-	return null;
+	// logic for bit movement, write logic for bit crashing, from top to bottom,
+		for(int i=seq.length()-blankcount;i>1;i--)
+		{
+			switch(seq.substring(i-2,i))
+			{
+			case "00":
+				//replace with 02
+			case "01":case "10":
+				//do nothing
+			case "11":
+				// replace with 10
+			}
+			shiftblanks(seq);
+		}
+		
+		
+		
+		return null;
 }
 	private String thiscodeSeq(String thisSeq) {
 		
@@ -89,7 +106,7 @@ private String processSeq(String shiftseq, int blankcount) {
 		String blankseq="";
 		for (int i=0;i<seq.length();i++)
 		{
-			if (seq.charAt(i)==2)
+			if (seq.charAt(i)=='2')
 				blankseq=blankseq+2;
 			else
 				bitseq=bitseq+seq.charAt(i);
