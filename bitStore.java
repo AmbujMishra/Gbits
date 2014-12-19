@@ -49,7 +49,7 @@ public class bitStore {
 	public String getbitTypeEquivalentString(bitType [] t)
 	{
 		
-		String seq=null;
+		String seq="";
 		for (int i=0;i<t.length;i++)
 		{
 		if(t[i]==bitStore.bitType.bit0)
