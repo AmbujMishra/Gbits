@@ -68,9 +68,9 @@ public class bitStore {
 		bitType b[]=new bitType[seq.length()];
 		for (int i=0;i<seq.length();i++)
 		{
-			if (seq.charAt(i)==0)
+			if (seq.charAt(i)=='0')
 			b[i]=bitStore.bitType.bit0;
-			else if (seq.charAt(i)==1)
+			else if (seq.charAt(i)=='1')
 			b[i]=bitStore.bitType.bit1;
 			else
 			b[i]=bitStore.bitType.nobit;
