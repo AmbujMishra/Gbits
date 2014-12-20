@@ -47,26 +47,32 @@ private String processSeq(String shiftseq, int blankcount) {
 	}
 
 
-	private String reprocesssSeq(String seq, int blankcount) {
+private String reprocesssSeq(String seq, int blankcount) {
 	
 	// logic for bit movement, write logic for bit crashing, from top to bottom,
-		for(int i=seq.length()-blankcount;i>1;i--)
+		StringBuilder sb= new StringBuilder(seq);
+		
+		for(int i=sb.length()-blankcount;i>1;i--)
 		{
-			switch(seq.substring(i-2,i))
+			switch(sb.substring(i-2,i))
 			{
 			case "00":
+				
 				//replace with 02
-			case "01":case "10":
+				sb.replace(i-2, i, "02");
+				break;
+			//case "01":case "10":
 				//do nothing
+				//break;
 			case "11":
 				// replace with 10
+				sb.replace(i-2, i, "10");
+				break;
 			}
+			seq=sb.toString();
 			shiftblanks(seq);
 		}
-		
-		
-		
-		return null;
+		return seq;
 }
 	private String thiscodeSeq(String thisSeq) {
 		
