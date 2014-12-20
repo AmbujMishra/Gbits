@@ -58,8 +58,37 @@ public class Gbits extends ApplicationAdapter {
 		
 		/***************handling bit logic**************/
 		
-		//if pressed left key
-		for (int i=row-1; i >=0;i--)		//row i
+//if pressed left key
+		if(Gdx.input.isKeyPressed(Keys.LEFT))
+		{
+			System.out.println("left");
+			for (int i=0; i<row;i++)		//row i
+			{
+				bitStore.bitType b[]= new bitStore.bitType[col];
+				// b[0]= bs.getbitType(0, i);
+				// b[1]= bs.getbitType(1, i);
+				// b[2]= bs.getbitType(2, i);
+				// b[3]= bs.getbitType(3, i);
+				 for (int bc=0;bc<b.length;bc++)
+				 {
+					 b[bc]=bs.getbitType(bc,i);
+				 }
+					
+				 // creating string seq for column
+				 String bitseq= bs.getbitTypeEquivalentString(b);
+				 // processing string seq
+				 String processedseq=bl.processbitSequence(bitseq);
+				 // converting string seq back to bitTypes
+				 b=bs.getEquivalentbitTypefromString(processedseq);
+				 
+				 // setting bit type
+				 for (int j=0; j < col;j++)		//row j
+					{
+					 bs.setbitType(j, i, b[j]);
+					}
+			}
+		}
+		/*for (int i=row-1; i >=0;i--)		//row i
 		{	
 			bitStore.bitType b1= bs.getbitType(0, i);
 			bitStore.bitType b2= bs.getbitType(1, i);
@@ -99,18 +128,84 @@ public class Gbits extends ApplicationAdapter {
 				
 			}
 			//}
-		}
+		}*/
 		//if pressed right key
+		if(Gdx.input.isKeyPressed(Keys.RIGHT))
+		{
+			System.out.println("right");
+			for (int i=0; i<row;i--)		//row i
+			{
+				bitStore.bitType b[]= new bitStore.bitType[col];
+				// b[0]= bs.getbitType(3, i);
+				// b[1]= bs.getbitType(2, i);
+				// b[2]= bs.getbitType(1, i);
+				// b[3]= bs.getbitType(0, i);
+				 for (int bc=0;bc<b.length;bc++)
+				 {
+					 b[bc]=bs.getbitType(b.length-bc-1,i);
+				 }
+					
+				 // creating string seq for column
+				 String bitseq= bs.getbitTypeEquivalentString(b);
+				 // processing string seq
+				 String processedseq=bl.processbitSequence(bitseq);
+				 // converting string seq back to bitTypes
+				 b=bs.getEquivalentbitTypefromString(processedseq);
+				 
+				 // setting bit type
+				 for (int j=0; j < col;j++)		//row j
+					{
+					 bs.setbitType(b.length-j-1, i, b[j]);
+					}
+			}
+		}
 		//if pressed up key
-		//if pressed down key
+	      if(Gdx.input.isKeyPressed(Keys.UP))
+	      {
+	    	  System.out.println("up");
+	    	  for (int i=0; i < col;i++)		//column i
+	  		{
+	  			bitStore.bitType b[]= new bitStore.bitType[row];
+	  			 //b[0]= bs.getbitType(i, 3);
+	  			// b[1]= bs.getbitType(i, 2);
+	  			// b[2]= bs.getbitType(i, 1);
+	  			// b[3]= bs.getbitType(i, 0);
+	  			 for (int bc=0;bc<b.length;bc++)
+	  			 {
+	  				 b[bc]=bs.getbitType(i,b.length-bc-1);
+	  			 }
+	  				
+	  			 // creating string seq for column
+	  			 String bitseq= bs.getbitTypeEquivalentString(b);
+	  			 // processing string seq
+	  			 String processedseq=bl.processbitSequence(bitseq);
+	  			 // converting string seq back to bitTypes
+	  			 b=bs.getEquivalentbitTypefromString(processedseq);
+	  			 
+	  			 // setting bit type
+	  			 for (int j=0; j < row;j++)		//column j
+	  				{
+	  				 bs.setbitType(i, b.length-j-1, b[j]);
+	  				}
+	  		}
+	      }
+	      
+		//if pressed down key	
+		if(Gdx.input.isKeyPressed(Keys.DOWN))
+		{
+			System.out.println("down");
 		for (int i=0; i < col;i++)		//column i
 		{
-			bitStore.bitType b[]= new bitStore.bitType[col];
-			 b[0]= bs.getbitType(i, 0);
-			 b[1]= bs.getbitType(i, 1);
-			 b[2]= bs.getbitType(i, 2);
-			 b[3]= bs.getbitType(i, 3);
-			 
+			bitStore.bitType b[]= new bitStore.bitType[row];
+			 //b[0]= bs.getbitType(i, 0);
+			// b[1]= bs.getbitType(i, 1);
+			// b[2]= bs.getbitType(i, 2);
+			// b[3]= bs.getbitType(i, 3);
+			 for (int bc=0;bc<b.length;bc++)
+			 {
+				 b[bc]=bs.getbitType(i,bc);
+			 }
+				
 			 // creating string seq for column
 			 String bitseq= bs.getbitTypeEquivalentString(b);
 			 // processing string seq
@@ -124,7 +219,7 @@ public class Gbits extends ApplicationAdapter {
 				 bs.setbitType(i, j, b[j]);
 				}
 		}
-		
+		}
 		
 		//bs.bitcalculate();
 		 // process user input
