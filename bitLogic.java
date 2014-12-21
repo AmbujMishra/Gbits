@@ -1,7 +1,7 @@
 package com.kingAm.games;
 
 public class bitLogic {
-
+	
 	public String processbitSequence(String bitseq) {
 	
 		int blankcount=countBlanks(bitseq);
@@ -47,7 +47,7 @@ private String processSeq(String shiftseq, int blankcount) {
 	}
 
 
-private String reprocesssSeq(String seq, int blankcount) {
+	private String reprocesssSeq(String seq, int blankcount) {
 	
 	// logic for bit movement, write logic for bit crashing, from top to bottom,
 		StringBuilder sb= new StringBuilder(seq);
@@ -70,17 +70,20 @@ private String reprocesssSeq(String seq, int blankcount) {
 				break;
 			}
 			seq=sb.toString();
-			shiftblanks(seq);
+			// write condition if it have 0 blanks
+			if (countBlanks(seq)!=0)
+			seq=shiftblanks(seq);
 		}
 		return seq;
 }
+	
 	private String thiscodeSeq(String thisSeq) {
 		
 		String codeSeq="";
 		if (thisSeq.charAt(0)=='0')
 		{
 		codeSeq=codeSeq+0;
-			for (int i=1;i<=thisSeq.length();i++)
+			for (int i=1;i<thisSeq.length();i++)
 			{
 				if(i%2!=0)
 					codeSeq=codeSeq+1;
@@ -91,7 +94,7 @@ private String reprocesssSeq(String seq, int blankcount) {
 		else
 		{
 			codeSeq=codeSeq+1;
-			for (int i=1;i<=thisSeq.length();i++)
+			for (int i=1;i<thisSeq.length();i++)
 			{
 				if(i%2!=0)
 					codeSeq=codeSeq+0;
@@ -107,7 +110,7 @@ private String reprocesssSeq(String seq, int blankcount) {
 
 }
 	private String shiftblanks(String seq) {
-		
+
 		String bitseq="";
 		String blankseq="";
 		for (int i=0;i<seq.length();i++)
