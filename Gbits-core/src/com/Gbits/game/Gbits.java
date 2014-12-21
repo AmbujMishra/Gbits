@@ -309,7 +309,7 @@ public class Gbits extends ApplicationAdapter {
 		if (xdeg< -10) 
 		tilt=1;  //up right
 		if (xdeg>10)
-		tilt=2	  //up left
+		tilt=2;	  //up left
 		}
 		if (ydeg< -10)
 		{
@@ -317,7 +317,7 @@ public class Gbits extends ApplicationAdapter {
 		if (xdeg<-10)
 		tilt=1;		//down right
 		if (xdeg>10)
-		tilt=2		//down left
+		tilt=2;		//down left
 		}
 		if(xdeg>10)
 		{
