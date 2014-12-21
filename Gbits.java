@@ -2,13 +2,15 @@ package com.kingAm.games;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.FPSLogger;
 
 
-public class Gbits extends ApplicationAdapter {
+public class Gbits extends ApplicationAdapter implements InputProcessor {
 	
 	
 	private SpriteBatch batch;
@@ -18,7 +20,12 @@ public class Gbits extends ApplicationAdapter {
 	private static int col=4;
 	bitStore bs;
 	bitLogic bl=new bitLogic();
-
+	private renderswitch renders= renderswitch.ON;		//created render switch
+	
+	public enum renderswitch{
+		ON,
+		OFF
+	}
 	@Override
 	public void create () {
 
@@ -27,17 +34,230 @@ public class Gbits extends ApplicationAdapter {
 		 camera = new OrthographicCamera();
 	     camera.setToOrtho(false, 256, 256);
 	     batch = new SpriteBatch();
+	     Gdx.input.setInputProcessor(this);
 	      //initializing logger
 	      fpslog=new FPSLogger();
 	      //disabling the continuous rendering
 	      Gdx.graphics.setContinuousRendering(false);
-	     // Gdx.graphics.requestRendering();
+	      Gdx.graphics.requestRendering();
+	}
+	@Override
+	public boolean keyDown(int keycode) {
+		if(keycode==Keys.LEFT)
+		{
+			renders=renderswitch.ON;
+			System.out.println("left");
+			for (int i=0; i<row;i++)		//row i
+			{
+				bitStore.bitType b[]= new bitStore.bitType[col];
+				// b[0]= bs.getbitType(0, i);
+				// b[1]= bs.getbitType(1, i);
+				// b[2]= bs.getbitType(2, i);
+				// b[3]= bs.getbitType(3, i);
+				 for (int bc=0;bc<b.length;bc++)
+				 {
+					 b[bc]=bs.getbitType(bc,i);
+				 }
+					
+				 // creating string seq for column
+				 String bitseq= bs.getbitTypeEquivalentString(b);
+				 // processing string seq
+				 String processedseq=bl.processbitSequence(bitseq);
+				 // converting string seq back to bitTypes
+				 b=bs.getEquivalentbitTypefromString(processedseq);
+				 
+				 // setting bit type
+				 for (int j=0; j < col;j++)		//row j
+					{
+					 bs.setbitType(j, i, b[j]);
+					}
+			}
+			//Gdx.graphics.requestRendering();
+			
+		}
+		if(keycode==Keys.RIGHT)
+		{
+			
+			renders=renderswitch.ON;
+			System.out.println("right");
+			for (int i=0; i<row;i++)		//row i
+			{
+				bitStore.bitType b[]= new bitStore.bitType[col];
+				// b[0]= bs.getbitType(3, i);
+				// b[1]= bs.getbitType(2, i);
+				// b[2]= bs.getbitType(1, i);
+				// b[3]= bs.getbitType(0, i);
+				 for (int bc=0;bc<b.length;bc++)
+				 {
+					 b[bc]=bs.getbitType(b.length-bc-1,i);
+				 }
+					
+				 // creating string seq for column
+				 String bitseq= bs.getbitTypeEquivalentString(b);
+				 // processing string seq
+				 String processedseq=bl.processbitSequence(bitseq);
+				 // converting string seq back to bitTypes
+				 b=bs.getEquivalentbitTypefromString(processedseq);
+				 
+				 // setting bit type
+				 for (int j=0; j < col;j++)		//row j
+					{
+					 bs.setbitType(b.length-j-1, i, b[j]);
+					}
+			}
+			//Gdx.graphics.requestRendering();
+		}
+		if(keycode==Keys.DOWN)
+		{
+			renders=renderswitch.ON;
+			System.out.println("DOWN");
+			for (int i=0; i < col;i++)		//column i
+			{
+				bitStore.bitType b[]= new bitStore.bitType[row];
+				 //b[0]= bs.getbitType(i, 0);
+				// b[1]= bs.getbitType(i, 1);
+				// b[2]= bs.getbitType(i, 2);
+				// b[3]= bs.getbitType(i, 3);
+				 for (int bc=0;bc<b.length;bc++)
+				 {
+					 b[bc]=bs.getbitType(i,bc);
+				 }
+					
+				 // creating string seq for column
+				 String bitseq= bs.getbitTypeEquivalentString(b);
+				 // processing string seq
+				 String processedseq=bl.processbitSequence(bitseq);
+				 // converting string seq back to bitTypes
+				 b=bs.getEquivalentbitTypefromString(processedseq);
+				 
+				 // setting bit type
+				 for (int j=0; j < row;j++)		//column j
+					{
+					 bs.setbitType(i, j, b[j]);
+					}
+				 System.out.print(bs.getbitMap());
+			}
+			//Gdx.graphics.requestRendering();
+		}
+		if(keycode==Keys.UP)
+		{
+			renders=renderswitch.ON;
+			System.out.println("UP");
+			 for (int i=0; i < col;i++)		//column i
+		  		{
+		  			bitStore.bitType b[]= new bitStore.bitType[row];
+		  			 //b[0]= bs.getbitType(i, 3);
+		  			// b[1]= bs.getbitType(i, 2);
+		  			// b[2]= bs.getbitType(i, 1);
+		  			// b[3]= bs.getbitType(i, 0);
+		  			 for (int bc=0;bc<b.length;bc++)
+		  			 {
+		  				 b[bc]=bs.getbitType(i,b.length-bc-1);
+		  			 }
+		  				
+		  			 // creating string seq for column
+		  			 String bitseq= bs.getbitTypeEquivalentString(b);
+		  			 // processing string seq
+		  			 String processedseq=bl.processbitSequence(bitseq);
+		  			 // converting string seq back to bitTypes
+		  			 b=bs.getEquivalentbitTypefromString(processedseq);
+		  			 
+		  			 // setting bit type
+		  			 for (int j=0; j < row;j++)		//column j
+		  				{
+		  				 bs.setbitType(i, b.length-j-1, b[j]);
+		  				}
+		  		}
+			//Gdx.graphics.requestRendering();
+		}				
+		return false;
+	}
+	@Override
+	public boolean keyUp(int keycode) {
+		//renders=renderswitch.OFF;
+		return false;
+	}
+	@Override
+	public boolean keyTyped(char character) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean scrolled(int amount) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	@Override
 	public void render () {
 		
 		/*************drawing bits****************/
+		switch (renders)
+		{
+		case ON:
+			System.out.println("draw");
+			Gdx.gl.glClearColor(1, 1, 1, 1);
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+			 // tell the camera to update its matrices.
+		      camera.update();
+		      // tell the SpriteBatch to render in the
+		      // coordinate system specified by the camera.
+		      batch.setProjectionMatrix(camera.combined);
+		      
+			batch.begin();
+			for (int i=0; i <row;i++)		//row i
+			{	
+				for (int j=0;j<col;j++)		//column j
+				{
+					batch.draw(bs.getbits(i,j),i*64,j*64);
+				}
+			}
+			batch.end();
+		case OFF:default:
+			break;
+		}
 		fpslog.log();
+	       
+	       
+	}
+	
+
+	 @Override
+	   public void dispose() {
+	      // dispose of all the native resources
+	        batch.dispose();
+	   }
+	   @Override
+	   public void resize(int width, int height) {
+	   }
+	   @Override
+	   public void pause() {
+	   }
+	   @Override
+	   public void resume() {
+	   }
+
+} 
+		/*fpslog.log();
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		 // tell the camera to update its matrices.
@@ -54,12 +274,34 @@ public class Gbits extends ApplicationAdapter {
 				batch.draw(bs.getbits(i,j),j*64,i*64);
 			}
 		}
-		batch.end();
+		batch.end();*/
+		
+		/*Gdx.input.setInputProcessor(new InputAdapter () {
+			
+			@Override
+			   public boolean keyDown (int keycode) {
+				if(keycode==Keys.LEFT)
+				{
+					System.out.println("left");
+			      //return false;
+				}
+				if(keycode==Keys.RIGHT)
+				{
+					System.out.println("right");
+			      //return false;
+				}
+				return true;
+			   }
+				
+			
+		});*/
 		
 		/***************handling bit logic**************/
+		// handling in bitLogic method check, scrap this junk below
+		// it should be event based		
 		
-//if pressed left key
-		if(Gdx.input.isKeyPressed(Keys.LEFT))
+		//if pressed left key
+		/*if(Gdx.input.isKeyPressed(Keys.LEFT))
 		{
 			System.out.println("left");
 			for (int i=0; i<row;i++)		//row i
@@ -88,7 +330,7 @@ public class Gbits extends ApplicationAdapter {
 					}
 			}
 		}
-		/*for (int i=row-1; i >=0;i--)		//row i
+		for (int i=row-1; i >=0;i++)		//row i
 		{	
 			bitStore.bitType b1= bs.getbitType(0, i);
 			bitStore.bitType b2= bs.getbitType(1, i);
@@ -128,12 +370,12 @@ public class Gbits extends ApplicationAdapter {
 				
 			}
 			//}
-		}*/
+		}
 		//if pressed right key
 		if(Gdx.input.isKeyPressed(Keys.RIGHT))
 		{
 			System.out.println("right");
-			for (int i=0; i<row;i--)		//row i
+			for (int i=0; i<row;i++)		//row i
 			{
 				bitStore.bitType b[]= new bitStore.bitType[col];
 				// b[0]= bs.getbitType(3, i);
@@ -193,7 +435,7 @@ public class Gbits extends ApplicationAdapter {
 		//if pressed down key	
 		if(Gdx.input.isKeyPressed(Keys.DOWN))
 		{
-			System.out.println("down");
+		System.out.println("down");
 		for (int i=0; i < col;i++)		//column i
 		{
 			bitStore.bitType b[]= new bitStore.bitType[row];
@@ -219,140 +461,27 @@ public class Gbits extends ApplicationAdapter {
 				 bs.setbitType(i, j, b[j]);
 				}
 		}
-		}
-		
+		}*/
 		//bs.bitcalculate();
 		 // process user input
-	     /* if(Gdx.input.isTouched()) {
+	     /*if(Gdx.input.isTouched()) {
 	    	  
 	         Vector3 touchPos = new Vector3();
 	         touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 	         camera.unproject(touchPos);
 	         bit.x = touchPos.x - 64 / 2;
 	         bit.y=touchPos.y;
-	      }
-	      if(Gdx.input.isKeyPressed(Keys.LEFT)) bit.x -= 400 * Gdx.graphics.getDeltaTime();
-	      if(Gdx.input.isKeyPressed(Keys.RIGHT)) bit.x += 400 * Gdx.graphics.getDeltaTime();
-	      if(Gdx.input.isKeyPressed(Keys.UP)) bit.y += 400 * Gdx.graphics.getDeltaTime();
-	      if(Gdx.input.isKeyPressed(Keys.DOWN)) bit.y -= 400 * Gdx.graphics.getDeltaTime();
+	      }*/
+	      /*if(Gdx.input.isKeyPressed(Keys.LEFT)) ;
+	      if(Gdx.input.isKeyPressed(Keys.RIGHT));
+	      if(Gdx.input.isKeyPressed(Keys.UP));
+	      if(Gdx.input.isKeyPressed(Keys.DOWN));*/
 	      // make sure the bucket stays within the screen bounds
-	      if(bit.x < 0) bit.x = 0;
+	      /*if(bit.x < 0) bit.x = 0;
 	      if(bit.x > 800 - 64) bit.x = 800 - 64;
 	      if(bit.y< 0) bit.y=0;
-	      if(bit.y > 400 - 64) bit.y = 400 - 64;
+	      if(bit.y > 400 - 64) bit.y = 400 - 64;*/
 	      //fpslog.log();
 	     // System.out.println ("frame changed");
 	     // Gdx.graphics.requestRendering();
 	      //System.out.println ("calling rendering");
-	       * */
-	       
-	}
-	
-
-	 @Override
-	   public void dispose() {
-	      // dispose of all the native resources
-	        batch.dispose();
-	   }
-	   @Override
-	   public void resize(int width, int height) {
-	   }
-	   @Override
-	   public void pause() {
-	   }
-	   @Override
-	   public void resume() {
-	   }
-} 
-	
-	// ****************8/122014: Trying to handle input with updateing camera.*******************************************
-	// bit should be move along y axis, downwards
-	/*
-	private SpriteBatch batch;
-	//private Texture bitImage;
-	private OrthographicCamera cam;
-	private Sprite bitsprite;
-	public FPSLogger fpslog;
-	private String message = "Do something already!";
-	private BitmapFont font;
-	private float rotationSpeed;
-	
-	@Override
-	public void create () {
-		rotationSpeed = 90f;
-		//img = new Texture("bit.jpg");
-		float w = Gdx.graphics.getWidth();
-        float h = Gdx.graphics.getHeight();
-		bitsprite = new Sprite(new Texture(Gdx.files.internal("bit.jpg")));
-		bitsprite.setSize(64*(h/w),64*(h/w));
-		//bitsprite.setPosition(w/2-bitsprite.getWidth()/2, 0);
-		//bitImage = new Texture(Gdx.files.internal("bit.jpg"));
-		
-        //message+=h+w;
-	      cam = new OrthographicCamera(100, 100 * (h / w)); 
-	      cam.setToOrtho(false, 800, 800);
-	      //cam.position.set(cam.viewportWidth / 2, cam.viewportHeight / 2f, 0);
-	      cam.update();
-		  batch = new SpriteBatch();
-		  font=new BitmapFont();
-		  font.setColor(Color.BLUE);
-		  //font.getBounds(message);
-		  
-	      //bit = new Rectangle();
-	     // bit.x = 800 / 2 - 64 / 2; // center the bit horizontally
-	    // bits. bit.y = 20; // bottom left corner of the btt is 20 pixels above the bottom screen edge
-	     // bit.width = 64;
-	     // bit.height = 64;
-	      //initializing logger
-	      fpslog=new FPSLogger();
-	      //disabling the continuous rendering
-	      Gdx.graphics.setContinuousRendering(false);
-	     // Gdx.graphics.requestRendering();
-	}
-	
-	@Override
-	public void render () {
-		int h = Gdx.graphics.getHeight();
-		int w = Gdx.graphics.getWidth();
-		handleInput();
-		 cam.update();
-		fpslog.log();
-		Gdx.gl.glClearColor(1, 1, 1, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		 // tell the camera to update its matrices.
-	      //cam.update();
-	      // tell the SpriteBatch to render in the
-	      // coordinate system specified by the camera.
-	      batch.setProjectionMatrix(cam.combined);
-	      
-		batch.begin();
-		bitsprite.draw(batch);
-		//font.draw(batch, message, w/2, h/2);
-		//batch.draw(bitImage, bit.x, bit.y);
-		batch.end();
-}
-	 private void handleInput() {
-		// TODO Auto-generated method stub
-		 if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-			 //bitsprite.setX
-	            cam.rotate(-rotationSpeed, 0, 0, 1);
-	        }
-		
-	}
-	@Override
-	   public void dispose() {
-	      // dispose of all the native resources
-	      batch.dispose();
-	      bitsprite.getTexture().dispose();
-	   
-	   }
-	   @Override
-	   public void resize(int width, int height) {
-	   }
-	   @Override
-	   public void pause() {
-	   }
-	   @Override
-	   public void resume() {
-	   }*/
-	
