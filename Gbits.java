@@ -78,6 +78,7 @@ public class Gbits extends ApplicationAdapter implements InputProcessor{
 			fpslog.log();
 			handleTilt();
 			setbits(tilt);
+			Gdx.graphics.requestRendering();
 		      
 		}
 		
