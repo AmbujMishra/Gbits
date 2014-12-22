@@ -1,5 +1,6 @@
 package com.kingAm.games;
 
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -10,30 +11,39 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.FPSLogger;
 
 
+/*@author ambuj mishra*/
 public class Gbits extends ApplicationAdapter implements InputProcessor {
 	
 	
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
 	public FPSLogger fpslog;
-	private static int row=4;
-	private static int col=4;
+	private static int row=6;
+	private static int col=6;
 	bitStore bs;
 	bitLogic bl=new bitLogic();
-	private renderswitch renders= renderswitch.ON;		//created render switch
-	
-	public enum renderswitch{
-		ON,
-		OFF
-	}
+	//private renderswitch renders= renderswitch.ON;		//created render switch
+	private boolean drawflag=true;
+	//camera
+	/*static final int WORLD_WIDTH = 100;
+    static final int WORLD_HEIGHT = 100;
+    private static float w;
+    private static float h;*/
+  
 	@Override
 	public void create () {
 
 		 // creating or initializing bits
 		 bs=new bitStore();
+		  //w = Gdx.graphics.getWidth();
+	     // h = Gdx.graphics.getHeight();  
 		 camera = new OrthographicCamera();
-	     //camera.setToOrtho(false, 256, 256);
+	     //camera = new OrthographicCamera(100,100*(h/w));
 	     camera.setToOrtho(false, 64*col,64*row);
+	    //camera.setToOrtho(false, w,h);
+	     //camera.setToOrtho(false);
+	     //camera.position.set(64*col,64*row, 0);
+	     //camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
 	     camera.update();
 	     batch = new SpriteBatch();
 	     Gdx.input.setInputProcessor(this);
@@ -42,12 +52,18 @@ public class Gbits extends ApplicationAdapter implements InputProcessor {
 	      //disabling the continuous rendering
 	      Gdx.graphics.setContinuousRendering(false);
 	      Gdx.graphics.requestRendering();
+	      
+	      //input event
+	     // InputEvent e= new InputEvent();
+	     // e.getListenerActor();
+	      //e.handle();
+	     
 	}
 	@Override
 	public boolean keyDown(int keycode) {
 		if(keycode==Keys.LEFT)
 		{
-			renders=renderswitch.ON;
+			drawflag=true;
 			System.out.println("left");
 			for (int i=0; i<row;i++)		//row i
 			{
@@ -80,7 +96,7 @@ public class Gbits extends ApplicationAdapter implements InputProcessor {
 		if(keycode==Keys.RIGHT)
 		{
 			
-			renders=renderswitch.ON;
+			drawflag=true;
 			System.out.println("right");
 			for (int i=0; i<row;i++)		//row i
 			{
@@ -111,7 +127,7 @@ public class Gbits extends ApplicationAdapter implements InputProcessor {
 		}
 		if(keycode==Keys.DOWN)
 		{
-			renders=renderswitch.ON;
+			drawflag=true;
 			System.out.println("DOWN");
 			for (int i=0; i < col;i++)		//column i
 			{
@@ -143,7 +159,7 @@ public class Gbits extends ApplicationAdapter implements InputProcessor {
 		}
 		if(keycode==Keys.UP)
 		{
-			renders=renderswitch.ON;
+			drawflag=true;
 			System.out.println("UP");
 			 for (int i=0; i < col;i++)		//column i
 		  		{
@@ -171,85 +187,89 @@ public class Gbits extends ApplicationAdapter implements InputProcessor {
 		  				}
 		  		}
 			//Gdx.graphics.requestRendering();
-		}				
-		return false;
+		}	
+		
+		return true;
 	}
 	@Override
 	public boolean keyUp(int keycode) {
-		//renders=renderswitch.OFF;
+		//drawflag=false;
 		return false;
 	}
 	@Override
 	public boolean keyTyped(char character) {
-		// TODO Auto-generated method stub
+		//drawflag=false;
 		return false;
 	}
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
+		drawflag=false;
 		return false;
 	}
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
+		drawflag=false;
 		return false;
 	}
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// TODO Auto-generated method stub
+		drawflag=false;
 		return false;
 	}
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
-		// TODO Auto-generated method stub
+		drawflag=false;
 		return false;
 	}
 	@Override
 	public boolean scrolled(int amount) {
-		// TODO Auto-generated method stub
+		drawflag=false;
 		return false;
 	}
 	@Override
 	public void render () {
 		
+		
 		/*************drawing bits****************/
-		switch (renders)
+		if (drawflag)
 		{
-		case ON:
 			System.out.println("draw");
+			 // tell the camera to update its matrices.
+		      //camera.update();
 			Gdx.gl.glClearColor(1, 1, 1, 1);
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-			 // tell the camera to update its matrices.
-		      camera.update();
 		      // tell the SpriteBatch to render in the
 		      // coordinate system specified by the camera.
-		      batch.setProjectionMatrix(camera.combined);
-		      
+		   batch.setProjectionMatrix(camera.combined);
+		     //camera.update();
 			batch.begin();
+			//batch.setProjectionMatrix(camera.combined);
 			for (int i=0; i <row;i++)		//row i
 			{	
 				for (int j=0;j<col;j++)		//column j
 				{
+					//batch.setProjectionMatrix(camera.combined);
 					batch.draw(bs.getbits(i,j),i*64,j*64);
+					//camera.update();
+					//batch.draw(bs.getbits(i,j),i*(w/col),j*(h/row));
+					//bs.getbits(i, j,w/col,h/row).draw(batch);
 				}
 			}
 			batch.end();
-		case OFF:default:
-			break;
 		}
 		fpslog.log();
-	       
+   
 	       
 	}
 	
-
-	 @Override
+	@Override
 	   public void dispose() {
 	      // dispose of all the native resources
 	        batch.dispose();
 	   }
 	   @Override
 	   public void resize(int width, int height) {
+		   camera.update();
 	   }
 	   @Override
 	   public void pause() {
@@ -257,6 +277,12 @@ public class Gbits extends ApplicationAdapter implements InputProcessor {
 	   @Override
 	   public void resume() {
 	   }
+	/*@Override
+	public boolean handle(Event event) {
+		
+		// TODO Auto-generated method stub
+		return false;
+	}*/
 
 } 
 		/*fpslog.log();
