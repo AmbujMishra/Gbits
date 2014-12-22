@@ -32,7 +32,9 @@ public class Gbits extends ApplicationAdapter implements InputProcessor {
 		 // creating or initializing bits
 		 bs=new bitStore();
 		 camera = new OrthographicCamera();
-	     camera.setToOrtho(false, 256, 256);
+	     //camera.setToOrtho(false, 256, 256);
+	     camera.setToOrtho(false, 64*col,64*row);
+	     camera.update();
 	     batch = new SpriteBatch();
 	     Gdx.input.setInputProcessor(this);
 	      //initializing logger
