@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.FPSLogger;
 
 
-public class Gbits extends ApplicationAdapter implements InputProcessor{
+public class GbitsAndroid extends ApplicationAdapter implements InputProcessor{
 
 	// 22/12/2014: office update for bit movement using tilt for working prototype
 	private SpriteBatch batch;
@@ -18,6 +18,7 @@ public class Gbits extends ApplicationAdapter implements InputProcessor{
 	private static int row=6;
 	private static int col=6;
 	private boolean drawflag=true;
+	private int previoust=0;
 	
 	bitStore bs;
 	bitLogic bl=new bitLogic();
@@ -77,7 +78,7 @@ public class Gbits extends ApplicationAdapter implements InputProcessor{
 			}
 			fpslog.log();
 			handleTilt();
-			setbits(tilt);
+			//setbits(tilt);
 			Gdx.graphics.requestRendering();
 		      
 		}
@@ -94,38 +95,54 @@ public class Gbits extends ApplicationAdapter implements InputProcessor{
 
 		if (ydeg>10)
 		{
+		if(previoust!=3)
 		tilt=3;		//up
-		if (xdeg< -10) 
+		if (xdeg< -10 && previoust!=1 )
 		tilt=1;  //up right
-		if (xdeg>10)
+		if (xdeg>10&& previoust!=2 )
 		tilt=2;	  //up left
 		}
 		if (ydeg< -10)
 		{
+		if(previoust!=4)
 		tilt=4;		//down
-		if (xdeg<-10)
+		if (xdeg<-10 && previoust!=1)
 		tilt=1;		//down right
-		if (xdeg>10)
+		if (xdeg>10 && previoust!=2 )
 		tilt=2;		//down left
 		}
 		if(xdeg>10)
 		{
+		if(previoust!=2)
 		tilt=2;		//left
-		if (ydeg>10)
+		if (ydeg>10 && previoust!=3)
 		tilt=3;		//left up
-		if(ydeg<-10)
+		if(ydeg<-10 && previoust!=4)
 		tilt=4;		// left down
 		}
 		if (xdeg< -10)
 		{
+		if(previoust!=1)
 		tilt=1;		//right
-		if (ydeg>10)
+		if (ydeg>10 && previoust!=3)
 		tilt=3;		//right  up
-		if(ydeg<-10)
+		if(ydeg<-10 && previoust!=4)
 		tilt=4;		//right down
 		}
 		if (xdeg > -5 && xdeg< 5 && ydeg > -5 && ydeg <5)
+		{
+		 if(previoust!=0)
 			tilt=0;
+		}
+		// no tilt change =no drawing
+		if (previoust==tilt)
+		drawflag=false;	
+		else
+		{
+		previoust=tilt;		
+		setbits(tilt);
+		}
+		Gdx.graphics.requestRendering();
 		}
 		private void setbits(int tilt)
 		{
@@ -133,7 +150,7 @@ public class Gbits extends ApplicationAdapter implements InputProcessor{
 			{
 			case 1:
 			//set bit position to extreme right
-				drawflag=true;
+				//drawflag=true;
 				System.out.println("right");
 				for (int i=0; i<row;i++)		//row i
 				{
@@ -164,7 +181,7 @@ public class Gbits extends ApplicationAdapter implements InputProcessor{
 			
 			case 2:
 			//extreme left
-				drawflag=true;
+				//drawflag=true;
 				System.out.println("left");
 				for (int i=0; i<row;i++)		//row i
 				{
@@ -196,7 +213,7 @@ public class Gbits extends ApplicationAdapter implements InputProcessor{
 			
 			case 3:
 			//up
-				drawflag=true;
+				//drawflag=true;
 				System.out.println("UP");
 				 for (int i=0; i < col;i++)		//column i
 			  		{
@@ -228,7 +245,7 @@ public class Gbits extends ApplicationAdapter implements InputProcessor{
 			
 			case 4:
 			//down
-				drawflag=true;
+				//drawflag=true;
 				System.out.println("DOWN");
 				for (int i=0; i < col;i++)		//column i
 				{
@@ -261,9 +278,11 @@ public class Gbits extends ApplicationAdapter implements InputProcessor{
 			
 			case 0:
 				//middle
-				drawflag=true;
+				//drawflag=true;
 				break;
 			}
+			drawflag=true;
+			//Gdx.graphics.requestRendering();
 		}
 		 @Override
 		   public void dispose() {
@@ -334,4 +353,3 @@ public class Gbits extends ApplicationAdapter implements InputProcessor{
 		}
 
 }
-
