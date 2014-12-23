@@ -1,66 +1,42 @@
 package com.kingAm.games;
 
-
-package com.kingAm.games;
-
-
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.FPSLogger;
-
-
-/*@author ambuj mishra*/
-public class Gbits extends ApplicationAdapter implements InputProcessor {
-	
-	
+ 
+public class GameScreen implements Screen, InputProcessor {
+  
+	final GbitsExtended game;
+ 
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
 	public FPSLogger fpslog;
-	private static int row=6;
-	private static int col=6;
+	private static int row=8;
+	private static int col=8;
 	bitStore bs;
 	bitLogic bl=new bitLogic();
-	//private renderswitch renders= renderswitch.ON;		//created render switch
 	private boolean drawflag=true;
-	//camera
-	/*static final int WORLD_WIDTH = 100;
-    static final int WORLD_HEIGHT = 100;
-    private static float w;
-    private static float h;*/
-  
-	@Override
-	public void create () {
-
-		 // creating or initializing bits
+ 
+	public GameScreen(final GbitsExtended gam) {
+		this.game = gam;
+		// creating or initializing bits
 		 bs=new bitStore();
-		  //w = Gdx.graphics.getWidth();
-	     // h = Gdx.graphics.getHeight();  
-		 camera = new OrthographicCamera();
-	     //camera = new OrthographicCamera(100,100*(h/w));
-	     camera.setToOrtho(false, 64*col,64*row);
-	    //camera.setToOrtho(false, w,h);
-	     //camera.setToOrtho(false);
-	     //camera.position.set(64*col,64*row, 0);
-	     //camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
-	     camera.update();
-	     batch = new SpriteBatch();
+		// create the camera and the SpriteBatch
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, 64*col,64*row);
+		batch = new SpriteBatch();
 	     Gdx.input.setInputProcessor(this);
 	      //initializing logger
 	      fpslog=new FPSLogger();
 	      //disabling the continuous rendering
 	      Gdx.graphics.setContinuousRendering(false);
 	      Gdx.graphics.requestRendering();
-	      
-	      //input event
-	     // InputEvent e= new InputEvent();
-	     // e.getListenerActor();
-	      //e.handle();
-	     
+ 
 	}
 	@Override
 	public boolean keyDown(int keycode) {
@@ -156,7 +132,7 @@ public class Gbits extends ApplicationAdapter implements InputProcessor {
 					{
 					 bs.setbitType(i, j, b[j]);
 					}
-				 System.out.print(bs.getbitMap());
+				 //System.out.print(bs.getbitMap());
 			}
 			//Gdx.graphics.requestRendering();
 		}
@@ -230,9 +206,7 @@ public class Gbits extends ApplicationAdapter implements InputProcessor {
 		return false;
 	}
 	@Override
-	public void render () {
-		
-		
+	public void render(float delta) {
 		/*************drawing bits****************/
 		if (drawflag)
 		{
@@ -244,7 +218,6 @@ public class Gbits extends ApplicationAdapter implements InputProcessor {
 		      // tell the SpriteBatch to render in the
 		      // coordinate system specified by the camera.
 		   batch.setProjectionMatrix(camera.combined);
-		     //camera.update();
 			batch.begin();
 			//batch.setProjectionMatrix(camera.combined);
 			for (int i=0; i <row;i++)		//row i
@@ -259,25 +232,52 @@ public class Gbits extends ApplicationAdapter implements InputProcessor {
 				}
 			}
 			batch.end();
+			int count=0;
+			for (int i=0; i <row;i++)		//row i
+			{	
+				for (int j=0;j<col;j++)		//column j
+				{
+					if (bs.getbitType(i, j)==bitStore.bitType.nobit)
+						count++;	
+				}
+				}
+			if (count==(row*col)-2)
+			{	
+			game.setScreen(new GameOverScreen(game));
+			dispose();
+			}
+			camera.update();
 		}
 		fpslog.log();
-   
-	       
 	}
-	
+ 
 	@Override
-	   public void dispose() {
-	      // dispose of all the native resources
-	        batch.dispose();
-	   }
-	   @Override
-	   public void resize(int width, int height) {
-		   camera.update();
-	   }
-	   @Override
-	   public void pause() {
-	   }
-	   @Override
-	   public void resume() {
-	   }
-} 
+	public void resize(int width, int height) {
+		drawflag=true;
+		Gdx.graphics.requestRendering();
+	}
+ 
+	@Override
+	public void show() {
+		// start the playback of the background music
+		// when the screen is shown
+	}
+ 
+	@Override
+	public void hide() {
+	}
+ 
+	@Override
+	public void pause() {
+	}
+ 
+	@Override
+	public void resume() {
+	}
+ 
+	@Override
+	public void dispose() {
+		batch.dispose();
+	}
+ 
+}
