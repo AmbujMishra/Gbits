@@ -8,6 +8,23 @@ case: X=-ve and Y=+ve
 if -X>Y then Left else Down
 
 case: X=-ve and Y=-ve
-if _x>_Y then Left else UP
+if -x>-Y then Left else UP
 
 above case has been tested.
+
+if (screenX-tx > 0 && screenY-ty>0 && screenY-ty < screenX-tx )
+				tilt=1;		//right
+			else
+				tilt=4;
+			if (tx-screenX >0 && screenY-ty>0 &&tx-screenX> screenY-ty  )
+				tilt=2;
+			else
+				tilt=4;
+			if(screenX-tx > 0 && screenY-ty<0 && ty-screenY< screenX-tx)
+				tilt=1;	//right
+			else
+				tilt=3;
+			if(tx-screenX >0 && ty-screenY>0 &&tx-screenX> ty-screenY )
+				tilt=2;	//left
+			else
+				tilt=3;
