@@ -1,0 +1,13 @@
+case: X=+ve and Y=+ve
+ifX>Y then Right else Down
+
+case: X=+ve and Y=-ve
+if X> (-Y) then Right else Up
+
+case: X=-ve and Y=+ve
+if -X>Y then Left else Down
+
+case: X=-ve and Y=-ve
+if _x>_Y then Left else UP
+
+above case has been tested.
