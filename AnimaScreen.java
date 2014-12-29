@@ -12,6 +12,7 @@ public class AnimaScreen implements Screen{
 	GbitsGame game;
 	private OrthographicCamera camera;
 	String before[];
+	String after[];
 	private boolean animate=false;
 	public AnimaScreen(GbitsGame gg) {
 		game=gg;
@@ -30,7 +31,8 @@ public class AnimaScreen implements Screen{
 
 	private void StepProcessing() {
 		
-		String [] after=game.BC.getBitArray();
+		//String [] after=game.BC.getBitArray();
+		after=before;
 		switch(game.getGravity())
 		{
 		case LEFT:
@@ -54,11 +56,11 @@ public class AnimaScreen implements Screen{
 				game.BC.setBitArray(after);
 				game.setScreen(game.INS);
 			}
-			else	//call render()  for animation and set before=after
-			{
-				render(0);
-				before=after;
-			}
+		//	else	//call render()  for animation and set before=after
+		//	{
+			//	render(0); dnt call render, let it be called itself;
+			//	before=after; //call it into render after animation
+		//	}
 			break;
 		case RIGHT:
 		case UP:
@@ -74,7 +76,22 @@ public class AnimaScreen implements Screen{
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		game.batch.setProjectionMatrix(camera.combined);
 		camera.update();
+		game.batch.begin();
+		for (int i=0; i < game.BC.getRow();i++)		//row i
+		{	
+			for (int j=0;j < game.BC.getColumn();j++)		//column j
+			//for (char c: bitA[i].)
+			{
+			if (after[i].charAt(j)=='0')
+				game.batch.draw(game.tbitI0,i*64,j*64);
+			else if(after[i].charAt(j)=='1')
+				game.batch.draw(game.tbitI1,i*64,j*64);
+				
+			}
+		}
+		// Now write animation here, record animation somewhere it will be easy
 		
+		game.batch.end();
 		//write complex logic for animation :(
 		
 		game.fpslog.log();
