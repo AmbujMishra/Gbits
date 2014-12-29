@@ -13,6 +13,7 @@ public class AnimaScreen implements Screen{
 	private OrthographicCamera camera;
 	String before[];
 	String after[];
+	int[] change=new int[game.BC.getRow];
 	private boolean animate=false;
 	public AnimaScreen(GbitsGame gg) {
 		game=gg;
@@ -56,11 +57,13 @@ public class AnimaScreen implements Screen{
 				game.BC.setBitArray(after);
 				game.setScreen(game.INS);
 			}
-		//	else	//call render()  for animation and set before=after
-		//	{
+			else	//call render()  for animation and set before=after
+			{
+				//get animation bit location
+				change=getAnimationLocation(before,after);
 			//	render(0); dnt call render, let it be called itself;
 			//	before=after; //call it into render after animation
-		//	}
+			}
 			break;
 		case RIGHT:
 		case UP:
@@ -69,7 +72,16 @@ public class AnimaScreen implements Screen{
 		}
 		
 	}
-
+	private int[] getAnimationLocation(String[] before, String[] after)
+	{
+		for(int i=0;i<change.length();i++)
+		{
+			for (int j=0;j<before.length();j++)
+			if (before[i].charAt[j]!=after[i].charAt[j])		//its wrong, 2 bits will be changed
+			change[i]=j;
+		}
+		return change;
+	}
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -82,15 +94,19 @@ public class AnimaScreen implements Screen{
 			for (int j=0;j < game.BC.getColumn();j++)		//column j
 			//for (char c: bitA[i].)
 			{
-			if (after[i].charAt(j)=='0')
+			if (before[i].charAt(j)=='0')
 				game.batch.draw(game.tbitI0,i*64,j*64);
-			else if(after[i].charAt(j)=='1')
+			else if(before[i].charAt(j)=='1')
 				game.batch.draw(game.tbitI1,i*64,j*64);
 				
 			}
 		}
 		// Now write animation here, record animation somewhere it will be easy
-		
+		for (int c=0;c<change.length();c++)
+		{
+			if (after[c].charAt(change[c])==2 && )
+			game.batch.draw(game.tbitI0,(change[c]*64)-(20 * Gdx.graphics.getDeltaTime()),c*64);
+		}
 		game.batch.end();
 		//write complex logic for animation :(
 		
