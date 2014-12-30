@@ -17,7 +17,7 @@ public class InputScreen implements Screen,InputProcessor{
 	//private FPSLogger fpslog;
 	//BitContainer BC;
 	//private boolean animFlag;
-	private String[] bitA;
+	//private String[] bitA;
 	//private int bitCount=0;
 	public InputScreen(GbitsGame gg) {
 		game=gg;
@@ -45,16 +45,18 @@ public class InputScreen implements Screen,InputProcessor{
 		game.batch.setProjectionMatrix(camera.combined);
 		camera.update();
 		
-		bitA=game.BC.getBitArray();
+		//bitA=game.BC.getBitArray();
 		game.batch.begin();
 		for (int i=0; i < game.BC.getRow();i++)		//row i
 		{	
 			for (int j=0;j < game.BC.getColumn();j++)		//column j
 			//for (char c: bitA[i].)
 			{
-			if (bitA[i].charAt(j)=='0')
+			//if (bitA[i].charAt(j)=='0')
+				if (game.BC.getBit(i, j)=='0')
 				game.batch.draw(game.tbitI0,i*64,j*64);
-			else if(bitA[i].charAt(j)=='1')
+			//else if(bitA[i].charAt(j)=='1')
+				else if(game.BC.getBit(i, j)=='1')
 				game.batch.draw(game.tbitI1,i*64,j*64);
 				
 			}
@@ -108,22 +110,26 @@ public class InputScreen implements Screen,InputProcessor{
 		//game.BP.processbitSequence("1111");
 			game.setGravity(Gravity.LEFT);
 			game.setScreen(game.ANS);
+			//game.setScreen(game.FAS);
 		}
 		if(keycode==Keys.RIGHT)
 		{
 			game.setGravity(Gravity.RIGHT);
 			game.setScreen(game.ANS);
+			//game.setScreen(game.FAS);
 		}
 		if(keycode==Keys.UP)
 		{
 			game.setGravity(Gravity.UP);
 			game.setScreen(game.ANS);
+			//game.setScreen(game.FAS);
 		}
 		if(keycode==Keys.DOWN)
 		{
 			game.setGravity(Gravity.DOWN);
-			game.setScreen(game.ANS);
-			//game.setScreen(game.GOS);
+			//game.setScreen(game.ANS);
+			//game.setScreen(game.FAS);
+			game.setScreen(game.GOS);
 		}
 		return true;
 	}
