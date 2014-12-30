@@ -50,7 +50,7 @@ public class BitProcessing {
 
 }
 	
-	private String shiftblanks(String seq) {
+	public String shiftblanks(String seq) {
 
 		String bitseq="";
 		String blankseq="";
@@ -76,14 +76,16 @@ public class BitProcessing {
 		
 	}
 
-	public String singleStepProcess(String seq) 
+/*	public String singleStepProcess(String seq) 
 	{
 	
 			if (isShiftRequired(seq)) //now check for shift, isRequired?
+			{	registerShiftAnima();
 				return shiftblanks(seq);
+			}
 			else
 				return unitBitPairProcess(seq);
-	}
+	}*/
 	
 	private String unitBitPairProcess(String seq) {
 		
@@ -117,12 +119,13 @@ public class BitProcessing {
 			return sb.toString();
 	}
 	
-private boolean isShiftRequired(String seq) {
+public boolean isShiftRequired(String seq) {
 		for (int i=0;i<seq.length()-countBlanks(seq);i++)
 			{
 			if (seq.charAt(i)=='2')
 				return true;
 			}
+		System.out.println(seq);
 		return false;
 	}
 
