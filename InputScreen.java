@@ -32,6 +32,9 @@ public class InputScreen implements Screen,InputProcessor{
 
 	@Override
 	public void show() {
+		if (game.BC.getBitCount()==2)
+			game.setScreen(game.GOS);
+		
 	Gdx.input.setInputProcessor(this);
     Gdx.graphics.setContinuousRendering(false);
     Gdx.graphics.requestRendering();
@@ -54,18 +57,21 @@ public class InputScreen implements Screen,InputProcessor{
 			{
 			//if (bitA[i].charAt(j)=='0')
 				if (game.BC.getBit(i, j)=='0')
-				game.batch.draw(game.tbitI0,i*64,j*64);
+				game.batch.draw(game.tbitI0,j*64,i*64);
 			//else if(bitA[i].charAt(j)=='1')
 				else if(game.BC.getBit(i, j)=='1')
-				game.batch.draw(game.tbitI1,i*64,j*64);
+				game.batch.draw(game.tbitI1,j*64,i*64);
 				
 			}
 		}
 		game.batch.end();
 		
-		if (game.BC.getBitCount()==2)
-			game.setScreen(game.GOS);
-		
+		/*if (game.BC.getBitCount()==2)
+			game.setScreen(game.GOS);*/
+		if (game.getAnima())
+		{
+			game.setScreen(game.ANS);
+		}
 		game.fpslog.log();
 	}
 
@@ -109,19 +115,20 @@ public class InputScreen implements Screen,InputProcessor{
 			// Return back to this screen
 		//game.BP.processbitSequence("1111");
 			game.setGravity(Gravity.LEFT);
-			game.setScreen(game.ANS);
+			game.setAnima(true);
+			//game.setScreen(game.ANS);
 			//game.setScreen(game.FAS);
 		}
 		if(keycode==Keys.RIGHT)
 		{
 			game.setGravity(Gravity.RIGHT);
-			game.setScreen(game.ANS);
+			//game.setScreen(game.ANS);
 			//game.setScreen(game.FAS);
 		}
 		if(keycode==Keys.UP)
 		{
 			game.setGravity(Gravity.UP);
-			game.setScreen(game.ANS);
+			//game.setScreen(game.ANS);
 			//game.setScreen(game.FAS);
 		}
 		if(keycode==Keys.DOWN)
