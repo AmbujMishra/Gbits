@@ -18,11 +18,13 @@ public class GbitsGame extends Game{
 		LEFT;
 	}
 	private Gravity g;
+	public boolean animate=false;
 	//https://code.google.com/p/libgdx-users/wiki/ScreenAndGameClasses
 	MainMenuScreen MMS;
 	InputScreen INS;
 	AnimaScreen ANS;
 	GameOverScreen GOS;
+	FastAnimaScreen FAS;
 	BitContainer BC;
 	BitProcessing BP;
 	public SpriteBatch batch;
@@ -35,6 +37,7 @@ public class GbitsGame extends Game{
     	INS=new InputScreen(this);
     	ANS =new AnimaScreen(this);
     	GOS= new GameOverScreen(this);
+    	FAS=new FastAnimaScreen(this);
     	//initializing gravity with ZERO
     	setGravity(Gravity.ZERO);
     	BP=new BitProcessing();
@@ -68,5 +71,13 @@ public class GbitsGame extends Game{
 	public Gravity getGravity()
 	{
 		return g;
+	}
+	public void setAnima(boolean a)
+	{
+		animate=a;
+	}
+	public boolean getAnima()
+	{
+		return animate;
 	}
 }
