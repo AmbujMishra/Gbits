@@ -161,10 +161,10 @@ private boolean getAnimationInProcess()
 	public void render(float delta) {
 		//setAnimationInProcess(false);
 		System.out.println("animation screen");
-		System.out.println("animationrender");
-		System.out.println(game.getAnima());
-		System.out.println(getAnimationInProcess());
-		Gdx.gl.glClearColor(1, 1, 1, 1);
+		//System.out.println("animationrender");
+		//System.out.println(game.getAnima());
+		//System.out.println(getAnimationInProcess());
+		//Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		game.batch.setProjectionMatrix(camera.combined);
 		camera.update();
@@ -176,6 +176,8 @@ private boolean getAnimationInProcess()
 
 		if(getAnimationInProcess() /*&& loop<max-2 && !getloopIncrement()*/)
 		{
+			//Gdx.gl.glClearColor(1, 1, 1, 1);
+			//Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		setAnimationInProcess(false);
 		//setloopIncrement(true);
 		game.batch.begin();
@@ -271,6 +273,7 @@ private boolean getAnimationInProcess()
 			case "11":
 				if (x> loop*64)
 				{
+				game.batch.draw(game.tbitI0,(loop+1)*64,i*64);
 				game.batch.draw(game.tbitI1,x,i*64);
 				//x=x-(Gdx.graphics.getDeltaTime()*20);
 				setAnimationInProcess(true);
@@ -295,7 +298,8 @@ private boolean getAnimationInProcess()
 				//find next bit cluster if any and fast animate the falling process
 			}
 		}
-		x=x-(Gdx.graphics.getDeltaTime()*200);
+		//x=x-(Gdx.graphics.getDeltaTime()*200);
+		x=x-delta*200;
 		game.batch.end();
 		}
 		else
@@ -308,7 +312,7 @@ private boolean getAnimationInProcess()
 				}
 			else if (game.BP.isAnimaRequired(game.BC.getBitArray()))
 			{
-				System.out.println(max);
+				//System.out.println(max);
 				//for(String ss:game.BC.getBitArray())
 				//System.out.println(ss);
 				setAnimationInProcess(true);
