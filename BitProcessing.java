@@ -118,15 +118,53 @@ public class BitProcessing {
 
 			return sb.toString();
 	}
-	
+	// it will check only spaces in a seq only
 public boolean isShiftRequired(String seq) {
 		for (int i=0;i<seq.length()-countBlanks(seq);i++)
 			{
 			if (seq.charAt(i)=='2')
 				return true;
 			}
-		System.out.println(seq);
+		//System.out.println(seq);
 		return false;
 	}
+
+public boolean isAnimaRequired(String seq) {
+	for (int i=0;i<seq.length()-countBlanks(seq);i++)
+		{
+		if (seq.charAt(i)=='2')
+			return true;
+		}
+	for (int i=0;i<seq.length()-1;i++)
+	{
+		switch(seq.substring(i,i+2))
+		{
+		case "00": case "11": case "20": case "21":
+			return true;
+		}
+	}
+	//System.out.println(seq);
+	return false;
+}
+
+public boolean isAnimaRequired(String[] seqA) {
+	for (int j=0;j<seqA.length;j++)
+	{
+		for (int i=0;i<seqA[j].length()-countBlanks(seqA[j]);i++)
+		{
+		if (seqA[j].charAt(i)=='2')
+			return true;
+		}
+	for (int i=0;i<seqA[j].length()-1;i++)
+	{
+		switch(seqA[j].substring(i,i+2))
+		{
+		case "00": case "11": case "20": case "21":
+			return true;
+		}
+	}
+	}
+	return false;
+}
 
 }
