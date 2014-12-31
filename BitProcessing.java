@@ -129,7 +129,7 @@ public boolean isShiftRequired(String seq) {
 		return false;
 	}
 
-public boolean isAnimaRequired(String seq) {
+/*public boolean isAnimaRequired(String seq) {
 	for (int i=0;i<seq.length()-countBlanks(seq);i++)
 		{
 		if (seq.charAt(i)=='2')
@@ -145,9 +145,13 @@ public boolean isAnimaRequired(String seq) {
 	}
 	//System.out.println(seq);
 	return false;
-}
+}*/
 
-public boolean isAnimaRequired(String[] seqA) {
+public boolean isAnimaRequired(String[] seqA, String g) {
+	
+	switch (g)
+	{
+	case "LEFT":
 	for (int j=0;j<seqA.length;j++)
 	{
 		for (int i=0;i<seqA[j].length()-countBlanks(seqA[j]);i++)
@@ -163,6 +167,27 @@ public boolean isAnimaRequired(String[] seqA) {
 			return true;
 		}
 	}
+	}
+	break;
+	case "RIGHT":
+		for (int j=0;j<seqA.length;j++)
+		{
+			for (int i=seqA[j].length()-1;i>=countBlanks(seqA[j]);i--)
+			{
+			if (seqA[j].charAt(i)=='2')
+				return true;
+			}
+		//for (int i=0;i<seqA[j].length()-1;i++)
+		for (int i=seqA[j].length();i>=2;i--)
+		{
+			switch(seqA[j].substring(i-2,i))
+			{
+			case "00": case "11": case "02": case "12":
+				return true;
+			}
+		}
+		}
+		break;
 	}
 	return false;
 }
