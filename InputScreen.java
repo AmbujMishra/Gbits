@@ -122,6 +122,7 @@ public class InputScreen implements Screen,InputProcessor{
 		if(keycode==Keys.RIGHT)
 		{
 			game.setGravity(Gravity.RIGHT);
+			game.setAnima(true);
 			//game.setScreen(game.ANS);
 			//game.setScreen(game.FAS);
 		}
