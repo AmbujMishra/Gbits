@@ -1,4 +1,4 @@
-package com.gameScreens.games;
+package com.Gbits.Screens;
 
 
 import com.badlogic.gdx.Gdx;
@@ -8,26 +8,19 @@ import com.badlogic.gdx.Input.Keys;
 //import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.gameScreens.games.GbitsGame.Gravity;
+import com.Gbits.Screens.GbitsGame.Gravity;
 
 public class InputScreen implements Screen,InputProcessor{
 
 	GbitsGame game;
 	private OrthographicCamera camera;
-	//private FPSLogger fpslog;
-	//BitContainer BC;
-	//private boolean animFlag;
-	//private String[] bitA;
-	//private int bitCount=0;
+
 	public InputScreen(GbitsGame gg) {
 		game=gg;
-		//fpslog=new FPSLogger();
-		//BC=new BitContainer(44);
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false,64*game.BC.getRow(), 64*game.BC.getColumn());
 	    camera.update();
-	    //Gdx.graphics.setContinuousRendering(false);
-	    //Gdx.graphics.requestRendering();
+
 	}
 
 	@Override
@@ -42,32 +35,25 @@ public class InputScreen implements Screen,InputProcessor{
 
 	@Override
 	public void render(float delta) {
-		System.out.println("input screen");
+		//System.out.println("input screen");
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		game.batch.setProjectionMatrix(camera.combined);
 		camera.update();
 		
-		//bitA=game.BC.getBitArray();
 		game.batch.begin();
 		for (int i=0; i < game.BC.getRow();i++)		//row i
 		{	
 			for (int j=0;j < game.BC.getColumn();j++)		//column j
-			//for (char c: bitA[i].)
 			{
-			//if (bitA[i].charAt(j)=='0')
 				if (game.BC.getBit(i, j)=='0')
 				game.batch.draw(game.tbitI0,j*64,i*64);
-			//else if(bitA[i].charAt(j)=='1')
 				else if(game.BC.getBit(i, j)=='1')
 				game.batch.draw(game.tbitI1,j*64,i*64);
-				
 			}
 		}
 		game.batch.end();
 		
-		/*if (game.BC.getBitCount()==2)
-			game.setScreen(game.GOS);*/
 		if (game.getAnima())
 		{
 			game.setScreen(game.ANS);
@@ -109,35 +95,23 @@ public class InputScreen implements Screen,InputProcessor{
 	public boolean keyDown(int keycode) {
 		if(keycode==Keys.LEFT)
 		{
-			//process current bit array
-			// store the arrays in temp arrays
-			// show animation by calling AnimaScreen
-			// Return back to this screen
-		//game.BP.processbitSequence("1111");
 			game.setGravity(Gravity.LEFT);
 			game.setAnima(true);
-			//game.setScreen(game.ANS);
-			//game.setScreen(game.FAS);
 		}
 		if(keycode==Keys.RIGHT)
 		{
 			game.setGravity(Gravity.RIGHT);
 			game.setAnima(true);
-			//game.setScreen(game.ANS);
-			//game.setScreen(game.FAS);
 		}
 		if(keycode==Keys.UP)
 		{
 			game.setGravity(Gravity.UP);
-			//game.setScreen(game.ANS);
-			//game.setScreen(game.FAS);
+			game.setAnima(true);
 		}
 		if(keycode==Keys.DOWN)
 		{
 			game.setGravity(Gravity.DOWN);
-			//game.setScreen(game.ANS);
-			//game.setScreen(game.FAS);
-			game.setScreen(game.GOS);
+			game.setAnima(true);
 		}
 		return true;
 	}
