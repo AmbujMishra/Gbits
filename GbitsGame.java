@@ -1,4 +1,4 @@
-package com.gameScreens.games;
+package com.Gbits.Screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GbitsGame extends Game{
 	
+	//Gravity Enum		AM: Think about ZERO, handle it appropriately
 	public enum Gravity
 	{
 		ZERO,
@@ -17,29 +18,50 @@ public class GbitsGame extends Game{
 		RIGHT,
 		LEFT;
 	}
-	private Gravity g;
-	public boolean animate=false;
-	//https://code.google.com/p/libgdx-users/wiki/ScreenAndGameClasses
+
+	//Animation flag, Responsible for calling Animation screen
+	private boolean animate=false;
+	//Screens, Main Menu, Input Handler, Animation, Game over respectively
 	MainMenuScreen MMS;
 	InputScreen INS;
 	AnimaScreen ANS;
 	GameOverScreen GOS;
-	FastAnimaScreen FAS;
+
 	BitContainer BC;
 	BitProcessing BP;
+	
+	private Gravity g;
 	public SpriteBatch batch;
     public BitmapFont font;
 	public Texture tbitI0;
 	public Texture tbitI1;
 	public FPSLogger fpslog;
+	
+	public void setGravity(Gravity g)
+	{
+		this.g=g;
+	}
+	
+	public Gravity getGravity()
+	{
+		return g;
+	}
+	public void setAnima(boolean a)
+	{
+		animate=a;
+	}
+	public boolean getAnima()
+	{
+		return animate;
+	}
     public void create() {
     	MMS =new MainMenuScreen(this);
     	INS=new InputScreen(this);
     	ANS =new AnimaScreen(this);
     	GOS= new GameOverScreen(this);
-    	FAS=new FastAnimaScreen(this);
     	//initializing gravity with ZERO
     	setGravity(Gravity.ZERO);
+    	//initializing bit processing class
     	BP=new BitProcessing();
     	batch = new SpriteBatch();
         //Use LibGDX's default Arial font.
@@ -60,24 +82,10 @@ public class GbitsGame extends Game{
         font.dispose();
         tbitI0.dispose();
         tbitI1.dispose();
+        MMS.dispose();
+        INS.dispose();
+        ANS.dispose();
+        GOS.dispose();
 		Gdx.app.exit();
     }
-	
-	public void setGravity(Gravity g)
-	{
-		this.g=g;
-	}
-	
-	public Gravity getGravity()
-	{
-		return g;
-	}
-	public void setAnima(boolean a)
-	{
-		animate=a;
-	}
-	public boolean getAnima()
-	{
-		return animate;
-	}
 }
