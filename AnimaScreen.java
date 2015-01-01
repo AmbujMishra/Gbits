@@ -1,61 +1,38 @@
-package com.gameScreens.games;
+package com.Gbits.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-//import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-//import com.gameScreens.games.GbitsGame.Gravity;
-import com.gameScreens.games.GbitsGame.Gravity;
+import com.Gbits.Screens.GbitsGame.Gravity;
 
 public class AnimaScreen implements Screen{
 
 	GbitsGame game;
 	private OrthographicCamera camera;
-	//String before[];
-	//String after[];
-	//String[] change=new String[game.BC.getRow()];
-	private float x;
+	private float x,y;
 	int max;
 	private int loop=0;
 	private boolean animationInProcess=false;
-	//private boolean loopIncrement=false;
+	
 	public AnimaScreen(GbitsGame gg) {
 		game=gg;
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false,64*game.BC.getRow(), 64*game.BC.getColumn());
 	    camera.update();
 	}
-	/*private void setloopIncrement(boolean l)
-	{
-		loopIncrement=l;
-	}*/
-	/*private boolean getloopIncrement()
-	{
-		return loopIncrement;
-	}*/
-	/*private int getloop()
-	{
-		return loop;
-	}*/
 	private void setloop(int l)
 	{
 		loop=l;
-		//setX();
 	}
-	/*private void incrementloop()
-	{
-		loop=loop+1;
-	}*/
 	private void setX(int x)
 	{
 		this.x=x*64;
 	}
-
-	/*private float getX()
+	private void setY(int y)
 	{
-		return x;
-	}*/
+		this.y=y*64;
+	}
 private void setAnimationInProcess(boolean f)
 {
 	animationInProcess=f;
@@ -64,135 +41,65 @@ private boolean getAnimationInProcess()
 {
 	return animationInProcess;
 }
+
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(null);
 		Gdx.graphics.setContinuousRendering(true);
-		//before=game.BC.getBitArray();
-		//it will process single step
-		//StepProcessing();
-		//FastAnimaScreen FAS=new FastAnimaScreen();
-		System.out.println("animationshow");
-		max=game.BC.getColumn()-1;
-		//int i=0;
-		/*while(i<game.BC.getRow() && !animate)
-		{
-		if (game.BP.isAnimaRequired(game.BC.getBitRow(i)))
-		animate=true;
-		else		
-		i=i+1;
-		}*/
-		//if(!animate)
-		//	game.setScreen(game.INS);
-		//else
-		//{
+		System.out.println("animation screen show method");
 		if(game.BP.isAnimaRequired(game.BC.getBitArray(),game.getGravity().toString()))
 		{
 			switch(game.getGravity())
 			{
 			case LEFT:
+				max=game.BC.getColumn()-1;
 				setloop(0);
 				setX(loop+1);
 				break;
 			case RIGHT:
+				max=game.BC.getColumn()-1;
 				setloop(max);
 				setX(loop-1);
 				break;
-/*			case UP:
-				game.setScreen(game.INS);
+			case DOWN:					// like LEFT swap x and y coordinates
+				max=game.BC.getRow()-1;
+				setloop(0);
+				setY(loop+1);			// setting the y location of moving row
 				break;
-			case DOWN:
+			case UP:				// like RIGHT swap x and y coordinates
+				max=game.BC.getRow()-1;
+				setloop(max);
+				setY(loop-1);
 				break;
 			case ZERO:
-				break;*/
+				game.setAnima(false);
+				game.setScreen(game.INS);
+				break;
 			}
 			setAnimationInProcess(true);
 		}
 		else
 		{
-			System.out.println("not required");
+			System.out.println("Animation is not required");
 			game.setAnima(false);
 			game.setGravity(Gravity.ZERO);
 			game.setScreen(game.INS);
 		}
-
-		//Gdx.graphics.setContinuousRendering(true);
-		//Gdx.graphics.requestRendering();
-		//}
 	}
 
-	/*private void StepProcessing() {
-		
-		//split in columns and proceeed dear :P 
-		//String [] after=game.BC.getBitArray();
-		after=before;
-		switch(game.getGravity())
-		{
-		case LEFT:
-			
-			for (int i=0;i<game.BC.getRow();i++)
-			{
-				//first check the normalized version of row then call this step.
-				if (!game.BP.checkSeq(after[i], game.BP.countBlanks(after[i])))
-				{
-					after[i]=game.BP.singleStepProcess(after[i]);
-					animate=true;
-				}
-				else 
-					animate=false;
-			}
-			
-			if (!animate)
-			{
-				//update bit container
-				//return to Input screen
-				game.BC.setBitArray(after);
-				game.setScreen(game.INS);
-			}
-			else	//call render()  for animation and set before=after
-			{
-				//get animation bit location
-				change=getAnimationLocation(before,after);
-			//	render(0); dnt call render, let it be called itself;
-			//	before=after; //call it into render after animation
-			}
-			break;
-		case RIGHT:
-		case UP:
-		case DOWN:
-		default:
-		}
-		
-	}*/
-	/*private String[] getAnimationLocation(String[] before, String[] after)
-	{
-		for(int i=0;i<change.length;i++)
-		{
-			for (int j=0;j<before.length();j++)
-			if (before[i].charAt[j]!=after[i].charAt[j])		//its wrong, 2 bits will be changed
-			change[i]=j;
-		}
-		return change;
-	}*/
 	@Override
 	public void render(float delta) {
-		//setAnimationInProcess(false);
-		System.out.println("animation screen");
-		//System.out.println("animationrender");
-		//System.out.println(game.getAnima());
-		//System.out.println(getAnimationInProcess());
+		System.out.println("animation screen render");
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		game.batch.setProjectionMatrix(camera.combined);
 		camera.update();
 		if(game.getGravity()== Gravity.LEFT)
 		{
-		if(getAnimationInProcess() /*&& loop<max-2 && !getloopIncrement()*/)
+			System.out.println("left animation");
+		if(getAnimationInProcess())
 		{
-			//Gdx.gl.glClearColor(1, 1, 1, 1);
-			//Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		setAnimationInProcess(false);
-		//setloopIncrement(true);
 		game.batch.begin();
 		//drawing bits prior to loop bits including loop
 		//drawing columns, not row
@@ -200,10 +107,8 @@ private boolean getAnimationInProcess()
 		{
 			for (int j=0;j<game.BC.getRow();j++)
 			{
-				//if(game.BC.getBitRow(j).charAt(i)=='0')
 				if(game.BC.getBit(j,i)=='0')
 					game.batch.draw(game.tbitI0,i*64,j*64);
-				//else if (game.BC.getBitRow(j).charAt(i)=='1')
 				else if (game.BC.getBit(j,i)=='1')
 					game.batch.draw(game.tbitI1,i*64,j*64);
 			}
@@ -219,7 +124,7 @@ private boolean getAnimationInProcess()
 					game.batch.draw(game.tbitI1,i*64,j*64);
 			}
 		}
-			//setX(x+((loop+1)*64));
+
 		for(int i=0;i<game.BC.getRow();i++)
 		{
 			switch(game.BC.getBitRow(i).substring(loop, loop+2))
@@ -228,16 +133,12 @@ private boolean getAnimationInProcess()
 				if (x> loop*64)
 				{
 				game.batch.draw(game.tbitI0,x,i*64);
-				//x=x-(Gdx.graphics.getDeltaTime()*20);
 				setAnimationInProcess(true);
-				//setloopIncrement(false);
 				}
 				else
 				{
 				game.batch.draw(game.tbitI0,loop*64,i*64);
 				game.BC.setBit("2", i, loop+1);
-				//setAnimationInProcess(false);
-				//setloopIncrement(true);
 				}
 				break;
 			case "01":
@@ -246,41 +147,32 @@ private boolean getAnimationInProcess()
 			case "10":
 				game.batch.draw(game.tbitI0,(loop+1)*64,i*64);
 				break;
-			case "02": case "12":
-				//setAnimationInProcess(false);
+			case "02": case "12": case "22":
 				break;
 			case "20": 
 				if (x> loop*64)
 				{
 				game.batch.draw(game.tbitI0,x,i*64);
-				//x=x-(Gdx.graphics.getDeltaTime()*20);
 				setAnimationInProcess(true);
-				//setloopIncrement(false);
 				}
 				else
 				{
 				game.batch.draw(game.tbitI0,loop*64,i*64);
 				game.BC.setBit("0", i, loop);
 				game.BC.setBit("2", i, loop+1);
-				//setAnimationInProcess(false);
-				//setloopIncrement(true);
 				}
 				break;
 			case "21":
 				if (x> loop*64)
 				{
 				game.batch.draw(game.tbitI1,x,i*64);
-				//x=x-(Gdx.graphics.getDeltaTime()*20);
 				setAnimationInProcess(true);
-				//setloopIncrement(false);
 				}
 				else
 				{
 				game.batch.draw(game.tbitI1,loop*64,i*64);
 				game.BC.setBit("1", i, loop);
 				game.BC.setBit("2", i, loop+1);
-				//setAnimationInProcess(false);
-				//setloopIncrement(true);
 				}
 				break;
 			case "11":
@@ -288,30 +180,17 @@ private boolean getAnimationInProcess()
 				{
 				game.batch.draw(game.tbitI0,(loop+1)*64,i*64);
 				game.batch.draw(game.tbitI1,x,i*64);
-				//x=x-(Gdx.graphics.getDeltaTime()*20);
 				setAnimationInProcess(true);
-				//setloopIncrement(false);
 				}
 				else
 				{
 				game.batch.draw(game.tbitI1,loop*64,i*64);
 				game.batch.draw(game.tbitI0,(loop+1)*64,i*64);
 				game.BC.setBit("0", i, loop+1);
-				//setAnimationInProcess(false);
-				//setloopIncrement(true);
 				}
-				//game.batch.draw(game.tbitI1,(loop+1)*64,i*64);
 				break;
-			case "22":
-				//setAnimationInProcess(false);
-				//it will never come now as handling in Fast animation screen.
-				System.out.println("FTW");
-				break; 
-				//game.BC.findNextBitCluster();
-				//find next bit cluster if any and fast animate the falling process
 			}
 		}
-		//x=x-(Gdx.graphics.getDeltaTime()*200);
 		x=x-delta*200;
 		game.batch.end();
 		}
@@ -322,13 +201,9 @@ private boolean getAnimationInProcess()
 				setloop(loop+1);
 				setX(loop+1);
 				setAnimationInProcess(true);
-				//animate=false;
 				}
 			else if (game.BP.isAnimaRequired(game.BC.getBitArray(),game.getGravity().toString()))
 			{
-				//System.out.println(max);
-				//for(String ss:game.BC.getBitArray())
-				//System.out.println(ss);
 				setAnimationInProcess(true);
 				setloop(0);
 				setX(loop+1);
@@ -345,13 +220,10 @@ private boolean getAnimationInProcess()
 		//write code for RIGHT case game.getGravity()= Gravity.RIGHT
 		if(game.getGravity()== Gravity.RIGHT)
 		{
-			System.out.println("right");
-			if(getAnimationInProcess() /*&& loop<max-2 && !getloopIncrement()*/)
+			System.out.println("right animation");
+			if(getAnimationInProcess())
 			{
-				//Gdx.gl.glClearColor(1, 1, 1, 1);
-				//Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 			setAnimationInProcess(false);
-			//setloopIncrement(true);
 			game.batch.begin();
 			//drawing bits prior to loop bits including loop
 			//drawing columns, not row
@@ -359,10 +231,8 @@ private boolean getAnimationInProcess()
 			{
 				for (int j=0;j<game.BC.getRow();j++)
 				{
-					//if(game.BC.getBitRow(j).charAt(i)=='0')
 					if(game.BC.getBit(j,i)=='0')
 						game.batch.draw(game.tbitI0,i*64,j*64);
-					//else if (game.BC.getBitRow(j).charAt(i)=='1')
 					else if (game.BC.getBit(j,i)=='1')
 						game.batch.draw(game.tbitI1,i*64,j*64);
 				}
@@ -378,7 +248,6 @@ private boolean getAnimationInProcess()
 						game.batch.draw(game.tbitI1,i*64,j*64);
 				}
 			}
-				//setX(x+((loop+1)*64));
 			for(int i=0;i<game.BC.getRow();i++)
 			{
 				switch(game.BC.getBitRow(i).substring(loop-1, loop+1))
@@ -387,16 +256,12 @@ private boolean getAnimationInProcess()
 					if (x < (loop)*64)
 					{
 					game.batch.draw(game.tbitI0,x,i*64);
-					//x=x-(Gdx.graphics.getDeltaTime()*20);
 					setAnimationInProcess(true);
-					//setloopIncrement(false);
 					}
 					else
 					{
 					game.batch.draw(game.tbitI0,loop*64,i*64);
 					game.BC.setBit("2", i, loop-1);
-					//setAnimationInProcess(false);
-					//setloopIncrement(true);
 					}
 					break;
 				case "01":
@@ -405,41 +270,32 @@ private boolean getAnimationInProcess()
 				case "10":
 					game.batch.draw(game.tbitI1,(loop-1)*64,i*64);
 					break;
-				case "20": case "21":
-					//setAnimationInProcess(false);
+				case "20": case "21": case "22":
 					break;
 				case "02": 
 					if (x< loop*64)
 					{
 					game.batch.draw(game.tbitI0,x,i*64);
-					//x=x-(Gdx.graphics.getDeltaTime()*20);
 					setAnimationInProcess(true);
-					//setloopIncrement(false);
 					}
 					else
 					{
 					game.batch.draw(game.tbitI0,loop*64,i*64);
 					game.BC.setBit("2", i, loop-1);
 					game.BC.setBit("0", i, loop);
-					//setAnimationInProcess(false);
-					//setloopIncrement(true);
 					}
 					break;
 				case "12":
 					if (x< loop*64)
 					{
 					game.batch.draw(game.tbitI1,x,i*64);
-					//x=x-(Gdx.graphics.getDeltaTime()*20);
 					setAnimationInProcess(true);
-					//setloopIncrement(false);
 					}
 					else
 					{
 					game.batch.draw(game.tbitI1,loop*64,i*64);
 					game.BC.setBit("2", i, loop-1);
 					game.BC.setBit("1", i, loop);
-					//setAnimationInProcess(false);
-					//setloopIncrement(true);
 					}
 					break;
 				case "11":
@@ -447,30 +303,17 @@ private boolean getAnimationInProcess()
 					{
 					game.batch.draw(game.tbitI0,(loop-1)*64,i*64);
 					game.batch.draw(game.tbitI1,x,i*64);
-					//x=x-(Gdx.graphics.getDeltaTime()*20);
 					setAnimationInProcess(true);
-					//setloopIncrement(false);
 					}
 					else
 					{
 					game.batch.draw(game.tbitI1,loop*64,i*64);
 					game.batch.draw(game.tbitI0,(loop-1)*64,i*64);
 					game.BC.setBit("0", i, loop-1);
-					//setAnimationInProcess(false);
-					//setloopIncrement(true);
 					}
-					//game.batch.draw(game.tbitI1,(loop+1)*64,i*64);
 					break;
-				case "22":
-					//setAnimationInProcess(false);
-					//it will never come now as handling in Fast animation screen.It will come :( handle it
-					System.out.println("FTW");
-					break; 
-					//game.BC.findNextBitCluster();
-					//find next bit cluster if any and fast animate the falling process
 				}
 			}
-			//x=x-(Gdx.graphics.getDeltaTime()*200);
 			x=x+delta*200;
 			game.batch.end();
 			}
@@ -481,13 +324,9 @@ private boolean getAnimationInProcess()
 					setloop(loop-1);
 					setX(loop-1);
 					setAnimationInProcess(true);
-					//animate=false;
 					}
 				else if (game.BP.isAnimaRequired(game.BC.getBitArray(),game.getGravity().toString()))  //correct here it is getting true always
 				{
-					//System.out.println(max);
-					//for(String ss:game.BC.getBitArray())
-					//System.out.println(ss);
 					setAnimationInProcess(true);
 					setloop(max);
 					setX(loop-1);
@@ -501,120 +340,256 @@ private boolean getAnimationInProcess()
 					
 			}
 		}
-		game.fpslog.log();
-	}
-		//game.setScreen(game.INS); 	
-/*		game.batch.begin();
-		x=x+((loop+1)*64);
 		
-		if (loop<max)
+		//write code for DOWN case game.getGravity()= Gravity.DOWN
+		// like LEFT, swap x and y coordinates
+		if(game.getGravity()== Gravity.DOWN)
 		{
-			
-			//drawing bits prior to loop bits excluding loop
+			System.out.println("down animation");
+			if(getAnimationInProcess())
+			{
+			setAnimationInProcess(false);
+			game.batch.begin();
+			//drawing bits prior to loop bits including loop
+			//drawing rows, not column
 			for (int i=0;i<=loop;i++)
 			{
-				for (int j=0;j<game.BC.getRow();j++)
+				for (int j=0;j<game.BC.getColumn();j++)
 				{
-					if(after[j].charAt(i)=='0')
-						game.batch.draw(game.tbitI0,i*64,j*64);
-					else if (after[j].charAt(i)=='1')
-						game.batch.draw(game.tbitI1,i*64,j*64);
+					if(game.BC.getBit(i,j)=='0')
+						game.batch.draw(game.tbitI0,j*64,i*64);
+					else if (game.BC.getBit(i,j)=='1')
+						game.batch.draw(game.tbitI1,j*64,i*64);
 				}
 			}
-			//drawing bits post loop bits excluding loop
-			for (int i=loop+2;i<max;i++)
+			//drawing bits post loop bits excluding loop, drawing rows
+			for (int i=loop+2;i<=max;i++)
 			{
-				for (int j=0;j<game.BC.getRow();j++)
+				for (int j=0;j<game.BC.getColumn();j++)
 				{
-					if(after[j].charAt(i)=='0')
-						game.batch.draw(game.tbitI0,i*64,j*64);
-					else if (after[j].charAt(i)=='1')
-						game.batch.draw(game.tbitI1,i*64,j*64);
+					if(game.BC.getBit(i,j)=='0')
+						game.batch.draw(game.tbitI0,j*64,i*64);
+					else if (game.BC.getBit(i,j)=='1')
+						game.batch.draw(game.tbitI1,j*64,i*64);
 				}
 			}
-			for(int i=0;i<game.BC.getRow();i++)
+			for(int i=0;i<game.BC.getColumn();i++)
 			{
-				switch(after[i].substring(loop, loop+2))
+				switch(game.BC.getBitCol(i,game.getGravity().toString()).substring(loop, loop+2))
 				{
 				case "00":
-					if (x>= loop*64)
+					if (y> loop*64)
 					{
-					game.batch.draw(game.tbitI0,x,i*64);
-					x=x-(Gdx.graphics.getDeltaTime()*20);
+					game.batch.draw(game.tbitI0,i*64,y);
+					setAnimationInProcess(true);
 					}
 					else
-					game.BC.setBit("2", i, loop+1);	
+					{
+					game.batch.draw(game.tbitI0,i*64,loop*64);	// i think this line is causing flicker
+					game.BC.setBit("2",loop+1,i);
+					}
+					break;
+				case "01":
+					game.batch.draw(game.tbitI1,i*64,(loop+1)*64);
+					break;
+				case "10":
+					game.batch.draw(game.tbitI0,i*64,(loop+1)*64);
+					break;
+				case "02": case "12": case "22":
 					break;
 				case "20": 
-					if (x>= loop*64)
+					if (y> loop*64)
 					{
-					game.batch.draw(game.tbitI0,x,i*64);
-					x=x-(Gdx.graphics.getDeltaTime()*20);
+					game.batch.draw(game.tbitI0,i*64,y);
+					setAnimationInProcess(true);
 					}
 					else
 					{
-					game.BC.setBit("2", i, loop+1);	
-					game.BC.setBit("0", i, loop);
+					game.batch.draw(game.tbitI0,i*64,loop*64);
+					game.BC.setBit("0", loop,i);
+					game.BC.setBit("2",loop+1,i);
 					}
 					break;
-				case"21": 
-				if(after[i].charAt(loop)=='0')
-					game.batch.draw(game.tbitI0,loop*64,i*64);
-				if(after[i].charAt(loop+1)=='0')
-					game.batch.draw(game.tbitI0,((loop+1)*64)-(Gdx.graphics.getDeltaTime()*20),i*64);
-				else if(after[i].charAt(loop+1)=='1')
-					game.batch.draw(game.tbitI1,((loop+1)*64)-(Gdx.graphics.getDeltaTime()*20),i*64);
-				break;
+				case "21":
+					if (y> loop*64)
+					{
+					game.batch.draw(game.tbitI1,i*64,y);
+					setAnimationInProcess(true);
+					}
+					else
+					{
+					game.batch.draw(game.tbitI1,i*64,loop*64);
+					game.BC.setBit("1",loop,i);
+					game.BC.setBit("2",loop+1,i);
+					}
+					break;
 				case "11":
-					x=((loop+1)*64)-(Gdx.graphics.getDeltaTime()*20);
-					game.batch.draw(game.tbitI1,loop*64,i*64);
-					if(x>loop*64)
+					if (y> loop*64)
 					{
-					game.batch.draw(game.tbitI1,x,i*64);
-					x=x-(Gdx.graphics.getDeltaTime()*20);
+					game.batch.draw(game.tbitI0,i*64,(loop+1)*64);
+					game.batch.draw(game.tbitI1,i*64,y);
+					setAnimationInProcess(true);
 					}
 					else
-					game.batch.draw(game.tbitI0,(loop+1)*64,i*64);
-					break;
-				default:
-					if(after[i].charAt(loop)=='0')
-						game.batch.draw(game.tbitI0,loop*64,i*64);
-					else if(after[i].charAt(loop)=='1')
-						game.batch.draw(game.tbitI1,loop*64,i*64);
-					if(after[i].charAt(loop+1)=='0')
-						game.batch.draw(game.tbitI0,(loop+1)*64,i*64);
-					else if(after[i].charAt(loop+1)=='1')
-						game.batch.draw(game.tbitI1,(loop+1)*64,i*64);
+					{
+					game.batch.draw(game.tbitI1,i*64,loop*64);
+					game.batch.draw(game.tbitI0,i*64,(loop+1)*64);
+					game.BC.setBit("0", loop+1,i);
+					}
 					break;
 				}
 			}
-			
-		}
-		else
-		game.setScreen(game.INS); */ //maybe
-		
-/*		for (int i=0; i < game.BC.getRow();i++)		//row i
-		{	
-			for (int j=0;j < game.BC.getColumn();j++)		//column j
-			//for (char c: bitA[i].)
+			y=y-delta*200;
+			game.batch.end();
+			}
+			else
 			{
-			if (before[i].charAt(j)=='0')
-				game.batch.draw(game.tbitI0,i*64,j*64);
-			else if(before[i].charAt(j)=='1')
-				game.batch.draw(game.tbitI1,i*64,j*64);
-				
+				if (loop<max-1)
+					{
+					setloop(loop+1);
+					setY(loop+1);
+					setAnimationInProcess(true);
+					}
+				else if (game.BP.isAnimaRequired(game.BC.getBitArray(),game.getGravity().toString()))
+				{
+					setAnimationInProcess(true);
+					setloop(0);
+					setY(loop+1);
+				}
+				else
+				{
+					game.setAnima(false);
+					game.setGravity(Gravity.ZERO);
+					game.setScreen(game.INS);
+				}		
 			}
 		}
-		// Now write animation here, record animation somewhere it will be easy
-		for (int c=0;c<change.length();c++)
+		//write code for UP case game.getGravity()= Gravity.UP
+		//just like RIGHT swap x and y coordinates
+		if(game.getGravity()== Gravity.UP)
 		{
-			if (after[c].charAt(change[c])==2 && )
-			game.batch.draw(game.tbitI0,(change[c]*64)-(20 * Gdx.graphics.getDeltaTime()),c*64);
-		}*/
-		//game.batch.end();
-		//write complex logic for animation :(	
-
-
+			System.out.println("up animation");
+			if(getAnimationInProcess())
+			{
+			setAnimationInProcess(false);
+			game.batch.begin();
+			//drawing bits prior to loop bits including loop
+			//drawing rows, not column
+			for (int i=loop;i<=max;i++)
+			{
+				for (int j=0;j<game.BC.getColumn();j++)
+				{
+					if(game.BC.getBit(i,j)=='0')
+						game.batch.draw(game.tbitI0,j*64,i*64);
+					else if (game.BC.getBit(i,j)=='1')
+						game.batch.draw(game.tbitI1,j*64,i*64);
+				}
+			}
+			//drawing bits post loop bits excluding loop, drawing rows
+			for (int i=loop-2;i>=0;i--)
+			{
+				for (int j=0;j<game.BC.getColumn();j++)
+				{
+					if(game.BC.getBit(i,j)=='0')
+						game.batch.draw(game.tbitI0,j*64,i*64);
+					else if (game.BC.getBit(i,j)=='1')
+						game.batch.draw(game.tbitI1,j*64,i*64);
+				}
+			}
+			for(int i=0;i<game.BC.getColumn();i++)
+			{
+				switch(game.BC.getBitCol(i,game.getGravity().toString()).substring(loop-1, loop+1))
+				{
+				case "00":
+					if (y < (loop)*64)
+					{
+					game.batch.draw(game.tbitI0,i*64,y);
+					setAnimationInProcess(true);
+					}
+					else
+					{
+					game.batch.draw(game.tbitI0,i*64,loop*64);
+					game.BC.setBit("2", loop-1, i);
+					}
+					break;
+				case "01":
+					game.batch.draw(game.tbitI0,i*64,(loop-1)*64);
+					break;
+				case "10":
+					game.batch.draw(game.tbitI1,i*64,(loop-1)*64);
+					break;
+				case "20": case "21": case"22":
+					break;
+				case "02": 
+					if (y< loop*64)
+					{
+					game.batch.draw(game.tbitI0,i*64,y);
+					setAnimationInProcess(true);
+					}
+					else
+					{
+					game.batch.draw(game.tbitI0,i*64,loop*64);
+					game.BC.setBit("2", loop-1, i);
+					game.BC.setBit("0", loop, i);
+					}
+					break;
+				case "12":
+					if (y< loop*64)
+					{
+					game.batch.draw(game.tbitI1,i*64,y);
+					setAnimationInProcess(true);
+					}
+					else
+					{
+					game.batch.draw(game.tbitI1,i*64,loop*64);
+					game.BC.setBit("2", loop-1, i);
+					game.BC.setBit("1", loop, i);
+					}
+					break;
+				case "11":
+					if (y< loop*64)
+					{
+					game.batch.draw(game.tbitI0,i*64,(loop-1)*64);
+					game.batch.draw(game.tbitI1,i*64,y);
+					setAnimationInProcess(true);
+					}
+					else
+					{
+					game.batch.draw(game.tbitI0,i*64,(loop-1)*64);
+					game.batch.draw(game.tbitI1,i*64,loop*64);
+					game.BC.setBit("0", loop-1, i);
+					}
+					break;
+				}
+			}
+			y=y+delta*200;
+			game.batch.end();
+			}
+			else
+			{
+				if (loop>1)
+					{
+					setloop(loop-1);
+					setY(loop-1);
+					setAnimationInProcess(true);
+					}
+				else if (game.BP.isAnimaRequired(game.BC.getBitArray(),game.getGravity().toString()))  //correct here it is getting true always
+				{
+					setAnimationInProcess(true);
+					setloop(max);
+					setY(loop-1);
+				}
+				else
+				{
+					game.setAnima(false);
+					game.setGravity(Gravity.ZERO);
+					game.setScreen(game.INS);
+				}		
+			}
+		}
+		
+		game.fpslog.log();
+	}
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
