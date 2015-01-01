@@ -1,39 +1,29 @@
-package com.gameScreens.games;
+package com.Gbits.Screens;
 
 public class BitContainer {
 
 	private static String [] BitA;
 	private static int row;			//rows
 	private static int col;			//columns
-	//private Texture tbitI0;
-	//private Texture tbitI1;
-	//private Texture tblank;
 	
 	BitContainer(int stage)
 	{
-		//loading texture : Loading in main game class now as it is reused by 2 screens
-		//tbitI0=new Texture(Gdx.files.internal("bit0.png"));	
-		//tbitI1=new Texture(Gdx.files.internal("bit1.png"));
-		//tblank=new Texture(Gdx.files.internal("blank.png"));
-		
 		//call stage
 		Stage(stage);
 	}
 	
-	private void Stage(int stageNo)
+	public void Stage(int stageNo)
 	{
 		switch (stageNo)
 		{
 		case 44:
 			row=4;
 			col=4;
-			//BitA=new String[row];
-			BitA=new String[]{"1011","1100","1011","1111"};
+			BitA=new String[]{"1101","1000","1011","1111"};
 			break;
 		case 55:
 			row=5;
 			col=5;
-			//BitA=new String[row];
 			BitA=new String[]{"10110","10100","10101","10111","11000"};
 			break;
 		}
@@ -75,13 +65,30 @@ public class BitContainer {
 	{
 		BitA[index]=seq;
 	}
-	/*public Texture getBitTexture(char c)
+	
+	public String getBitRow(int row)
 	{
-		if (c=='0')
-		return tbitI0;
-		else if (c=='1')
-		return tbitI1;
-		else
-		return null;
-	}*/
+		return BitA[row];
+	}
+	
+	public String getBitCol(int col, String g)
+	{
+		String bitC="";
+		for (int i=0;i<row;i++)
+		{
+			bitC=bitC+BitA[i].charAt(col);
+		}
+		return bitC;
+	}
+	
+	public char getBit(int row, int col)
+	{
+		return BitA[row].charAt(col);
+	}
+	public void setBit(String b, int row, int col)
+	{
+		StringBuilder sb=new StringBuilder(BitA[row]);
+		sb.replace(col, col+1,b);
+		BitA[row]=sb.toString();
+	}
 }
