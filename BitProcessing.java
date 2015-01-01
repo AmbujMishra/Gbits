@@ -1,4 +1,4 @@
-package com.gameScreens.games;
+package com.Gbits.Screens;
 
 /*@author ambuj mishra*/
 
@@ -10,7 +10,6 @@ public class BitProcessing {
 	public boolean checkSeq(String shiftseq, int blankcount)
 	{
 		String thisseq=shiftseq.substring(0,shiftseq.length()-blankcount);
-		//String pairSeq=thisSeq.substring(0, 2);
 		if (thisseq.equals(thiscodeSeq(thisseq)))
 			return true;
 		else
@@ -76,48 +75,6 @@ public class BitProcessing {
 		
 	}
 
-/*	public String singleStepProcess(String seq) 
-	{
-	
-			if (isShiftRequired(seq)) //now check for shift, isRequired?
-			{	registerShiftAnima();
-				return shiftblanks(seq);
-			}
-			else
-				return unitBitPairProcess(seq);
-	}*/
-	
-	private String unitBitPairProcess(String seq) {
-		
-		// logic for bit movement, write logic for bit crashing, from bottom to top,
-			StringBuilder sb= new StringBuilder(seq);
-			boolean changed=false;
-			int i=0;
-			while (!changed)
-			{
-				switch(sb.substring(i,i+2))
-				{
-				case "00":		
-					//replace with 02
-					sb.replace(i,i+2, "02");
-					changed=true;
-					break;
-				//case "01":case "10":
-					//do nothing
-					//break;
-				case "11":
-					// replace with 10
-					sb.replace(i, i+2, "10");
-					changed=true;
-					break;
-				default:
-					i=i+1;
-					break;	
-				}
-			}
-
-			return sb.toString();
-	}
 	// it will check only spaces in a seq only
 public boolean isShiftRequired(String seq) {
 		for (int i=0;i<seq.length()-countBlanks(seq);i++)
@@ -125,27 +82,8 @@ public boolean isShiftRequired(String seq) {
 			if (seq.charAt(i)=='2')
 				return true;
 			}
-		//System.out.println(seq);
 		return false;
 	}
-
-/*public boolean isAnimaRequired(String seq) {
-	for (int i=0;i<seq.length()-countBlanks(seq);i++)
-		{
-		if (seq.charAt(i)=='2')
-			return true;
-		}
-	for (int i=0;i<seq.length()-1;i++)
-	{
-		switch(seq.substring(i,i+2))
-		{
-		case "00": case "11": case "20": case "21":
-			return true;
-		}
-	}
-	//System.out.println(seq);
-	return false;
-}*/
 
 public boolean isAnimaRequired(String[] seqA, String g) {
 	
@@ -177,7 +115,6 @@ public boolean isAnimaRequired(String[] seqA, String g) {
 			if (seqA[j].charAt(i)=='2')
 				return true;
 			}
-		//for (int i=0;i<seqA[j].length()-1;i++)
 		for (int i=seqA[j].length();i>=2;i--)
 		{
 			switch(seqA[j].substring(i-2,i))
@@ -188,6 +125,56 @@ public boolean isAnimaRequired(String[] seqA, String g) {
 		}
 		}
 		break;
+	case "DOWN":
+		for (int j=0;j<seqA[0].length();j++)
+		{
+			String colSeq="";
+			for (int i=0;i<seqA.length;i++)
+			{
+				colSeq=colSeq+seqA[i].charAt(j);
+			}
+			
+			for (int i=0;i<colSeq.length()-countBlanks(colSeq);i++)
+			{
+			if (colSeq.charAt(i)=='2')
+				return true;
+			}
+			for (int i=0;i<colSeq.length()-1;i++)
+			{
+				switch(colSeq.substring(i,i+2))
+				{
+				case "00": case "11": case "20": case "21":
+					return true;
+				}
+			}
+		}
+	break;
+	case "UP":
+		for (int j=0;j<seqA[0].length();j++)
+		{
+			String colSeq="";
+			for (int i=seqA.length-1;i>=0;i--)
+			{
+				colSeq=colSeq+seqA[i].charAt(j);
+			}
+			
+			for (int i=0;i<colSeq.length()-countBlanks(colSeq);i++)
+			{
+			if (colSeq.charAt(i)=='2')
+				return true;
+			}
+			for (int i=0;i<colSeq.length()-1;i++)
+			{
+				switch(colSeq.substring(i,i+2))
+				{
+				case "00": case "11": case "20": case "21":
+					return true;
+				}
+			}
+		}
+	break;
+	case "ZERO":
+		return false;
 	}
 	return false;
 }
