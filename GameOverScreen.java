@@ -1,4 +1,4 @@
-package com.gameScreens.games;
+package com.Gbits.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -15,7 +15,6 @@ public class GameOverScreen implements Screen {
  
 	public GameOverScreen(GbitsGame gg) {
 		game = gg;
- 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 800, 480);
  
@@ -42,13 +41,12 @@ public class GameOverScreen implements Screen {
 		game.batch.end();
  
 		if (Gdx.input.isTouched()) {
-			//game.setScreen(new GameScreen(game));
+			//correct your camera to get rid of extra screen
+			game.BC.Stage(44);
 			game.setScreen(game.MMS);
 			//dispose();
 		}
 		if (Gdx.input.isKeyPressed(Keys.ENTER)) {
-			//game.setScreen(new GameScreen(game));
-			//game.dispose();
 			Gdx.app.exit();
 			
 		}
