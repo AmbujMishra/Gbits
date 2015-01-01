@@ -1,4 +1,4 @@
-package com.gameScreens.games;
+package com.Gbits.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -16,7 +16,7 @@ public class MainMenuScreen implements Screen{
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 800, 480);
 		//write a logic here to load the stage and initialize BitContainer class
-		game.BC=new BitContainer(44);
+		game.BC=new BitContainer(55);
  
 	}
  
@@ -34,9 +34,7 @@ public class MainMenuScreen implements Screen{
 		game.batch.end();
  
 		if (Gdx.input.isTouched()) {
-			//game.setScreen(new GameScreen(game));
 			game.setScreen(game.INS);
-			//dispose();
 		}
 		game.fpslog.log();
 	}
