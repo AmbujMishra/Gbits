@@ -1,29 +1,31 @@
 package com.Gbits.Screens;
 
-
+/*
+ *Ambuj Mishra
+ *1-1-2015 
+ */
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.Gbits.Screens.GbitsGame.Gravity;
 
 public class InputScreen implements Screen,InputProcessor{
 
 	GbitsGame game;
-	private OrthographicCamera camera;
 
 	public InputScreen(GbitsGame gg) {
 		game=gg;
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false,64*game.BC.getRow(), 64*game.BC.getColumn());
-	    camera.update();
+
 
 	}
 
 	@Override
 	public void show() {
+		game.camera.setToOrtho(false,64*game.BC.getRow(), 64*game.BC.getColumn());
+	    game.camera.update();
+	    
 		if (game.BC.getBitCount()==2)
 			game.setScreen(game.GOS);
 		
@@ -37,8 +39,8 @@ public class InputScreen implements Screen,InputProcessor{
 		//System.out.println("input screen");
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		game.batch.setProjectionMatrix(camera.combined);
-		camera.update();
+		game.batch.setProjectionMatrix(game.camera.combined);
+		game.camera.update();
 		
 		game.batch.begin();
 		for (int i=0; i < game.BC.getRow();i++)		//row i
@@ -81,7 +83,6 @@ public class InputScreen implements Screen,InputProcessor{
 	@Override
 	public void hide() {
 		 Gdx.input.setInputProcessor(null);
-		
 	}
 
 	@Override
