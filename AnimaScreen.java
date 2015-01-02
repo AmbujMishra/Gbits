@@ -1,18 +1,16 @@
 package com.Gbits.Screens;
 /*
  *Ambuj Mishra
- *2-1-2015 
+ *1-1-2015 
  */
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.Gbits.Screens.GbitsGame.Gravity;
 
 public class AnimaScreen implements Screen{
 
 	GbitsGame game;
-	private OrthographicCamera camera;
 	private float x,y;
 	int max;
 	private int loop=0;
@@ -20,9 +18,6 @@ public class AnimaScreen implements Screen{
 	
 	public AnimaScreen(GbitsGame gg) {
 		game=gg;
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false,64*game.BC.getRow(), 64*game.BC.getColumn());
-	    camera.update();
 	}
 	private void setloop(int l)
 	{
@@ -47,6 +42,9 @@ private boolean getAnimationInProcess()
 
 	@Override
 	public void show() {
+		game.camera.setToOrtho(false,64*game.BC.getRow(), 64*game.BC.getColumn());
+	    game.camera.update();
+	    
 		Gdx.input.setInputProcessor(null);
 		Gdx.graphics.setContinuousRendering(true);
 		System.out.println("animation screen show method");
@@ -95,8 +93,8 @@ private boolean getAnimationInProcess()
 		System.out.println("animation screen render");
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		game.batch.setProjectionMatrix(camera.combined);
-		camera.update();
+		game.batch.setProjectionMatrix(game.camera.combined);
+		game.camera.update();
 		if(game.getGravity()== Gravity.LEFT)
 		{
 			System.out.println("left animation");
