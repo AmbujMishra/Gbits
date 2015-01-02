@@ -1,11 +1,16 @@
 package com.Gbits.Screens;
-
+/*
+ *Ambuj Mishra
+ *1-1-2015 
+ */
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.FPSLogger;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.gameScreens.games.BitContainer;
 
 public class GbitsGame extends Game{
 	
@@ -36,7 +41,7 @@ public class GbitsGame extends Game{
 	public Texture tbitI0;
 	public Texture tbitI1;
 	public FPSLogger fpslog;
-	
+	public OrthographicCamera camera;
 	public void setGravity(Gravity g)
 	{
 		this.g=g;
@@ -55,6 +60,7 @@ public class GbitsGame extends Game{
 		return animate;
 	}
     public void create() {
+    	camera = new OrthographicCamera();
     	MMS =new MainMenuScreen(this);
     	INS=new InputScreen(this);
     	ANS =new AnimaScreen(this);
@@ -63,6 +69,7 @@ public class GbitsGame extends Game{
     	setGravity(Gravity.ZERO);
     	//initializing bit processing class
     	BP=new BitProcessing();
+    	BC=new BitContainer();
     	batch = new SpriteBatch();
         //Use LibGDX's default Arial font.
         font = new BitmapFont();
