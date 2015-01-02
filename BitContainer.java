@@ -1,21 +1,28 @@
 package com.Gbits.Screens;
-
+/*
+ *Ambuj Mishra
+ *1-1-2015 
+ */
 public class BitContainer {
 
 	private static String [] BitA;
 	private static int row;			//rows
 	private static int col;			//columns
 	
-	BitContainer(int stage)
-	{
-		//call stage
-		Stage(stage);
-	}
-	
 	public void Stage(int stageNo)
 	{
 		switch (stageNo)
 		{
+		case 22:
+			row=2;
+			col=2;
+			BitA=new String[]{"11","10"};
+			break;
+		case 33:
+			row=3;
+			col=3;
+			BitA=new String[]{"110","100","101"};
+			break;
 		case 44:
 			row=4;
 			col=4;
