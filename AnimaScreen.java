@@ -1,5 +1,8 @@
 package com.Gbits.Screens;
-
+/*
+ *Ambuj Mishra
+ *1-1-2015 
+ */
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -191,11 +194,27 @@ private boolean getAnimationInProcess()
 				break;
 			}
 		}
-		x=x-delta*200;
+		x=x-delta*500;
 		game.batch.end();
 		}
 		else
 		{
+			//drawing all bits once again to fix flicker of screen
+			// As nothing was being drawn in this loop
+			game.batch.begin();
+			for (int i=0;i<game.BC.getColumn();i++)
+			{
+				for (int j=0;j<game.BC.getRow();j++)
+				{
+					//if(game.BC.getBitRow(j).charAt(i)=='0')
+					if(game.BC.getBit(j,i)=='0')
+						game.batch.draw(game.tbitI0,i*64,j*64);
+					//else if (game.BC.getBitRow(j).charAt(i)=='1')
+					else if (game.BC.getBit(j,i)=='1')
+						game.batch.draw(game.tbitI1,i*64,j*64);
+				}
+			}
+			game.batch.end();
 			if (loop<max-1)
 				{
 				setloop(loop+1);
@@ -314,11 +333,28 @@ private boolean getAnimationInProcess()
 					break;
 				}
 			}
-			x=x+delta*200;
+			x=x+delta*500;
 			game.batch.end();
 			}
 			else
 			{
+				//drawing all bits once again to fix flicker of screen
+				// As nothing was being drawn in this loop
+				game.batch.begin();
+				for (int i=0;i<game.BC.getColumn();i++)
+				{
+					for (int j=0;j<game.BC.getRow();j++)
+					{
+						//if(game.BC.getBitRow(j).charAt(i)=='0')
+						if(game.BC.getBit(j,i)=='0')
+							game.batch.draw(game.tbitI0,i*64,j*64);
+						//else if (game.BC.getBitRow(j).charAt(i)=='1')
+						else if (game.BC.getBit(j,i)=='1')
+							game.batch.draw(game.tbitI1,i*64,j*64);
+					}
+				}
+				game.batch.end();
+				
 				if (loop>1)
 					{
 					setloop(loop-1);
@@ -439,11 +475,28 @@ private boolean getAnimationInProcess()
 					break;
 				}
 			}
-			y=y-delta*200;
+			y=y-delta*500;
 			game.batch.end();
 			}
 			else
 			{
+				//drawing all bits once again to fix flicker of screen
+				// As nothing was being drawn in this loop
+				game.batch.begin();
+				for (int i=0;i<game.BC.getColumn();i++)
+				{
+					for (int j=0;j<game.BC.getRow();j++)
+					{
+						//if(game.BC.getBitRow(j).charAt(i)=='0')
+						if(game.BC.getBit(j,i)=='0')
+							game.batch.draw(game.tbitI0,i*64,j*64);
+						//else if (game.BC.getBitRow(j).charAt(i)=='1')
+						else if (game.BC.getBit(j,i)=='1')
+							game.batch.draw(game.tbitI1,i*64,j*64);
+					}
+				}
+				game.batch.end();
+				
 				if (loop<max-1)
 					{
 					setloop(loop+1);
@@ -562,11 +615,28 @@ private boolean getAnimationInProcess()
 					break;
 				}
 			}
-			y=y+delta*200;
+			y=y+delta*500;
 			game.batch.end();
 			}
 			else
 			{
+				//drawing all bits once again to fix flicker of screen
+				// As nothing was being drawn in this loop
+				game.batch.begin();
+				for (int i=0;i<game.BC.getColumn();i++)
+				{
+					for (int j=0;j<game.BC.getRow();j++)
+					{
+						//if(game.BC.getBitRow(j).charAt(i)=='0')
+						if(game.BC.getBit(j,i)=='0')
+							game.batch.draw(game.tbitI0,i*64,j*64);
+						//else if (game.BC.getBitRow(j).charAt(i)=='1')
+						else if (game.BC.getBit(j,i)=='1')
+							game.batch.draw(game.tbitI1,i*64,j*64);
+					}
+				}
+				game.batch.end();
+				
 				if (loop>1)
 					{
 					setloop(loop-1);
