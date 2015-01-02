@@ -14,7 +14,7 @@ import com.Gbits.Screens.GbitsGame.Gravity;
 public class InputScreen implements Screen,InputProcessor{
 
 	GbitsGame game;
-
+	private int tx,ty;
 	public InputScreen(GbitsGame gg) {
 		game=gg;
 
@@ -130,7 +130,8 @@ public class InputScreen implements Screen,InputProcessor{
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
+		tx=screenX;
+		ty=screenY;
 		return false;
 	}
 
@@ -142,8 +143,27 @@ public class InputScreen implements Screen,InputProcessor{
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// TODO Auto-generated method stub
-		return false;
+		if (screenX-tx > 0 && screenY-ty < screenX-tx)
+		{	//right
+			game.setGravity(Gravity.RIGHT);
+			game.setAnima(true);
+		}
+		if (tx-screenX >0 && tx-screenX> ty-screenY )
+			{	//left
+			game.setGravity(Gravity.LEFT);
+			game.setAnima(true);
+			}
+		if(screenY-ty>0 && screenY-ty >screenX-tx)
+		{	//down
+			game.setGravity(Gravity.DOWN);
+			game.setAnima(true);			
+		}
+		if(ty-screenY>0 && ty-screenY > tx-screenX)
+		{	//up
+			game.setGravity(Gravity.UP);
+			game.setAnima(true);
+		}
+		return true;
 	}
 
 	@Override
