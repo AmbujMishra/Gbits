@@ -1,41 +1,59 @@
 package com.Gbits.Screens;
-
+/*
+ *Ambuj Mishra
+ *1-1-2015 
+ */
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
  
 public class MainMenuScreen implements Screen{
  
 	GbitsGame game;
-	OrthographicCamera camera;
 
 	public MainMenuScreen(GbitsGame gg) {
 		game = gg;
- 
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 800, 480);
-		//write a logic here to load the stage and initialize BitContainer class
-		game.BC=new BitContainer(55);
- 
 	}
  
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0.2f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
- 
-		camera.update();
-		game.batch.setProjectionMatrix(camera.combined);
+		game.batch.setProjectionMatrix(game.camera.combined);
+		game.camera.update();
  
 		game.batch.begin();
 		game.font.draw(game.batch, "Welcome to Gbits!!! ", 100, 400);
 		game.font.draw(game.batch, "Tap anywhere to begin!", 100, 350);
+		game.font.draw(game.batch, "Press 2,3,4 or 5 to set stage", 100, 200);
 		game.batch.end();
  
 		if (Gdx.input.isTouched()) {
+			game.BC.Stage(22);
 			game.setScreen(game.INS);
 		}
+		if(Gdx.input.isKeyPressed(Keys.NUM_2))
+		{
+			game.BC.Stage(22);
+			game.setScreen(game.INS);
+		}
+		if(Gdx.input.isKeyPressed(Keys.NUM_3))
+		{
+			game.BC.Stage(33);
+			game.setScreen(game.INS);
+		}
+		if(Gdx.input.isKeyPressed(Keys.NUM_4))
+		{
+			game.BC.Stage(44);
+			game.setScreen(game.INS);
+		}
+		if(Gdx.input.isKeyPressed(Keys.NUM_5))
+		{
+			game.BC.Stage(55);
+			game.setScreen(game.INS);
+		}
+		game.fpslog.log();
 		game.fpslog.log();
 	}
  
@@ -45,10 +63,14 @@ public class MainMenuScreen implements Screen{
  
 	@Override
 	public void show() {
+		game.camera.setToOrtho(false, 800, 480);
+		game.camera.update();
+		Gdx.graphics.setContinuousRendering(false);
 	}
  
 	@Override
 	public void hide() {
+		Gdx.input.setInputProcessor(null);
 	}
  
 	@Override
