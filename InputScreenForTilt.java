@@ -1,10 +1,10 @@
-package com.gameScreens.games;
+package com.Gbits.Screens;
 
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.gameScreens.games.GbitsGame.Gravity;
+import com.Gbits.Screens.GbitsGame.Gravity;
 
 public class InputScreenForTilt implements Screen{
 
