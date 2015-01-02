@@ -1,28 +1,27 @@
 package com.Gbits.Screens;
-
+/*
+ *Ambuj Mishra
+ *1-1-2015 
+ */
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 
 
 public class GameOverScreen implements Screen {
 
 	GbitsGame game;
 	 
-	OrthographicCamera camera;
- 
 	public GameOverScreen(GbitsGame gg) {
 		game = gg;
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 800, 480);
  
 	}
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
+		game.camera.setToOrtho(false, 800, 480);
+		Gdx.graphics.setContinuousRendering(false);
 		
 	}
 
@@ -30,9 +29,8 @@ public class GameOverScreen implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0.2f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
- 
-		camera.update();
-		game.batch.setProjectionMatrix(camera.combined);
+		game.batch.setProjectionMatrix(game.camera.combined);
+		game.camera.update();
  
 		game.batch.begin();
 		game.font.draw(game.batch, "Game Over!!! ", 100, 400);
@@ -41,10 +39,7 @@ public class GameOverScreen implements Screen {
 		game.batch.end();
  
 		if (Gdx.input.isTouched()) {
-			//correct your camera to get rid of extra screen
-			game.BC.Stage(44);
 			game.setScreen(game.MMS);
-			//dispose();
 		}
 		if (Gdx.input.isKeyPressed(Keys.ENTER)) {
 			Gdx.app.exit();
@@ -73,7 +68,7 @@ public class GameOverScreen implements Screen {
 
 	@Override
 	public void hide() {
-		// TODO Auto-generated method stub
+		Gdx.input.setInputProcessor(null);
 		
 	}
 
