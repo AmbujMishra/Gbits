@@ -38,14 +38,14 @@ public class GameOverScreen implements Screen {
 		game.font.draw(game.batch, "Hit Enter to exit Game!", 100, 300);
 		game.batch.end();
  
-		if (Gdx.input.isTouched()) {
+		if (Gdx.input.justTouched()) {
 			game.setScreen(game.MMS);
 		}
 		if (Gdx.input.isKeyPressed(Keys.ENTER)) {
 			Gdx.app.exit();
 			
 		}
-		game.fpslog.log();
+		//game.fpslog.log();
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class GameOverScreen implements Screen {
 
 	@Override
 	public void hide() {
-		Gdx.input.setInputProcessor(null);
+		//Gdx.input.setInputProcessor(null);
 		
 	}
 
