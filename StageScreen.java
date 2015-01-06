@@ -1,5 +1,8 @@
 package com.Gbits.Screens;
-
+/*
+ *Ambuj Mishra
+ *6-1-2015 
+ */
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -30,10 +33,12 @@ public class StageScreen implements Screen{
 		game.batch.draw(game.tstage,0,0);
 		game.batch.end();
 		
-		if (Gdx.input.isTouched()) {
+		if (Gdx.input.justTouched()) {
 			int row=Gdx.input.getY()/(Gdx.graphics.getHeight()/5)+1;
 			int col=(Gdx.input.getX()/(Gdx.graphics.getWidth()/5))+1;
 			game.BC.Stage(row*10+col);
+			for (int i=0;i<game.BC.getRow();i++)
+			    System.out.println(game.BC.getBitRow(i));
 			//System.out.println(Gdx.input.getX()+","+Gdx.input.getY());
 			//System.out.println(row);
 			//System.out.println(col);
