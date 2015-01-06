@@ -29,7 +29,7 @@ public class MainMenuScreen implements Screen{
 		//game.font.draw(game.batch, "Press 2,3,4 or 5 to set stage", 100, 200);
 		game.batch.end();
  
-		if (Gdx.input.isTouched()) {
+		if (Gdx.input.justTouched()) {
 			//System.out.println("touched");
 			/*game.BC.Stage(22);
 		    for (int i=0;i<game.BC.getRow();i++)
