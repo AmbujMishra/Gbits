@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.gameScreens.games.BitContainer;
+import com.Gbits.Screens.BitContainer;
 
 public class GbitsGame extends Game{
 	
@@ -25,12 +25,13 @@ public class GbitsGame extends Game{
 	}
 
 	//Animation flag, Responsible for calling Animation screen
-	private boolean animate=false;
+	private boolean animate;
 	//Screens, Main Menu, Input Handler, Animation, Game over respectively
 	MainMenuScreen MMS;
 	InputScreen INS;
 	AnimaScreen ANS;
 	GameOverScreen GOS;
+	StageScreen STS;
 
 	BitContainer BC;
 	BitProcessing BP;
@@ -40,6 +41,7 @@ public class GbitsGame extends Game{
     public BitmapFont font;
 	public Texture tbitI0;
 	public Texture tbitI1;
+	public Texture tstage;
 	public FPSLogger fpslog;
 	public OrthographicCamera camera;
 	public void setGravity(Gravity g)
@@ -61,12 +63,15 @@ public class GbitsGame extends Game{
 	}
     public void create() {
     	camera = new OrthographicCamera();
+    	STS=new StageScreen(this);
     	MMS =new MainMenuScreen(this);
     	INS=new InputScreen(this);
     	ANS =new AnimaScreen(this);
     	GOS= new GameOverScreen(this);
+
     	//initializing gravity with ZERO
     	setGravity(Gravity.ZERO);
+    	setAnima(false);
     	//initializing bit processing class
     	BP=new BitProcessing();
     	BC=new BitContainer();
@@ -76,6 +81,7 @@ public class GbitsGame extends Game{
         //loading texture
       	tbitI0=new Texture(Gdx.files.internal("bit0.png"));	
       	tbitI1=new Texture(Gdx.files.internal("bit1.png"));
+      	tstage= new Texture(Gdx.files.internal("stage1.png"));
       	fpslog=new FPSLogger();
         setScreen(MMS);
     }
@@ -89,10 +95,12 @@ public class GbitsGame extends Game{
         font.dispose();
         tbitI0.dispose();
         tbitI1.dispose();
+        tstage.dispose();
         MMS.dispose();
         INS.dispose();
         ANS.dispose();
         GOS.dispose();
+        STS.dispose();
 		Gdx.app.exit();
     }
 }
