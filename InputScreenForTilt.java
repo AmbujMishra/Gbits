@@ -18,7 +18,7 @@ public class InputScreenForTilt implements Screen{
 
 	@Override
 	public void show() {
-		game.camera.setToOrtho(false,64*game.BC.getRow(), 64*game.BC.getColumn());
+		game.camera.setToOrtho(false,64*game.BC.getColumn(), 64*game.BC.getRow());
 	    game.camera.update();
 		
 	    if (game.BC.getBitCount()==2)
