@@ -11,29 +11,103 @@ public class BitContainer {
 	
 	public void Stage(int stageNo)
 	{
-		switch (stageNo)
+		
+		row=stageNo/10;
+		col=stageNo%10;
+		
+		BitA=new String[row];
+		
+		String rowS="1";
+		for (int i=1;i<col;i++)
+			rowS=rowS+"1";
+		for (int i=0;i<row;i++)
 		{
+			BitA[i]=rowS;
+		}
+		
+		/*switch (stageNo)
+		{
+		case 11:
+			row=1;
+			col=1;
+			BitA=new String[]{"1"};
+			break;
+		case 12:
+			row=1;
+			col=2;
+			BitA=new String[]{"11"};
+			break;
+		case 13:
+			row=1;
+			col=3;
+			BitA=new String[]{"111"};
+			break;
+		case 14:
+			row=1;
+			col=4;
+			BitA=new String[]{"1111"};
+			break;
+		case 15:
+			row=1;
+			col=4;
+			BitA=new String[]{"11111"};
+			break;
+		case 21:
+			row=2;
+			col=1;
+			BitA=new String[]{"1","1"};
+			break;
 		case 22:
 			row=2;
 			col=2;
-			BitA=new String[]{"11","10"};
+			BitA=new String[]{"11","11"};
+			break;
+		case 23:
+			row=2;
+			col=3;
+			BitA=new String[]{"111","111"};
+			break;
+		case 24:
+			row=2;
+			col=4;
+			BitA=new String[]{"1111","1111"};
+			break;
+		case 25:
+			row=2;
+			col=5;
+			BitA=new String[]{"11111","11111"};
+			break;
+		case 31:
+			row=3;
+			col=1;
+			BitA=new String[]{"1","1","1"};
+			break;
+		case 32:
+			row=3;
+			col=2;
+			BitA=new String[]{"11","11","11"};
 			break;
 		case 33:
 			row=3;
 			col=3;
-			BitA=new String[]{"110","100","101"};
+			BitA=new String[]{"111","111","111"};
 			break;
 		case 44:
 			row=4;
 			col=4;
 			BitA=new String[]{"1101","1000","1011","1111"};
 			break;
+		case 43:
+			row=4;
+			col=3;
+			BitA=new String[]{"110","100","101","111"};
+			break;
 		case 55:
 			row=5;
 			col=5;
 			BitA=new String[]{"10110","10100","10101","10111","11000"};
 			break;
-		}
+		}*/
 			
 	}
 	
