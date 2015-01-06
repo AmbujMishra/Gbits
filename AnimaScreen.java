@@ -47,7 +47,8 @@ private boolean getAnimationInProcess()
 	    
 		Gdx.input.setInputProcessor(null);
 		Gdx.graphics.setContinuousRendering(true);
-		System.out.println("animation screen show method");
+		//System.out.println("animation screen show method");
+		System.out.print(game.getGravity()+"|");
 		if(game.BP.isAnimaRequired(game.BC.getBitArray(),game.getGravity().toString()))
 		{
 			switch(game.getGravity())
@@ -81,7 +82,7 @@ private boolean getAnimationInProcess()
 		}
 		else
 		{
-			System.out.println("Animation is not required");
+			//System.out.println("Animation is not required");
 			game.setAnima(false);
 			game.setGravity(Gravity.ZERO);
 			game.setScreen(game.INS);
@@ -90,14 +91,14 @@ private boolean getAnimationInProcess()
 
 	@Override
 	public void render(float delta) {
-		System.out.println("animation screen render");
+		//System.out.println("animation screen render");
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		game.batch.setProjectionMatrix(game.camera.combined);
 		game.camera.update();
 		if(game.getGravity()== Gravity.LEFT)
 		{
-			System.out.println("left animation");
+			//System.out.println("left animation");
 		if(getAnimationInProcess())
 		{
 		setAnimationInProcess(false);
@@ -237,7 +238,7 @@ private boolean getAnimationInProcess()
 		//write code for RIGHT case game.getGravity()= Gravity.RIGHT
 		if(game.getGravity()== Gravity.RIGHT)
 		{
-			System.out.println("right animation");
+			//System.out.println("right animation");
 			if(getAnimationInProcess())
 			{
 			setAnimationInProcess(false);
@@ -379,7 +380,7 @@ private boolean getAnimationInProcess()
 		// like LEFT, swap x and y coordinates
 		if(game.getGravity()== Gravity.DOWN)
 		{
-			System.out.println("down animation");
+			//System.out.println("down animation");
 			if(getAnimationInProcess())
 			{
 			setAnimationInProcess(false);
@@ -519,7 +520,7 @@ private boolean getAnimationInProcess()
 		//just like RIGHT swap x and y coordinates
 		if(game.getGravity()== Gravity.UP)
 		{
-			System.out.println("up animation");
+			//System.out.println("up animation");
 			if(getAnimationInProcess())
 			{
 			setAnimationInProcess(false);
@@ -656,7 +657,7 @@ private boolean getAnimationInProcess()
 			}
 		}
 		
-		game.fpslog.log();
+		//game.fpslog.log();
 	}
 	@Override
 	public void resize(int width, int height) {
@@ -678,7 +679,7 @@ private boolean getAnimationInProcess()
 
 	@Override
 	public void hide() {
-		//Gdx.input.setInputProcessor(null);
+		Gdx.input.setInputProcessor(null);
 		
 	}
 
