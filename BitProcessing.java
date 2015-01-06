@@ -1,8 +1,9 @@
 package com.Gbits.Screens;
 
-/*@author ambuj mishra*/
-
-
+/*
+ *Ambuj Mishra
+ *1-1-2015 
+ */
 public class BitProcessing {
 	
 
