@@ -25,11 +25,13 @@ public class InputScreen implements Screen,InputProcessor{
 	public void show() {
 		game.camera.setToOrtho(false,64*game.BC.getColumn(), 64*game.BC.getRow());
 	    game.camera.update();
-	    
 		if (game.BC.getBitCount()==2)
+		{
+			System.out.println("gameover");
 			game.setScreen(game.GOS);
+		}
 		
-	Gdx.input.setInputProcessor(this);
+	//Gdx.input.setInputProcessor(this);
     Gdx.graphics.setContinuousRendering(false);
     Gdx.graphics.requestRendering();
 	}
@@ -57,9 +59,17 @@ public class InputScreen implements Screen,InputProcessor{
 		
 		if (game.getAnima())
 		{
+			//System.out.println("Input screen flag:"+game.getAnima());
 			game.setScreen(game.ANS);
 		}
-		game.fpslog.log();
+		if (Gdx.input.justTouched())
+		{
+			Gdx.input.setInputProcessor(this);
+			tx=Gdx.input.getX();
+			ty=Gdx.input.getY();
+		}
+		//Gdx.input.setInputProcessor(this);
+		//game.fpslog.log();
 	}
 
 	@Override
@@ -82,7 +92,8 @@ public class InputScreen implements Screen,InputProcessor{
 
 	@Override
 	public void hide() {
-		 Gdx.input.setInputProcessor(null);
+		 //System.out.println("hide input screen");
+		Gdx.input.setInputProcessor(null);
 	}
 
 	@Override
@@ -130,8 +141,8 @@ public class InputScreen implements Screen,InputProcessor{
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		tx=screenX;
-		ty=screenY;
+		//tx=screenX;
+		//ty=screenY;
 		return false;
 	}
 
@@ -143,25 +154,33 @@ public class InputScreen implements Screen,InputProcessor{
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		if (screenX-tx > 0 && screenY-ty < screenX-tx)
+		if (screenX-tx > 10 && screenY-ty < screenX-tx)
 		{	//right
 			game.setGravity(Gravity.RIGHT);
 			game.setAnima(true);
+			//tx=screenX;
+			//ty=screenY;
 		}
-		if (tx-screenX >0 && tx-screenX> ty-screenY )
+		if (tx-screenX >10 && tx-screenX> ty-screenY )
 			{	//left
 			game.setGravity(Gravity.LEFT);
 			game.setAnima(true);
+			//tx=screenX;
+			//ty=screenY;
 			}
-		if(screenY-ty>0 && screenY-ty >screenX-tx)
+		if(screenY-ty>10 && screenY-ty >screenX-tx)
 		{	//down
 			game.setGravity(Gravity.DOWN);
-			game.setAnima(true);			
+			game.setAnima(true);	
+			//tx=screenX;
+			//ty=screenY;
 		}
-		if(ty-screenY>0 && ty-screenY > tx-screenX)
+		if(ty-screenY>10 && ty-screenY > tx-screenX)
 		{	//up
 			game.setGravity(Gravity.UP);
 			game.setAnima(true);
+			//tx=screenX;
+			//ty=screenY;
 		}
 		return true;
 	}
