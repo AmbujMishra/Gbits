@@ -20,7 +20,8 @@ public class InputScreen implements Screen,InputProcessor{
 
 
 	}
-public boolean gameOver()
+
+	public boolean gameOver()
 	{
 	    if (game.BC.getBitCount()==(game.BC.getRow()+game.BC.getColumn()-1))
 	    	{
@@ -81,7 +82,7 @@ public boolean gameOver()
 	public void show() {
 		game.camera.setToOrtho(false,64*game.BC.getColumn(), 64*game.BC.getRow());
 	    game.camera.update();
-		//Game over mechanism , watch gameOver method
+	    //Game over mechanism , watch gameOver method
 		if (game.BC.getBitCount()<=2)
 		{
 			System.out.println("winner");
