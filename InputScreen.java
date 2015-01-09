@@ -20,17 +20,80 @@ public class InputScreen implements Screen,InputProcessor{
 
 
 	}
-
+public boolean gameOver()
+	{
+	    if (game.BC.getBitCount()==(game.BC.getRow()+game.BC.getColumn()-1))
+	    	{
+	    	//botleft, botright, rightup, leftup
+	    	/*
+	    	 * 3	2
+	    	 * 0	1
+	    	 */
+	    	char cornerbits[]=new char[]{game.BC.getBit(0,0),game.BC.getBit(0,game.BC.getColumn()-1),game.BC.getBit(game.BC.getRow()-1,game.BC.getColumn()-1),game.BC.getBit(game.BC.getRow()-1,0)};
+	    	//convert into string and fix
+	    	String cb=new String(cornerbits);
+	    	System.out.println(cb);
+	    	if(game.BP.countBlanks(cb)==1)
+	    	{
+	    		int i=0;
+	    		while(cb.charAt(i)!='2')
+	    		{
+	    			i=i+1;
+	    		}
+	    		System.out.println(i);
+	    		switch(i)
+	    		{
+	    		case 0:
+	    			if(cb.charAt(2)==cb.charAt(1)&&cb.charAt(2)==cb.charAt(3) && game.BP.checkSeq(game.BC.getBitRow(game.BC.getRow()-1),0) && game.BP.checkSeq(game.BC.getBitCol(game.BC.getColumn()-1,"DOWN"),0))
+	    			{
+	    				return true;
+	    			}
+	    			else 
+	    				break;
+	    		case 1:
+	    			if(cb.charAt(3)==cb.charAt(2)&&cb.charAt(3)==cb.charAt(0) && game.BP.checkSeq(game.BC.getBitRow(game.BC.getRow()-1),0) && game.BP.checkSeq(game.BC.getBitCol(0,"UP"),0))
+	    			{
+	    				return true;
+	    			}
+	    			else 
+	    				break;
+	    		case 2:
+	    			if(cb.charAt(0)==cb.charAt(3)&&cb.charAt(0)==cb.charAt(1) && game.BP.checkSeq(game.BC.getBitRow(0),0) && game.BP.checkSeq(game.BC.getBitCol(0,"LEFT"),0))
+	    			{
+	    				return true;
+	    			}
+	    			else 
+	    				return false;
+	    		case 3:
+	    			if(cb.charAt(1)==cb.charAt(2)&&cb.charAt(1)==cb.charAt(0) && game.BP.checkSeq(game.BC.getBitRow(0),0) && game.BP.checkSeq(game.BC.getBitCol(game.BC.getColumn()-1,"RIGHT"),0))
+	    			{
+	    				return true;
+	    			}
+	    			else 
+	    				break;
+	    		}
+	    		
+	    	}
+	    	}
+		return false;
+	}
 	@Override
 	public void show() {
 		game.camera.setToOrtho(false,64*game.BC.getColumn(), 64*game.BC.getRow());
 	    game.camera.update();
-		if (game.BC.getBitCount()==2)
+		//Game over mechanism , watch gameOver method
+		if (game.BC.getBitCount()<=2)
 		{
-			System.out.println("gameover");
+			System.out.println("winner");
+			// show winner screen here
 			game.setScreen(game.GOS);
 		}
-		
+		if(gameOver())
+		{
+			System.out.println("looser");
+			// show game over screen here
+			game.setScreen(game.GOS);
+		}
 	//Gdx.input.setInputProcessor(this);
     Gdx.graphics.setContinuousRendering(false);
     Gdx.graphics.requestRendering();
