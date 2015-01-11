@@ -36,7 +36,8 @@ public class GbitsGame extends Game{
 	BitContainer BC;
 	BitProcessing BP;
 	
-	private Gravity g;
+	private Gravity g=Gravity.ZERO;
+	private Gravity pg;		//previous gravity
 	public SpriteBatch batch;
     public BitmapFont font;
 	public Texture tbitI0;
@@ -46,12 +47,18 @@ public class GbitsGame extends Game{
 	public OrthographicCamera camera;
 	public void setGravity(Gravity g)
 	{
+		this.pg=getGravity();
 		this.g=g;
 	}
 	
 	public Gravity getGravity()
 	{
 		return g;
+	}
+	//11 JAN 2015	getting garivity previously set
+	public Gravity getPreviousGravity()
+	{
+		return pg;
 	}
 	public void setAnima(boolean a)
 	{
@@ -68,7 +75,6 @@ public class GbitsGame extends Game{
     	INS=new InputScreen(this);
     	ANS =new AnimaScreen(this);
     	GOS= new GameOverScreen(this);
-
     	//initializing gravity with ZERO
     	setGravity(Gravity.ZERO);
     	setAnima(false);
@@ -79,9 +85,9 @@ public class GbitsGame extends Game{
         //Use LibGDX's default Arial font.
         font = new BitmapFont();
         //loading texture
-      	tbitI0=new Texture(Gdx.files.internal("bit0.png"));	
-      	tbitI1=new Texture(Gdx.files.internal("bit1.png"));
-      	tstage= new Texture(Gdx.files.internal("stage1.png"));
+      	tbitI0=new Texture(Gdx.files.internal("bit0.jpg"));	
+      	tbitI1=new Texture(Gdx.files.internal("bit1.jpg"));
+      	tstage= new Texture(Gdx.files.internal("stage1.jpg"));
       	fpslog=new FPSLogger();
         setScreen(MMS);
     }
