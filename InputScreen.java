@@ -31,8 +31,16 @@ public class InputScreen implements Screen,InputProcessor{
     	 * 3	2
     	 * 0	1
     	 */
-		if(game.BP.countBlanks(cb)==3)
+		if(game.BP.countBlanks(cb)==3 ||game.BP.countBlanks(cb)==2)
 		{
+			for (int i=1;i<game.BC.getRow()-1;i++)		//rows
+			{
+				for(int j=1;j<game.BC.getColumn()-1;j++)	//columns
+				{
+					if (game.BC.getBit(i, j)!='2')
+						return false;
+				}
+			}
 			int i=0;
     		while(cb.charAt(i)=='2')
     		{
@@ -41,10 +49,63 @@ public class InputScreen implements Screen,InputProcessor{
     		switch(i)
     		{
     		case 0:
-    		
+    			String row0=game.BC.getBitRow(0);
+    			String col0=game.BC.getBitCol(0, "LEFT");
+    			if (game.BP.getNonBlanks(row0)>1)
+    			{
+    				if(game.BP.checkSeq(row0, game.BP.countBlanks(row0)))
+						return true;
+    			}
+    			else if(game.BP.checkSeq(col0, game.BP.countBlanks(col0)))
+						return true;
+    			
+/*    			if (game.getPreviousGravity()==Gravity.DOWN)
+    			{
+    				if(game.BP.checkSeq(game.BC.getBitRow(0), game.BP.countBlanks(game.BC.getBitRow(0))))
+    						return true;
+    			}
+    			if (game.getPreviousGravity()==Gravity.LEFT)
+    			{
+    				if(game.BP.checkSeq(game.BC.getBitCol(0, "LEFT"), game.BP.countBlanks(game.BC.getBitCol(0, "LEFT"))))
+						return true;
+    			}*/
+    		break;
     		case 1:
+    			String row1=game.BC.getBitRow(0);
+    			String col1=game.BC.getBitCol(game.BC.getColumn()-1, "RIGHT");
+    			if (game.BP.getNonBlanks(row1)>1)
+    			{
+    				if(game.BP.checkSeq(game.BP.shiftblanks(row1), game.BP.countBlanks(row1)))
+						return true;
+    			}
+    			else if(game.BP.checkSeq(col1, game.BP.countBlanks(col1)))
+						return true;
+   
+    			break;
     		case 2:
+    			String row2=game.BC.getBitRow(game.BC.getRow()-1);
+    			String col2=game.BC.getBitCol(game.BC.getColumn()-1, "RIGHT");
+    			if (game.BP.getNonBlanks(row2)>1)
+    			{
+    				if(game.BP.checkSeq(game.BP.shiftblanks(row2), game.BP.countBlanks(row2)))
+						return true;
+    			}
+    			else if(game.BP.checkSeq(game.BP.shiftblanks(col2), game.BP.countBlanks(col2)))
+						return true;
+   
+    			break;
     		case 3:
+    			String row3=game.BC.getBitRow(game.BC.getRow()-1);
+    			String col3=game.BC.getBitCol(0, "RIGHT");
+    			if (game.BP.getNonBlanks(row3)>1)
+    			{
+    				if(game.BP.checkSeq(row3, game.BP.countBlanks(row3)))
+						return true;
+    			}
+    			else if(game.BP.checkSeq(game.BP.shiftblanks(col3), game.BP.countBlanks(col3)))
+						return true;
+   
+    			break;
     		}
 		}
 		if (game.BC.getBitCount()<=(game.BC.getRow()+game.BC.getColumn()-1) && game.BC.getBitCount()>4)
