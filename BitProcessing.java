@@ -19,6 +19,18 @@ public class BitProcessing {
 		}
 		return s;
 	}
+	//11 JAN 2015
+	// get non blanks bit in a seq
+	public int getNonBlanks(String seq)
+	{
+		int n=0;
+		for (int i=0;i<seq.length();i++)
+		{
+			if (seq.charAt(i)!='2')
+				n++;
+		}
+		return n;
+	}
 	public boolean checkSeq(String shiftseq, int blankcount)
 	{
 		String thisseq=shiftseq.substring(0,shiftseq.length()-blankcount);
