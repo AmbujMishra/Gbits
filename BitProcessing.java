@@ -7,7 +7,18 @@ package com.Gbits.Screens;
 public class BitProcessing {
 	
 
-	
+	//11 JAN 2015
+	//Remove blanks (2) in a string
+	public String removeBlanks(String seq)
+	{
+		String s="";
+		for (int i=0;i<seq.length();i++)
+		{
+			if (seq.charAt(i)!='2')
+				s=s+seq.charAt(i);
+		}
+		return s;
+	}
 	public boolean checkSeq(String shiftseq, int blankcount)
 	{
 		String thisseq=shiftseq.substring(0,shiftseq.length()-blankcount);
