@@ -45,6 +45,15 @@ public class GbitsGame extends Game{
 	public Texture tstage;
 	public FPSLogger fpslog;
 	public OrthographicCamera camera;
+	
+	//bitsize in pixel,20/1/2015
+	public int bitSize=32;
+	//public int bitSize=64;
+	
+	public int getBitSize()
+	{
+		return bitSize;
+	}
 	public void setGravity(Gravity g)
 	{
 		this.pg=getGravity();
@@ -85,8 +94,11 @@ public class GbitsGame extends Game{
         //Use LibGDX's default Arial font.
         font = new BitmapFont();
         //loading texture
-      	tbitI0=new Texture(Gdx.files.internal("bit0.jpg"));	
-      	tbitI1=new Texture(Gdx.files.internal("bit1.jpg"));
+      	//tbitI0=new Texture(Gdx.files.internal("bit0.jpg"));	
+      	//tbitI1=new Texture(Gdx.files.internal("bit1.jpg"));
+      	
+      	tbitI0=new Texture(Gdx.files.internal("grey0.png"));	
+      	tbitI1=new Texture(Gdx.files.internal("grey1.png"));
       	tstage= new Texture(Gdx.files.internal("stage1.jpg"));
       	fpslog=new FPSLogger();
         setScreen(MMS);
