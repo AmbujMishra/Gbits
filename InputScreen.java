@@ -273,7 +273,7 @@ public class InputScreen implements Screen,InputProcessor{
 	
 	@Override
 	public void show() {
-		game.camera.setToOrtho(false,64*game.BC.getColumn(), 64*game.BC.getRow());
+		game.camera.setToOrtho(false,game.bitSize*game.BC.getColumn(), game.bitSize*game.BC.getRow());
 	    game.camera.update();
 	    //Game over mechanism , watch gameOver method
 		if (game.BC.getBitCount()<=2)
@@ -282,12 +282,12 @@ public class InputScreen implements Screen,InputProcessor{
 			// show winner screen here
 			game.setScreen(game.GOS);
 		}
-		if(gameOver())
+		/*if(gameOver())
 		{
 			System.out.println("looser");
 			// show game over screen here
 			game.setScreen(game.GOS);
-		}
+		}*/
 	//Gdx.input.setInputProcessor(this);
     Gdx.graphics.setContinuousRendering(false);
     Gdx.graphics.requestRendering();
@@ -296,7 +296,7 @@ public class InputScreen implements Screen,InputProcessor{
 	@Override
 	public void render(float delta) {
 		//System.out.println("input screen");
-		Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClearColor(7, 7, 7, 7);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		game.batch.setProjectionMatrix(game.camera.combined);
 		game.camera.update();
@@ -307,9 +307,9 @@ public class InputScreen implements Screen,InputProcessor{
 			for (int j=0;j < game.BC.getColumn();j++)		//column j
 			{
 				if (game.BC.getBit(i, j)=='0')
-				game.batch.draw(game.tbitI0,j*64,i*64);
+				game.batch.draw(game.tbitI0,j*game.bitSize,i*game.bitSize);
 				else if(game.BC.getBit(i, j)=='1')
-				game.batch.draw(game.tbitI1,j*64,i*64);
+				game.batch.draw(game.tbitI1,j*game.bitSize,i*game.bitSize);
 			}
 		}
 		game.batch.end();
