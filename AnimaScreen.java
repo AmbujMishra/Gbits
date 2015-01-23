@@ -15,7 +15,7 @@ public class AnimaScreen implements Screen{
 	int max;
 	private int loop=1;
 	private boolean animationInProcess=false;
-	
+	private int animaspeed=400;
 	public AnimaScreen(GbitsGame gg) {
 		game=gg;
 	}
@@ -92,7 +92,7 @@ private boolean getAnimationInProcess()
 	@Override
 	public void render(float delta) {
 		//System.out.println("animation screen render");
-		Gdx.gl.glClearColor(7, 7, 7, 7);
+		Gdx.gl.glClearColor(107/255f, 107/255f,107/255f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		game.batch.setProjectionMatrix(game.camera.combined);
 		game.camera.update();
@@ -193,7 +193,7 @@ private boolean getAnimationInProcess()
 				break;
 			}
 		}
-		x=x-delta*500;
+		x=x-delta*animaspeed;
 		game.batch.end();
 		}
 		else
@@ -332,7 +332,7 @@ private boolean getAnimationInProcess()
 					break;
 				}
 			}
-			x=x+delta*500;
+			x=x+delta*animaspeed;
 			game.batch.end();
 			}
 			else
@@ -474,7 +474,7 @@ private boolean getAnimationInProcess()
 					break;
 				}
 			}
-			y=y-delta*500;
+			y=y-delta*animaspeed;
 			game.batch.end();
 			}
 			else
@@ -614,7 +614,7 @@ private boolean getAnimationInProcess()
 					break;
 				}
 			}
-			y=y+delta*500;
+			y=y+delta*animaspeed;
 			game.batch.end();
 			}
 			else
