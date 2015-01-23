@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.Gbits.Screens.BitContainer;
 
+
 public class GbitsGame extends Game{
 	
 	//Gravity Enum		AM: Think about ZERO, handle it appropriately
@@ -32,7 +33,8 @@ public class GbitsGame extends Game{
 	AnimaScreen ANS;
 	GameOverScreen GOS;
 	StageScreen STS;
-
+	LooserGameOverScreen LGOS;
+	
 	BitContainer BC;
 	BitProcessing BP;
 	
@@ -45,11 +47,16 @@ public class GbitsGame extends Game{
 	public Texture tstage;
 	public FPSLogger fpslog;
 	public OrthographicCamera camera;
+	//bitsize of each bit, it will be used in cameras (in pixel)
+	//public int bitSize=256;
+	public int bitSize=64;
+	//offset space between bits (in pixel)
+	public int bitOffset=5;
 	
-	//bitsize in pixel,20/1/2015
-	public int bitSize=32;
-	//public int bitSize=64;
-	
+	public int getOffset()
+	{
+		return bitOffset;
+	}
 	public int getBitSize()
 	{
 		return bitSize;
@@ -84,6 +91,7 @@ public class GbitsGame extends Game{
     	INS=new InputScreen(this);
     	ANS =new AnimaScreen(this);
     	GOS= new GameOverScreen(this);
+    	LGOS=new LooserGameOverScreen(this);
     	//initializing gravity with ZERO
     	setGravity(Gravity.ZERO);
     	setAnima(false);
@@ -94,12 +102,11 @@ public class GbitsGame extends Game{
         //Use LibGDX's default Arial font.
         font = new BitmapFont();
         //loading texture
-      	//tbitI0=new Texture(Gdx.files.internal("bit0.jpg"));	
-      	//tbitI1=new Texture(Gdx.files.internal("bit1.jpg"));
-      	
-      	tbitI0=new Texture(Gdx.files.internal("grey0.png"));	
-      	tbitI1=new Texture(Gdx.files.internal("grey1.png"));
-      	tstage= new Texture(Gdx.files.internal("stage1.jpg"));
+      	tbitI0=new Texture(Gdx.files.internal("bit0.png"));	
+      	tbitI1=new Texture(Gdx.files.internal("bit1.png"));
+      	//tbitI0=new Texture(Gdx.files.internal("LED0.jpg"));	
+      	//tbitI1=new Texture(Gdx.files.internal("LED1.jpg"));
+      	tstage= new Texture(Gdx.files.internal("stage1.png"));
       	fpslog=new FPSLogger();
         setScreen(MMS);
     }
