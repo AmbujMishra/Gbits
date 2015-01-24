@@ -87,7 +87,22 @@ public class BitProcessing {
 				
 		return bitseq+blankseq;		//example: 10110022222
 	}
+//24 JAN 2015
+	public String shiftblanksLeft(String seq) {
 
+		String bitseq="";
+		String blankseq="";
+		for (int i=0;i<seq.length();i++)
+		{
+			if (seq.charAt(i)=='2')
+				blankseq=blankseq+2;
+			else
+				bitseq=bitseq+seq.charAt(i);
+		}
+				
+		return blankseq+bitseq;		//example: 222221111110111
+	}
+	
 	public int countBlanks(String bitseq) {
 		int count=0;
 		for (int i=0; i<bitseq.length();i++)
