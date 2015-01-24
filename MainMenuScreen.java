@@ -18,14 +18,16 @@ public class MainMenuScreen implements Screen{
  
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(0, 0, 0.2f, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		game.batch.setProjectionMatrix(game.camera.combined);
 		game.camera.update();
  
 		game.batch.begin();
-		game.font.draw(game.batch, "Welcome to Gbits!!! ", 100, 400);
-		game.font.draw(game.batch, "Tap anywhere to begin!", 100, 350);
+		//game.font.draw(game.batch, "Welcome to Gbits!!! ", 100, 400);
+		//game.font.draw(game.batch, "Tap anywhere to begin!", 100, 350);
+		game.font.draw(game.batch, "Welcome to Gbits!!! ", 30, 150);
+		game.font.draw(game.batch, "Tap anywhere to begin!", 20, 100);
 		//game.font.draw(game.batch, "Press 2,3,4 or 5 to set stage", 100, 200);
 		game.batch.end();
  
@@ -73,7 +75,8 @@ public class MainMenuScreen implements Screen{
  
 	@Override
 	public void show() {
-		game.camera.setToOrtho(false, 800, 480);
+		//game.camera.setToOrtho(false, 800, 480);
+		game.camera.setToOrtho(false, 200, 200);
 		game.camera.update();
 		Gdx.graphics.setContinuousRendering(false);
 	}
