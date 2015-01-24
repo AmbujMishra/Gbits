@@ -15,7 +15,7 @@ public class AnimaScreen implements Screen{
 	int max;
 	private int loop=1;
 	private boolean animationInProcess=false;
-	private int animaspeed=400;
+	
 	public AnimaScreen(GbitsGame gg) {
 		game=gg;
 	}
@@ -25,11 +25,11 @@ public class AnimaScreen implements Screen{
 	}
 	private void setX(int x)
 	{
-		this.x=x*game.bitSize;
+		this.x=x*game.getBitSize();
 	}
 	private void setY(int y)
 	{
-		this.y=y*game.bitSize;
+		this.y=y*game.getBitSize();
 	}
 private void setAnimationInProcess(boolean f)
 {
@@ -42,7 +42,7 @@ private boolean getAnimationInProcess()
 
 	@Override
 	public void show() {
-		game.camera.setToOrtho(false,game.bitSize*game.BC.getColumn(), game.bitSize*game.BC.getRow());
+		game.camera.setToOrtho(false,game.getBitSize()*game.BC.getColumn(), game.getBitSize()*game.BC.getRow());
 	    game.camera.update();
 	    
 		Gdx.input.setInputProcessor(null);
@@ -110,9 +110,9 @@ private boolean getAnimationInProcess()
 			for (int j=0;j<game.BC.getRow();j++)
 			{
 				if(game.BC.getBit(j,i)=='0')
-					game.batch.draw(game.tbitI0,i*game.bitSize,j*game.bitSize);
+					game.batch.draw(game.tbitI0,i*game.getBitSize(),j*game.getBitSize());
 				else if (game.BC.getBit(j,i)=='1')
-					game.batch.draw(game.tbitI1,i*game.bitSize,j*game.bitSize);
+					game.batch.draw(game.tbitI1,i*game.getBitSize(),j*game.getBitSize());
 			}
 		}
 		//drawing bits post loop bits excluding loop, drawing columns
@@ -121,9 +121,9 @@ private boolean getAnimationInProcess()
 			for (int j=0;j<game.BC.getRow();j++)
 			{
 				if(game.BC.getBit(j,i)=='0')
-					game.batch.draw(game.tbitI0,i*game.bitSize,j*game.bitSize);
+					game.batch.draw(game.tbitI0,i*game.getBitSize(),j*game.getBitSize());
 				else if (game.BC.getBit(j,i)=='1')
-					game.batch.draw(game.tbitI1,i*game.bitSize,j*game.bitSize);
+					game.batch.draw(game.tbitI1,i*game.getBitSize(),j*game.getBitSize());
 			}
 		}
 
@@ -132,68 +132,68 @@ private boolean getAnimationInProcess()
 			switch(game.BC.getBitRow(i).substring(loop-1, loop+1))
 			{
 			case "00":
-				if (x> (loop-1)*game.bitSize)
+				if (x> (loop-1)*game.getBitSize())
 				{
-				game.batch.draw(game.tbitI0,x,i*game.bitSize);
+				game.batch.draw(game.tbitI0,x,i*game.getBitSize());
 				setAnimationInProcess(true);
 				}
 				else
 				{
-				game.batch.draw(game.tbitI0,(loop-1)*game.bitSize,i*game.bitSize);
+				game.batch.draw(game.tbitI0,(loop-1)*game.getBitSize(),i*game.getBitSize());
 				game.BC.setBit("2", i, loop);
 				}
 				break;
 			case "01":
-				game.batch.draw(game.tbitI1,(loop)*game.bitSize,i*game.bitSize);
+				game.batch.draw(game.tbitI1,(loop)*game.getBitSize(),i*game.getBitSize());
 				break;
 			case "10":
-				game.batch.draw(game.tbitI0,(loop)*game.bitSize,i*game.bitSize);
+				game.batch.draw(game.tbitI0,(loop)*game.getBitSize(),i*game.getBitSize());
 				break;
 			case "02": case "12": case "22":
 				break;
 			case "20": 
-				if (x> (loop-1)*game.bitSize)
+				if (x> (loop-1)*game.getBitSize())
 				{
-				game.batch.draw(game.tbitI0,x,i*game.bitSize);
+				game.batch.draw(game.tbitI0,x,i*game.getBitSize());
 				setAnimationInProcess(true);
 				}
 				else
 				{
-				game.batch.draw(game.tbitI0,(loop-1)*game.bitSize,i*game.bitSize);
+				game.batch.draw(game.tbitI0,(loop-1)*game.getBitSize(),i*game.getBitSize());
 				game.BC.setBit("0", i, loop-1);
 				game.BC.setBit("2", i, loop);
 				}
 				break;
 			case "21":
-				if (x> (loop-1)*game.bitSize)
+				if (x> (loop-1)*game.getBitSize())
 				{
-				game.batch.draw(game.tbitI1,x,i*game.bitSize);
+				game.batch.draw(game.tbitI1,x,i*game.getBitSize());
 				setAnimationInProcess(true);
 				}
 				else
 				{
-				game.batch.draw(game.tbitI1,(loop-1)*game.bitSize,i*game.bitSize);
+				game.batch.draw(game.tbitI1,(loop-1)*game.getBitSize(),i*game.getBitSize());
 				game.BC.setBit("1", i, loop-1);
 				game.BC.setBit("2", i, loop);
 				}
 				break;
 			case "11":
-				if (x> (loop-1)*game.bitSize)
+				if (x> (loop-1)*game.getBitSize())
 				{
-				game.batch.draw(game.tbitI0,(loop)*game.bitSize,i*game.bitSize);
-				game.batch.draw(game.tbitI1,x,i*game.bitSize);
+				game.batch.draw(game.tbitI0,(loop)*game.getBitSize(),i*game.getBitSize());
+				game.batch.draw(game.tbitI1,x,i*game.getBitSize());
 				setAnimationInProcess(true);
 				}
 				else
 				{
-				game.batch.draw(game.tbitI1,(loop-1)*game.bitSize,i*game.bitSize);
-				game.batch.draw(game.tbitI0,(loop)*game.bitSize,i*game.bitSize);
+				game.batch.draw(game.tbitI1,(loop-1)*game.getBitSize(),i*game.getBitSize());
+				game.batch.draw(game.tbitI0,(loop)*game.getBitSize(),i*game.getBitSize());
 				game.BC.setBit("0", i, loop);
 				}
 				break;
 			}
 		}
-		x=x-delta*animaspeed;
+		x=x-delta*game.getAnimaSpeed();
 		game.batch.end();
 		}
 		else
@@ -207,10 +207,10 @@ private boolean getAnimationInProcess()
 				{
 					//if(game.BC.getBitRow(j).charAt(i)=='0')
 					if(game.BC.getBit(j,i)=='0')
-						game.batch.draw(game.tbitI0,i*game.bitSize,j*game.bitSize);
+						game.batch.draw(game.tbitI0,i*game.getBitSize(),j*game.getBitSize());
 					//else if (game.BC.getBitRow(j).charAt(i)=='1')
 					else if (game.BC.getBit(j,i)=='1')
-						game.batch.draw(game.tbitI1,i*game.bitSize,j*game.bitSize);
+						game.batch.draw(game.tbitI1,i*game.getBitSize(),j*game.getBitSize());
 				}
 			}
 			game.batch.end();
@@ -250,9 +250,9 @@ private boolean getAnimationInProcess()
 				for (int j=0;j<game.BC.getRow();j++)
 				{
 					if(game.BC.getBit(j,i)=='0')
-						game.batch.draw(game.tbitI0,i*game.bitSize,j*game.bitSize);
+						game.batch.draw(game.tbitI0,i*game.getBitSize(),j*game.getBitSize());
 					else if (game.BC.getBit(j,i)=='1')
-						game.batch.draw(game.tbitI1,i*game.bitSize,j*game.bitSize);
+						game.batch.draw(game.tbitI1,i*game.getBitSize(),j*game.getBitSize());
 				}
 			}
 			//drawing bits post loop bits excluding loop, drawing columns
@@ -261,9 +261,9 @@ private boolean getAnimationInProcess()
 				for (int j=0;j<game.BC.getRow();j++)
 				{
 					if(game.BC.getBit(j,i)=='0')
-						game.batch.draw(game.tbitI0,i*game.bitSize,j*game.bitSize);
+						game.batch.draw(game.tbitI0,i*game.getBitSize(),j*game.getBitSize());
 					else if (game.BC.getBit(j,i)=='1')
-						game.batch.draw(game.tbitI1,i*game.bitSize,j*game.bitSize);
+						game.batch.draw(game.tbitI1,i*game.getBitSize(),j*game.getBitSize());
 				}
 			}
 			for(int i=0;i<game.BC.getRow();i++)
@@ -271,68 +271,68 @@ private boolean getAnimationInProcess()
 				switch(game.BC.getBitRow(i).substring(loop-1, loop+1))
 				{
 				case "00":
-					if (x < (loop)*game.bitSize)
+					if (x < (loop)*game.getBitSize())
 					{
-					game.batch.draw(game.tbitI0,x,i*game.bitSize);
+					game.batch.draw(game.tbitI0,x,i*game.getBitSize());
 					setAnimationInProcess(true);
 					}
 					else
 					{
-					game.batch.draw(game.tbitI0,loop*game.bitSize,i*game.bitSize);
+					game.batch.draw(game.tbitI0,loop*game.getBitSize(),i*game.getBitSize());
 					game.BC.setBit("2", i, loop-1);
 					}
 					break;
 				case "01":
-					game.batch.draw(game.tbitI0,(loop-1)*game.bitSize,i*game.bitSize);
+					game.batch.draw(game.tbitI0,(loop-1)*game.getBitSize(),i*game.getBitSize());
 					break;
 				case "10":
-					game.batch.draw(game.tbitI1,(loop-1)*game.bitSize,i*game.bitSize);
+					game.batch.draw(game.tbitI1,(loop-1)*game.getBitSize(),i*game.getBitSize());
 					break;
 				case "20": case "21": case "22":
 					break;
 				case "02": 
-					if (x< loop*game.bitSize)
+					if (x< loop*game.getBitSize())
 					{
-					game.batch.draw(game.tbitI0,x,i*game.bitSize);
+					game.batch.draw(game.tbitI0,x,i*game.getBitSize());
 					setAnimationInProcess(true);
 					}
 					else
 					{
-					game.batch.draw(game.tbitI0,loop*game.bitSize,i*game.bitSize);
+					game.batch.draw(game.tbitI0,loop*game.getBitSize(),i*game.getBitSize());
 					game.BC.setBit("2", i, loop-1);
 					game.BC.setBit("0", i, loop);
 					}
 					break;
 				case "12":
-					if (x< loop*game.bitSize)
+					if (x< loop*game.getBitSize())
 					{
-					game.batch.draw(game.tbitI1,x,i*game.bitSize);
+					game.batch.draw(game.tbitI1,x,i*game.getBitSize());
 					setAnimationInProcess(true);
 					}
 					else
 					{
-					game.batch.draw(game.tbitI1,loop*game.bitSize,i*game.bitSize);
+					game.batch.draw(game.tbitI1,loop*game.getBitSize(),i*game.getBitSize());
 					game.BC.setBit("2", i, loop-1);
 					game.BC.setBit("1", i, loop);
 					}
 					break;
 				case "11":
-					if (x< loop*game.bitSize)
+					if (x< loop*game.getBitSize())
 					{
-					game.batch.draw(game.tbitI0,(loop-1)*game.bitSize,i*game.bitSize);
-					game.batch.draw(game.tbitI1,x,i*game.bitSize);
+					game.batch.draw(game.tbitI0,(loop-1)*game.getBitSize(),i*game.getBitSize());
+					game.batch.draw(game.tbitI1,x,i*game.getBitSize());
 					setAnimationInProcess(true);
 					}
 					else
 					{
-					game.batch.draw(game.tbitI1,loop*game.bitSize,i*game.bitSize);
-					game.batch.draw(game.tbitI0,(loop-1)*game.bitSize,i*game.bitSize);
+					game.batch.draw(game.tbitI1,loop*game.getBitSize(),i*game.getBitSize());
+					game.batch.draw(game.tbitI0,(loop-1)*game.getBitSize(),i*game.getBitSize());
 					game.BC.setBit("0", i, loop-1);
 					}
 					break;
 				}
 			}
-			x=x+delta*animaspeed;
+			x=x+delta*game.getAnimaSpeed();
 			game.batch.end();
 			}
 			else
@@ -346,10 +346,10 @@ private boolean getAnimationInProcess()
 					{
 						//if(game.BC.getBitRow(j).charAt(i)=='0')
 						if(game.BC.getBit(j,i)=='0')
-							game.batch.draw(game.tbitI0,i*game.bitSize,j*game.bitSize);
+							game.batch.draw(game.tbitI0,i*game.getBitSize(),j*game.getBitSize());
 						//else if (game.BC.getBitRow(j).charAt(i)=='1')
 						else if (game.BC.getBit(j,i)=='1')
-							game.batch.draw(game.tbitI1,i*game.bitSize,j*game.bitSize);
+							game.batch.draw(game.tbitI1,i*game.getBitSize(),j*game.getBitSize());
 					}
 				}
 				game.batch.end();
@@ -392,9 +392,9 @@ private boolean getAnimationInProcess()
 				for (int j=0;j<game.BC.getColumn();j++)
 				{
 					if(game.BC.getBit(i,j)=='0')
-						game.batch.draw(game.tbitI0,j*game.bitSize,i*game.bitSize);
+						game.batch.draw(game.tbitI0,j*game.getBitSize(),i*game.getBitSize());
 					else if (game.BC.getBit(i,j)=='1')
-						game.batch.draw(game.tbitI1,j*game.bitSize,i*game.bitSize);
+						game.batch.draw(game.tbitI1,j*game.getBitSize(),i*game.getBitSize());
 				}
 			}
 			//drawing bits post loop bits excluding loop, drawing rows
@@ -403,9 +403,9 @@ private boolean getAnimationInProcess()
 				for (int j=0;j<game.BC.getColumn();j++)
 				{
 					if(game.BC.getBit(i,j)=='0')
-						game.batch.draw(game.tbitI0,j*game.bitSize,i*game.bitSize);
+						game.batch.draw(game.tbitI0,j*game.getBitSize(),i*game.getBitSize());
 					else if (game.BC.getBit(i,j)=='1')
-						game.batch.draw(game.tbitI1,j*game.bitSize,i*game.bitSize);
+						game.batch.draw(game.tbitI1,j*game.getBitSize(),i*game.getBitSize());
 				}
 			}
 			for(int i=0;i<game.BC.getColumn();i++)
@@ -413,68 +413,68 @@ private boolean getAnimationInProcess()
 				switch(game.BC.getBitCol(i,game.getGravity().toString()).substring(loop-1, loop+1))
 				{
 				case "00":
-					if (y> (loop-1)*game.bitSize)
+					if (y> (loop-1)*game.getBitSize())
 					{
-					game.batch.draw(game.tbitI0,i*game.bitSize,y);
+					game.batch.draw(game.tbitI0,i*game.getBitSize(),y);
 					setAnimationInProcess(true);
 					}
 					else
 					{
-					game.batch.draw(game.tbitI0,i*game.bitSize,(loop-1)*game.bitSize);	// i think this line is causing flicker
+					game.batch.draw(game.tbitI0,i*game.getBitSize(),(loop-1)*game.getBitSize());	// i think this line is causing flicker
 					game.BC.setBit("2",loop,i);
 					}
 					break;
 				case "01":
-					game.batch.draw(game.tbitI1,i*game.bitSize,(loop)*game.bitSize);
+					game.batch.draw(game.tbitI1,i*game.getBitSize(),(loop)*game.getBitSize());
 					break;
 				case "10":
-					game.batch.draw(game.tbitI0,i*game.bitSize,(loop)*game.bitSize);
+					game.batch.draw(game.tbitI0,i*game.getBitSize(),(loop)*game.getBitSize());
 					break;
 				case "02": case "12": case "22":
 					break;
 				case "20": 
-					if (y> (loop-1)*game.bitSize)
+					if (y> (loop-1)*game.getBitSize())
 					{
-					game.batch.draw(game.tbitI0,i*game.bitSize,y);
+					game.batch.draw(game.tbitI0,i*game.getBitSize(),y);
 					setAnimationInProcess(true);
 					}
 					else
 					{
-					game.batch.draw(game.tbitI0,i*game.bitSize,(loop-1)*game.bitSize);
+					game.batch.draw(game.tbitI0,i*game.getBitSize(),(loop-1)*game.getBitSize());
 					game.BC.setBit("0", loop-1,i);
 					game.BC.setBit("2",loop,i);
 					}
 					break;
 				case "21":
-					if (y> (loop-1)*game.bitSize)
+					if (y> (loop-1)*game.getBitSize())
 					{
-					game.batch.draw(game.tbitI1,i*game.bitSize,y);
+					game.batch.draw(game.tbitI1,i*game.getBitSize(),y);
 					setAnimationInProcess(true);
 					}
 					else
 					{
-					game.batch.draw(game.tbitI1,i*game.bitSize,(loop-1)*game.bitSize);
+					game.batch.draw(game.tbitI1,i*game.getBitSize(),(loop-1)*game.getBitSize());
 					game.BC.setBit("1",loop-1,i);
 					game.BC.setBit("2",loop,i);
 					}
 					break;
 				case "11":
-					if (y> (loop-1)*game.bitSize)
+					if (y> (loop-1)*game.getBitSize())
 					{
-					game.batch.draw(game.tbitI0,i*game.bitSize,(loop)*game.bitSize);
-					game.batch.draw(game.tbitI1,i*game.bitSize,y);
+					game.batch.draw(game.tbitI0,i*game.getBitSize(),(loop)*game.getBitSize());
+					game.batch.draw(game.tbitI1,i*game.getBitSize(),y);
 					setAnimationInProcess(true);
 					}
 					else
 					{
-					game.batch.draw(game.tbitI1,i*game.bitSize,(loop-1)*game.bitSize);
-					game.batch.draw(game.tbitI0,i*game.bitSize,(loop)*game.bitSize);
+					game.batch.draw(game.tbitI1,i*game.getBitSize(),(loop-1)*game.getBitSize());
+					game.batch.draw(game.tbitI0,i*game.getBitSize(),(loop)*game.getBitSize());
 					game.BC.setBit("0", loop,i);
 					}
 					break;
 				}
 			}
-			y=y-delta*animaspeed;
+			y=y-delta*game.getAnimaSpeed();
 			game.batch.end();
 			}
 			else
@@ -488,10 +488,10 @@ private boolean getAnimationInProcess()
 					{
 						//if(game.BC.getBitRow(j).charAt(i)=='0')
 						if(game.BC.getBit(j,i)=='0')
-							game.batch.draw(game.tbitI0,i*game.bitSize,j*game.bitSize);
+							game.batch.draw(game.tbitI0,i*game.getBitSize(),j*game.getBitSize());
 						//else if (game.BC.getBitRow(j).charAt(i)=='1')
 						else if (game.BC.getBit(j,i)=='1')
-							game.batch.draw(game.tbitI1,i*game.bitSize,j*game.bitSize);
+							game.batch.draw(game.tbitI1,i*game.getBitSize(),j*game.getBitSize());
 					}
 				}
 				game.batch.end();
@@ -532,9 +532,9 @@ private boolean getAnimationInProcess()
 				for (int j=0;j<game.BC.getColumn();j++)
 				{
 					if(game.BC.getBit(i,j)=='0')
-						game.batch.draw(game.tbitI0,j*game.bitSize,i*game.bitSize);
+						game.batch.draw(game.tbitI0,j*game.getBitSize(),i*game.getBitSize());
 					else if (game.BC.getBit(i,j)=='1')
-						game.batch.draw(game.tbitI1,j*game.bitSize,i*game.bitSize);
+						game.batch.draw(game.tbitI1,j*game.getBitSize(),i*game.getBitSize());
 				}
 			}
 			//drawing bits post loop bits excluding loop, drawing rows
@@ -543,9 +543,9 @@ private boolean getAnimationInProcess()
 				for (int j=0;j<game.BC.getColumn();j++)
 				{
 					if(game.BC.getBit(i,j)=='0')
-						game.batch.draw(game.tbitI0,j*game.bitSize,i*game.bitSize);
+						game.batch.draw(game.tbitI0,j*game.getBitSize(),i*game.getBitSize());
 					else if (game.BC.getBit(i,j)=='1')
-						game.batch.draw(game.tbitI1,j*game.bitSize,i*game.bitSize);
+						game.batch.draw(game.tbitI1,j*game.getBitSize(),i*game.getBitSize());
 				}
 			}
 			for(int i=0;i<game.BC.getColumn();i++)
@@ -553,68 +553,68 @@ private boolean getAnimationInProcess()
 				switch(game.BC.getBitCol(i,game.getGravity().toString()).substring(loop-1, loop+1))
 				{
 				case "00":
-					if (y < (loop)*game.bitSize)
+					if (y < (loop)*game.getBitSize())
 					{
-					game.batch.draw(game.tbitI0,i*game.bitSize,y);
+					game.batch.draw(game.tbitI0,i*game.getBitSize(),y);
 					setAnimationInProcess(true);
 					}
 					else
 					{
-					game.batch.draw(game.tbitI0,i*game.bitSize,loop*game.bitSize);
+					game.batch.draw(game.tbitI0,i*game.getBitSize(),loop*game.getBitSize());
 					game.BC.setBit("2", loop-1, i);
 					}
 					break;
 				case "01":
-					game.batch.draw(game.tbitI0,i*game.bitSize,(loop-1)*game.bitSize);
+					game.batch.draw(game.tbitI0,i*game.getBitSize(),(loop-1)*game.getBitSize());
 					break;
 				case "10":
-					game.batch.draw(game.tbitI1,i*game.bitSize,(loop-1)*game.bitSize);
+					game.batch.draw(game.tbitI1,i*game.getBitSize(),(loop-1)*game.getBitSize());
 					break;
 				case "20": case "21": case"22":
 					break;
 				case "02": 
-					if (y< loop*game.bitSize)
+					if (y< loop*game.getBitSize())
 					{
-					game.batch.draw(game.tbitI0,i*game.bitSize,y);
+					game.batch.draw(game.tbitI0,i*game.getBitSize(),y);
 					setAnimationInProcess(true);
 					}
 					else
 					{
-					game.batch.draw(game.tbitI0,i*game.bitSize,loop*game.bitSize);
+					game.batch.draw(game.tbitI0,i*game.getBitSize(),loop*game.getBitSize());
 					game.BC.setBit("2", loop-1, i);
 					game.BC.setBit("0", loop, i);
 					}
 					break;
 				case "12":
-					if (y< loop*game.bitSize)
+					if (y< loop*game.getBitSize())
 					{
-					game.batch.draw(game.tbitI1,i*game.bitSize,y);
+					game.batch.draw(game.tbitI1,i*game.getBitSize(),y);
 					setAnimationInProcess(true);
 					}
 					else
 					{
-					game.batch.draw(game.tbitI1,i*game.bitSize,loop*game.bitSize);
+					game.batch.draw(game.tbitI1,i*game.getBitSize(),loop*game.getBitSize());
 					game.BC.setBit("2", loop-1, i);
 					game.BC.setBit("1", loop, i);
 					}
 					break;
 				case "11":
-					if (y< loop*game.bitSize)
+					if (y< loop*game.getBitSize())
 					{
-					game.batch.draw(game.tbitI0,i*game.bitSize,(loop-1)*game.bitSize);
-					game.batch.draw(game.tbitI1,i*game.bitSize,y);
+					game.batch.draw(game.tbitI0,i*game.getBitSize(),(loop-1)*game.getBitSize());
+					game.batch.draw(game.tbitI1,i*game.getBitSize(),y);
 					setAnimationInProcess(true);
 					}
 					else
 					{
-					game.batch.draw(game.tbitI0,i*game.bitSize,(loop-1)*game.bitSize);
-					game.batch.draw(game.tbitI1,i*game.bitSize,loop*game.bitSize);
+					game.batch.draw(game.tbitI0,i*game.getBitSize(),(loop-1)*game.getBitSize());
+					game.batch.draw(game.tbitI1,i*game.getBitSize(),loop*game.getBitSize());
 					game.BC.setBit("0", loop-1, i);
 					}
 					break;
 				}
 			}
-			y=y+delta*animaspeed;
+			y=y+delta*game.getAnimaSpeed();
 			game.batch.end();
 			}
 			else
@@ -628,10 +628,10 @@ private boolean getAnimationInProcess()
 					{
 						//if(game.BC.getBitRow(j).charAt(i)=='0')
 						if(game.BC.getBit(j,i)=='0')
-							game.batch.draw(game.tbitI0,i*game.bitSize,j*game.bitSize);
+							game.batch.draw(game.tbitI0,i*game.getBitSize(),j*game.getBitSize());
 						//else if (game.BC.getBitRow(j).charAt(i)=='1')
 						else if (game.BC.getBit(j,i)=='1')
-							game.batch.draw(game.tbitI1,i*game.bitSize,j*game.bitSize);
+							game.batch.draw(game.tbitI1,i*game.getBitSize(),j*game.getBitSize());
 					}
 				}
 				game.batch.end();
