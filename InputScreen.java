@@ -23,180 +23,8 @@ public class InputScreen implements Screen,InputProcessor{
 
 	public boolean gameOver()
 	{
-		//23 JAN 2015
-		//Made it independent of gravity, because gravity is getting set as zero after each animation cycle.
-		
-		//check for up,if no then check for left and right from up
-		//check for left, if no then check for up and down
-		//check for right, if no then check for up and down
-		//check for down, if no then check for left and right
-		/*go for above logic*/
-		
-		//First write a common method to transpose existing bit container based on gravity.No
-		//form a temp bit array
-		int r=game.BC.getRow();
-		int c=game.BC.getColumn();
-		String seq;
-		boolean go=true;
-		
-		//Apply LEFT and RIGHT both by removing blanks in rows
-		for (int i=0;i<r;i++)
-		{
-			if(game.BP.getNonBlanks(game.BC.getBitRow(i))!=0)
-			{
-			seq=game.BP.removeBlanks(game.BC.getBitRow(i));
-			if (!game.BP.checkSeq(seq, 0))
-				go=false;
-			}
-		}
-		//Apply UP and DOWN both by removing blanks in columns
-		for (int i=0;i<c;i++)
-		{
-			if(game.BP.getNonBlanks(game.BC.getBitCol(i, "DOWN"))!=0)
-			{
-			seq=game.BP.removeBlanks(game.BC.getBitCol(i, "DOWN"));
-			if (!game.BP.checkSeq(seq, 0))
-				go=false;
-			}
-		}
-		//Check UP and DOWN after applying LEFT gravity, It can be done simultaneously by removing blanks and checking columns
-		//LEFT
-		if(go)
-		{
-		//Forming temp bit array after removing blanks
-			String temp[]=new String[r];
-			for (int i=0;i<r;i++)
-				temp[i]=game.BP.shiftblanks(game.BC.getBitRow(i));
-				//temp[i]=game.BP.removeBlanks(game.BC.getBitRow(i));
-			for (int i=0;i<c;i++)
-			{
-				String tempC="";
-				for (int j=0;j<r;j++)
-				{
-					tempC=tempC+temp[j].charAt(i);
-				}
-				
-				if(game.BP.getNonBlanks(tempC)!=0)
-				{
-				seq=game.BP.removeBlanks(tempC);
-				if (!game.BP.checkSeq(seq, 0))
-					go=false;
-				}
-			}
-		}
-		
-		//RIGHT
-		if(go)
-		{
-			//Forming temp bit array after removing blanks
-			String temp[]=new String[r];
-			for (int i=0;i<r;i++)
-				temp[i]=game.BP.shiftblanksLeft(game.BC.getBitRow(i));
-			
-			for (int i=0;i<c;i++)
-			{
-				String tempC="";
-				for (int j=0;j<r;j++)
-				{
-					tempC=tempC+temp[j].charAt(i);
-				}
-				
-				if(game.BP.getNonBlanks(tempC)!=0)
-				{
-				seq=game.BP.removeBlanks(tempC);
-				if (!game.BP.checkSeq(seq, 0))
-					go=false;
-				}
-			}
-			
-		}
-		
-		//DOWN
-		if(go)
-		{
-			String temp[]=new String[c];
-			for (int i=0;i<c;i++)
-			{
-					temp[i]=game.BP.shiftblanks(game.BC.getBitCol(i, "DOWN"));
-			}
-			
-			String tempR[]=new String[r];
-			for (int i=0;i<r;i++)
-			{
-				tempR[i]="";
-				for(int j=0;j<c;j++)
-				tempR[i]=tempR[i]+temp[j].charAt(i);
-			}
-			//Two for loop above is kind of transposing your bit container from column to row and vice versa. Look out for this
-			for (int i=0;i<r;i++)
-			{
-				if(game.BP.getNonBlanks(tempR[i])!=0)
-				{
-					seq=game.BP.removeBlanks(tempR[i]);
-					if (!game.BP.checkSeq(seq, 0))
-						go=false;
-				}
-			}
-			
-		}
-		
-		//UP
-		if(go)
-		{
-			String temp[]=new String[c];
-			for (int i=0;i<c;i++)
-			{
-					temp[i]=game.BP.shiftblanksLeft(game.BC.getBitCol(i, "UP"));
-			}
-			
-			String tempR[]=new String[r];
-			for (int i=0;i<r;i++)
-			{
-				tempR[i]="";
-				for(int j=0;j<c;j++)
-				tempR[i]=tempR[i]+temp[j].charAt(i);
-			}
-			//Two for loop above is kind of transposing your bit container from column to row and vice versa. Look out for this
-			for (int i=0;i<r;i++)
-			{
-				if(game.BP.getNonBlanks(tempR[i])!=0)
-				{
-					seq=game.BP.removeBlanks(tempR[i]);
-					if (!game.BP.checkSeq(seq, 0))
-						go=false;
-				}
-			}
-		}
-		
-		return go;
-		
-		//21 JAN 2015
-		/*
-		 * After each Input
-		 * Apply remaining 3 gravity on current bit container
-		 * Shift seq according to gravity
-		 * Call checkSeq method, if you find false throughout, that means game over
-		 * Basically you will be calculating 3 possible step for each step to determine game over.
-		 * */
-		/*switch (game.getGravity())
-		{
-		case DOWN:
-			//check for up,if no then check for left and right from up
-			//check for left, if no then check for up and down
-			//check for right, if no then check for up and down
-			//check for down, if no then check for left and right
-			go for above logic
-			break;
-		case UP:
-			break;
-		case LEFT:
-		case RIGHT:
-			
-		}*/
-		//20 JAN 2015
-		//15 JAN 2015
-		/*10Jan2015 Update*/
-		/*char cornerbits[]=new char[]{game.BC.getBit(0,0),game.BC.getBit(0,game.BC.getColumn()-1),game.BC.getBit(game.BC.getRow()-1,game.BC.getColumn()-1),game.BC.getBit(game.BC.getRow()-1,0)};
+		/*10Jan2015 Update
+		char cornerbits[]=new char[]{game.BC.getBit(0,0),game.BC.getBit(0,game.BC.getColumn()-1),game.BC.getBit(game.BC.getRow()-1,game.BC.getColumn()-1),game.BC.getBit(game.BC.getRow()-1,0)};
 		String cb=new String(cornerbits);
 		//botleft, botright, rightup, leftup
     	
@@ -441,25 +269,172 @@ public class InputScreen implements Screen,InputProcessor{
 			}
 		}
 		return false;*/
+		//23 JAN 2015
+				//Made it independent of gravity, because gravity is getting set as zero after each animation cycle.
+				
+				//check for up,if no then check for left and right from up
+				//check for left, if no then check for up and down
+				//check for right, if no then check for up and down
+				//check for down, if no then check for left and right
+				/*go for above logic*/
+				
+				//First write a common method to transpose existing bit container based on gravity.No
+				//form a temp bit array
+				int r=game.BC.getRow();
+				int c=game.BC.getColumn();
+				String seq;
+				boolean go=true;
+				
+				//Apply LEFT and RIGHT both by removing blanks in rows
+				for (int i=0;i<r;i++)
+				{
+					if(game.BP.getNonBlanks(game.BC.getBitRow(i))!=0)
+					{
+					seq=game.BP.removeBlanks(game.BC.getBitRow(i));
+					if (!game.BP.checkSeq(seq, 0))
+						go=false;
+					}
+				}
+				//Apply UP and DOWN both by removing blanks in columns
+				for (int i=0;i<c;i++)
+				{
+					if(game.BP.getNonBlanks(game.BC.getBitCol(i, "DOWN"))!=0)
+					{
+					seq=game.BP.removeBlanks(game.BC.getBitCol(i, "DOWN"));
+					if (!game.BP.checkSeq(seq, 0))
+						go=false;
+					}
+				}
+				//Check UP and DOWN after applying LEFT gravity, It can be done simultaneously by removing blanks and checking columns
+				//LEFT
+				if(go)
+				{
+				//Forming temp bit array after removing blanks
+					String temp[]=new String[r];
+					for (int i=0;i<r;i++)
+						temp[i]=game.BP.shiftblanks(game.BC.getBitRow(i));
+						//temp[i]=game.BP.removeBlanks(game.BC.getBitRow(i));
+					for (int i=0;i<c;i++)
+					{
+						String tempC="";
+						for (int j=0;j<r;j++)
+						{
+							tempC=tempC+temp[j].charAt(i);
+						}
+						
+						if(game.BP.getNonBlanks(tempC)!=0)
+						{
+						seq=game.BP.removeBlanks(tempC);
+						if (!game.BP.checkSeq(seq, 0))
+							go=false;
+						}
+					}
+				}
+				
+				//RIGHT
+				if(go)
+				{
+					//Forming temp bit array after removing blanks
+					String temp[]=new String[r];
+					for (int i=0;i<r;i++)
+						temp[i]=game.BP.shiftblanksLeft(game.BC.getBitRow(i));
+					
+					for (int i=0;i<c;i++)
+					{
+						String tempC="";
+						for (int j=0;j<r;j++)
+						{
+							tempC=tempC+temp[j].charAt(i);
+						}
+						
+						if(game.BP.getNonBlanks(tempC)!=0)
+						{
+						seq=game.BP.removeBlanks(tempC);
+						if (!game.BP.checkSeq(seq, 0))
+							go=false;
+						}
+					}
+					
+				}
+				
+				//DOWN
+				if(go)
+				{
+					String temp[]=new String[c];
+					for (int i=0;i<c;i++)
+					{
+							temp[i]=game.BP.shiftblanks(game.BC.getBitCol(i, "DOWN"));
+					}
+					
+					String tempR[]=new String[r];
+					for (int i=0;i<r;i++)
+					{
+						tempR[i]="";
+						for(int j=0;j<c;j++)
+						tempR[i]=tempR[i]+temp[j].charAt(i);
+					}
+					//Two for loop above is kind of transposing your bit container from column to row and vice versa. Look out for this
+					for (int i=0;i<r;i++)
+					{
+						if(game.BP.getNonBlanks(tempR[i])!=0)
+						{
+							seq=game.BP.removeBlanks(tempR[i]);
+							if (!game.BP.checkSeq(seq, 0))
+								go=false;
+						}
+					}
+					
+				}
+				
+				//UP
+				if(go)
+				{
+					String temp[]=new String[c];
+					for (int i=0;i<c;i++)
+					{
+							temp[i]=game.BP.shiftblanksLeft(game.BC.getBitCol(i, "UP"));
+					}
+					
+					String tempR[]=new String[r];
+					for (int i=0;i<r;i++)
+					{
+						tempR[i]="";
+						for(int j=0;j<c;j++)
+						tempR[i]=tempR[i]+temp[j].charAt(i);
+					}
+					//Two for loop above is kind of transposing your bit container from column to row and vice versa. Look out for this
+					for (int i=0;i<r;i++)
+					{
+						if(game.BP.getNonBlanks(tempR[i])!=0)
+						{
+							seq=game.BP.removeBlanks(tempR[i]);
+							if (!game.BP.checkSeq(seq, 0))
+								go=false;
+						}
+					}
+				}
+				
+				return go;
+				
 	}
 	
 	@Override
 	public void show() {
-		game.camera.setToOrtho(false,game.bitSize*game.BC.getColumn(), game.bitSize*game.BC.getRow());
+		game.camera.setToOrtho(false,game.getBitSize()*game.BC.getColumn(), game.getBitSize()*game.BC.getRow());
 	    game.camera.update();
 	    //Game over mechanism , watch gameOver method
-		if (game.BC.getBitCount()<=2)
-		{
-			System.out.println("winner");
-			// show winner screen here
-			game.setScreen(game.GOS);
-		}
-		else if(gameOver())
-		{
-			System.out.println("looser");
-			// show game over screen here
-			game.setScreen(game.LGOS);
-		}
+	  		if (game.BC.getBitCount()<=2)
+	  		{
+	  			System.out.println("winner");
+	  			// show winner screen here
+	  			game.setScreen(game.GOS);
+	  		}
+	  		else if(gameOver())
+	  		{
+	  			System.out.println("looser");
+	  			// show game over screen here
+	  			game.setScreen(game.LGOS);
+	  		}
 	//Gdx.input.setInputProcessor(this);
     Gdx.graphics.setContinuousRendering(false);
     Gdx.graphics.requestRendering();
@@ -479,9 +454,9 @@ public class InputScreen implements Screen,InputProcessor{
 			for (int j=0;j < game.BC.getColumn();j++)		//column j
 			{
 				if (game.BC.getBit(i, j)=='0')
-				game.batch.draw(game.tbitI0,j*game.bitSize,i*game.bitSize);
+				game.batch.draw(game.tbitI0,j*game.getBitSize(),i*game.getBitSize());
 				else if(game.BC.getBit(i, j)=='1')
-				game.batch.draw(game.tbitI1,j*game.bitSize,i*game.bitSize);
+				game.batch.draw(game.tbitI1,j*game.getBitSize(),i*game.getBitSize());
 			}
 		}
 		game.batch.end();
@@ -583,28 +558,28 @@ public class InputScreen implements Screen,InputProcessor{
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		if (screenX-tx > 20 && screenY-ty < screenX-tx)
+		if (screenX-tx > 10 && screenY-ty < screenX-tx)
 		{	//right
 			game.setGravity(Gravity.RIGHT);
 			game.setAnima(true);
 			//tx=screenX;
 			//ty=screenY;
 		}
-		if (tx-screenX >20 && tx-screenX> ty-screenY )
+		if (tx-screenX >10 && tx-screenX> ty-screenY )
 			{	//left
 			game.setGravity(Gravity.LEFT);
 			game.setAnima(true);
 			//tx=screenX;
 			//ty=screenY;
 			}
-		if(screenY-ty>20 && screenY-ty >screenX-tx)
+		if(screenY-ty>10 && screenY-ty >screenX-tx)
 		{	//down
 			game.setGravity(Gravity.DOWN);
 			game.setAnima(true);	
 			//tx=screenX;
 			//ty=screenY;
 		}
-		if(ty-screenY>20 && ty-screenY > tx-screenX)
+		if(ty-screenY>10 && ty-screenY > tx-screenX)
 		{	//up
 			game.setGravity(Gravity.UP);
 			game.setAnima(true);
