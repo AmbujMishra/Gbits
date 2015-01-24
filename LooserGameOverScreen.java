@@ -20,7 +20,7 @@ public class LooserGameOverScreen implements Screen {
 
 	@Override
 	public void show() {
-		game.camera.setToOrtho(false,game.bitSize*game.BC.getColumn(), game.bitSize*game.BC.getRow());
+		game.camera.setToOrtho(false,game.getBitSize()*game.BC.getColumn(), game.getBitSize()*game.BC.getRow());
 		Gdx.graphics.setContinuousRendering(false);
 		
 	}
@@ -38,15 +38,16 @@ public class LooserGameOverScreen implements Screen {
 			for (int j=0;j < game.BC.getColumn();j++)		//column j
 			{
 				if (game.BC.getBit(i, j)=='0')
-				//game.batch.draw(game.tbitI0,game.bitOffset*(j+1)+j*game.bitSize,game.bitOffset*(i+1)+i*game.bitSize);
-				game.batch.draw(game.tbitI0,j*game.bitSize,i*game.bitSize);
+				//game.batch.draw(game.tbitI0,game.bitOffset*(j+1)+j*game.getBitSize(),game.bitOffset*(i+1)+i*game.getBitSize());
+				game.batch.draw(game.tbitI0,j*game.getBitSize(),i*game.getBitSize());
 				else if(game.BC.getBit(i, j)=='1')
-				//game.batch.draw(game.tbitI1,game.bitOffset*(j+1)+j*game.bitSize,game.bitOffset*(i+1)+i*game.bitSize);
-				game.batch.draw(game.tbitI1,j*game.bitSize,i*game.bitSize);
+				//game.batch.draw(game.tbitI1,game.bitOffset*(j+1)+j*game.getBitSize(),game.bitOffset*(i+1)+i*game.getBitSize());
+				game.batch.draw(game.tbitI1,j*game.getBitSize(),i*game.getBitSize());
 			}
 		}
 		game.font.setColor(1, 1, 0, 1);
-		game.font.draw(game.batch, "Game Over!!! ", 30, 100);
+		//game.font.draw(game.batch, "Game Over!!! ", 30, 60);
+		game.font.draw(game.batch, "Game Over!!! ",10 , 60);
 		game.batch.end();
  
 		if (Gdx.input.justTouched()) {
@@ -81,8 +82,8 @@ public class LooserGameOverScreen implements Screen {
 
 	@Override
 	public void hide() {
+		Gdx.input.setInputProcessor(null);
 		game.font.setColor(1, 1, 1, 1);
-		//Gdx.input.setInputProcessor(null);
 		
 	}
 
