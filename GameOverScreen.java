@@ -1,7 +1,7 @@
-package com.Gbits.Screens;
+package com.Gbits.Solver;
 /*
  *Ambuj Mishra
- *1-1-2015 
+ *23-02-2015 
  */
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -20,6 +20,7 @@ public class GameOverScreen implements Screen {
 
 	@Override
 	public void show() {
+		//game.camera.setToOrtho(false, 800, 480);
 		game.camera.setToOrtho(false, 300, 200);
 		Gdx.graphics.setContinuousRendering(false);
 		
@@ -33,12 +34,17 @@ public class GameOverScreen implements Screen {
 		game.camera.update();
  
 		game.batch.begin();
+		//game.font.draw(game.batch, "Game Over!!! ", 100, 400);
+		//game.font.draw(game.batch, "Tap anywhere to begin again!", 100, 350);
+		//game.font.draw(game.batch, "Exit Game!", 600, 200);
 		game.font.draw(game.batch, "Stage Cleared!", 100, 150);
 		game.font.draw(game.batch, "Tap Anywhere To Select Next Stage...", 30, 100);
-		//game.font.draw(game.batch, "Hit Enter to exit Game!", 100, 300);
 		game.batch.end();
  
 		if (Gdx.input.justTouched()) {
+			//if (Gdx.input.getX()>600)
+				//Gdx.app.exit();
+			//game.setScreen(game.MMS);
 			game.setScreen(game.STS);
 		}
 		if (Gdx.input.isKeyPressed(Keys.ENTER)) {
