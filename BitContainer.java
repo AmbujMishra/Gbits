@@ -1,7 +1,7 @@
-package com.Gbits.Screens;
+package com.Gbits.Solver;
 /*
  *Ambuj Mishra
- *1-1-2015 
+ *23-02-2015 
  */
 public class BitContainer {
 
@@ -161,7 +161,6 @@ public class BitContainer {
 		}
 		return bitC;
 	}
-	
 	public char getBit(int row, int col)
 	{
 		return BitA[row].charAt(col);
