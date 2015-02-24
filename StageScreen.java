@@ -1,7 +1,7 @@
-package com.Gbits.Screens;
+package com.Gbits.Solver;
 /*
  *Ambuj Mishra
- *6-1-2015 
+ *23-02-2015 
  */
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
