@@ -1,7 +1,7 @@
-package com.Gbits.Screens;
+package com.Gbits.Solver;
 /*
  *Ambuj Mishra
- *1-1-2015 
+ *23-02-2015 
  */
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -25,7 +25,7 @@ public class MainMenuScreen implements Screen{
  
 		game.batch.begin();
 		//game.font.draw(game.batch, "Welcome to Gbits!!! ", 100, 400);
-		//game.font.draw(game.batch, "Tap anywhere to begin!", 100, 350);
+		//game.font.draw(game.batch, "Tap anywhere to begin!", 100, 250);
 		game.font.draw(game.batch, "Welcome to Gbits!!! ", 30, 150);
 		game.font.draw(game.batch, "Tap anywhere to begin!", 20, 100);
 		//game.font.draw(game.batch, "Press 2,3,4 or 5 to set stage", 100, 200);
