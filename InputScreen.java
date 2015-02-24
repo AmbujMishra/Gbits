@@ -1,0 +1,604 @@
+package com.Gbits.Screens;
+
+/*
+ *Ambuj Mishra
+ *1-1-2015 
+ */
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.GL20;
+import com.Gbits.Screens.GbitsGame.Gravity;
+
+public class InputScreen implements Screen,InputProcessor{
+
+	GbitsGame game;
+	private int tx,ty;
+	public InputScreen(GbitsGame gg) {
+		game=gg;
+
+
+	}
+
+	public boolean gameOver()
+	{
+		/*10Jan2015 Update
+		char cornerbits[]=new char[]{game.BC.getBit(0,0),game.BC.getBit(0,game.BC.getColumn()-1),game.BC.getBit(game.BC.getRow()-1,game.BC.getColumn()-1),game.BC.getBit(game.BC.getRow()-1,0)};
+		String cb=new String(cornerbits);
+		//botleft, botright, rightup, leftup
+    	
+    	 * 3	2
+    	 * 0	1
+    	 
+		if(game.BP.countBlanks(cb)==3 ||game.BP.countBlanks(cb)==2)
+		{
+			for (int i=1;i<game.BC.getRow()-1;i++)		//rows
+			{
+				for(int j=1;j<game.BC.getColumn()-1;j++)	//columns
+				{
+					if (game.BC.getBit(i, j)!='2')
+						return false;
+				}
+			}
+			int i=0;
+    		while(cb.charAt(i)=='2')
+    		{
+    			i=i+1;		//non blank position
+    		}
+    		switch(i)
+    		{
+    		case 0:
+    			String row0=game.BC.getBitRow(0);
+    			String col0=game.BC.getBitCol(0, "LEFT");
+    			if (game.BP.getNonBlanks(row0)>1)
+    			{
+    				if(game.BP.checkSeq(row0, game.BP.countBlanks(row0)))
+						return true;
+    			}
+    			else if(game.BP.checkSeq(col0, game.BP.countBlanks(col0)))
+						return true;
+    			
+    			if (game.getPreviousGravity()==Gravity.DOWN)
+    			{
+    				if(game.BP.checkSeq(game.BC.getBitRow(0), game.BP.countBlanks(game.BC.getBitRow(0))))
+    						return true;
+    			}
+    			if (game.getPreviousGravity()==Gravity.LEFT)
+    			{
+    				if(game.BP.checkSeq(game.BC.getBitCol(0, "LEFT"), game.BP.countBlanks(game.BC.getBitCol(0, "LEFT"))))
+						return true;
+    			}
+    		break;
+    		case 1:
+    			String row1=game.BC.getBitRow(0);
+    			String col1=game.BC.getBitCol(game.BC.getColumn()-1, "RIGHT");
+    			if (game.BP.getNonBlanks(row1)>1)
+    			{
+    				if(game.BP.checkSeq(game.BP.shiftblanks(row1), game.BP.countBlanks(row1)))
+						return true;
+    			}
+    			else if(game.BP.checkSeq(col1, game.BP.countBlanks(col1)))
+						return true;
+   
+    			break;
+    		case 2:
+    			String row2=game.BC.getBitRow(game.BC.getRow()-1);
+    			String col2=game.BC.getBitCol(game.BC.getColumn()-1, "RIGHT");
+    			if (game.BP.getNonBlanks(row2)>1)
+    			{
+    				if(game.BP.checkSeq(game.BP.shiftblanks(row2), game.BP.countBlanks(row2)))
+						return true;
+    			}
+    			else if(game.BP.checkSeq(game.BP.shiftblanks(col2), game.BP.countBlanks(col2)))
+						return true;
+   
+    			break;
+    		case 3:
+    			String row3=game.BC.getBitRow(game.BC.getRow()-1);
+    			String col3=game.BC.getBitCol(0, "RIGHT");
+    			if (game.BP.getNonBlanks(row3)>1)
+    			{
+    				if(game.BP.checkSeq(row3, game.BP.countBlanks(row3)))
+						return true;
+    			}
+    			else if(game.BP.checkSeq(game.BP.shiftblanks(col3), game.BP.countBlanks(col3)))
+						return true;
+   
+    			break;
+    		}
+		}
+		if (game.BC.getBitCount()<=(game.BC.getRow()+game.BC.getColumn()-1) && game.BC.getBitCount()>4)
+		{
+			// remove it from here, its a win case
+			//if (game.BC.getBitCount()<=2)
+				//return true;
+			// count no of blank corners
+			//botleft, botright, rightup, leftup
+	    	
+	    	 * 3	2
+	    	 * 0	1
+	    	 
+			for (int i=1;i<game.BC.getRow()-1;i++)		//rows
+			{
+				for(int j=1;j<game.BC.getColumn()-1;j++)	//columns
+				{
+					if (game.BC.getBit(i, j)!='2')
+						return false;
+				}
+			}
+			//find active corner
+			//corner 0
+			if (game.BC.getBit(0,0)!='2' && game.BC.getBit(0,1)!='2' && game.BC.getBit(1,0)!='2')
+				{
+				int rowblank=game.BP.countBlanks(game.BC.getBitRow(0));
+				int colblank=game.BP.countBlanks(game.BC.getBitCol(0, "DOWN"));		// not using second parameter i.e. down
+				int rowl=game.BC.getColumn();
+				int coll=game.BC.getRow();
+				
+				if (game.BC.getBit(0, 0)==game.BC.getBit(0, rowl-rowblank-1) && game.BC.getBit(0, 0)==game.BC.getBit(coll-colblank-1, 0) && game.BP.checkSeq(game.BC.getBitRow(0), rowblank) && game.BP.checkSeq(game.BC.getBitCol(0, "DOWN"), colblank))
+				return true;
+				}
+			//similarly do for other corners
+			
+			//corner 1
+			if (game.BC.getBit(0,game.BC.getColumn()-1)!='2' && game.BC.getBit(0,game.BC.getColumn()-2)!='2' && game.BC.getBit(1,game.BC.getColumn()-1)!='2')
+			{
+				//int rowl=game.BC.getColumn();
+				int coll=game.BC.getRow();
+			int rowblank=game.BP.countBlanks(game.BC.getBitRow(0));
+			int colblank=game.BP.countBlanks(game.BC.getBitCol(game.BC.getColumn()-1, "DOWN"));		// not using second parameter i.e. down
+			if (game.BC.getBit(0,game.BC.getColumn()-1)==game.BC.getBit(0,rowblank) && game.BC.getBit(0,game.BC.getColumn()-1)==game.BC.getBit(coll-colblank-1, game.BC.getColumn()-1) && game.BP.checkSeq(game.BP.shiftblanks(game.BC.getBitRow(0)), rowblank) && game.BP.checkSeq(game.BC.getBitCol(game.BC.getColumn()-1, "DOWN"), colblank))
+			return true;
+			}
+			//corner 2
+			if (game.BC.getBit(game.BC.getRow()-1,game.BC.getColumn()-1)!='2' && game.BC.getBit(game.BC.getRow()-1,game.BC.getColumn()-2)!='2' && game.BC.getBit(game.BC.getRow()-2,game.BC.getColumn()-1)!='2')
+			{
+				//int rowl=game.BC.getColumn();
+				//int coll=game.BC.getRow();
+			int rowblank=game.BP.countBlanks(game.BC.getBitRow(game.BC.getRow()-1));
+			int colblank=game.BP.countBlanks(game.BC.getBitCol(game.BC.getColumn()-1, "DOWN"));		// not using second parameter i.e. down
+			if (game.BC.getBit(game.BC.getRow()-1,game.BC.getColumn()-1)==game.BC.getBit(game.BC.getRow()-1,rowblank) && game.BC.getBit(game.BC.getRow()-1,game.BC.getColumn()-1)==game.BC.getBit(colblank, game.BC.getColumn()-1) && game.BP.checkSeq(game.BP.shiftblanks(game.BC.getBitRow(game.BC.getRow()-1)), rowblank) && game.BP.checkSeq(game.BP.shiftblanks(game.BC.getBitCol(game.BC.getColumn()-1, "DOWN")), colblank))
+			return true;
+			}
+			//corner 3
+			if (game.BC.getBit(game.BC.getRow()-1,0)!='2' && game.BC.getBit(game.BC.getRow()-2,0)!='2' && game.BC.getBit(game.BC.getRow()-1,1)!='2')
+			{
+				int rowl=game.BC.getColumn();
+				//int coll=game.BC.getRow();
+			int rowblank=game.BP.countBlanks(game.BC.getBitRow(game.BC.getRow()-1));
+			int colblank=game.BP.countBlanks(game.BC.getBitCol(0, "DOWN"));		// not using second parameter i.e. down
+			if (game.BC.getBit(game.BC.getRow()-1,0)==game.BC.getBit(game.BC.getRow()-1,rowl-rowblank-1) && game.BC.getBit(game.BC.getRow()-1,0)==game.BC.getBit(colblank, 0) && game.BP.checkSeq((game.BC.getBitRow(game.BC.getRow()-1)), rowblank) && game.BP.checkSeq(game.BP.shiftblanks(game.BC.getBitCol(0, "DOWN")), colblank))
+			return true;
+			}
+			
+			
+			char cornerbits[]=new char[]{game.BC.getBit(0,0),game.BC.getBit(0,game.BC.getColumn()-1),game.BC.getBit(game.BC.getRow()-1,game.BC.getColumn()-1),game.BC.getBit(game.BC.getRow()-1,0)};
+			String cb=new String(cornerbits);
+			
+			switch(game.BP.countBlanks(cb))
+			{
+			case 1:				// no of blanks=1
+				int i=0;
+	    		while(cb.charAt(i)!='2')
+	    		{
+	    			i=i+1;		//blank location
+	    		}
+	    		switch(i)
+	    		{
+	    		case 0:
+	    			if(cb.charAt(2)==cb.charAt(1)&&cb.charAt(2)==cb.charAt(3) && game.BP.checkSeq(game.BC.getBitRow(game.BC.getRow()-1),0) && game.BP.checkSeq(game.BC.getBitCol(game.BC.getColumn()-1,"DOWN"),0))
+	    			{
+	    				return true;
+	    			}
+	    			else 
+	    				break;
+	    		case 1:
+	    			if(cb.charAt(3)==cb.charAt(2)&&cb.charAt(3)==cb.charAt(0) && game.BP.checkSeq(game.BC.getBitRow(game.BC.getRow()-1),0) && game.BP.checkSeq(game.BC.getBitCol(0,"UP"),0))
+	    			{
+	    				return true;
+	    			}
+	    			else 
+	    				break;
+	    		case 2:
+	    			if(cb.charAt(0)==cb.charAt(3)&&cb.charAt(0)==cb.charAt(1) && game.BP.checkSeq(game.BC.getBitRow(0),0) && game.BP.checkSeq(game.BC.getBitCol(0,"LEFT"),0))
+	    			{
+	    				return true;
+	    			}
+	    			else 
+	    				break;
+	    		case 3:
+	    			if(cb.charAt(1)==cb.charAt(2)&&cb.charAt(1)==cb.charAt(0) && game.BP.checkSeq(game.BC.getBitRow(0),0) && game.BP.checkSeq(game.BC.getBitCol(game.BC.getColumn()-1,"RIGHT"),0))
+	    			{
+	    				return true;
+	    			}
+	    			else 
+	    				break;
+	    		}
+			case 2:					//no of blanks=2
+				if(game.BC.getBitCount()<=4)
+					return false;
+				
+				//get active row and column
+				int c[]=new int[2], j=0,k=0;
+	    		while(j<4)
+	    		{
+	    			if(cb.charAt(j)=='2')
+	    			{
+	    				c[k]=j;
+	    				k++;
+	    			}
+	    		}
+	    		
+	    		//missed few case below
+	    		if(c[0]==0 && c[1]==1)		//row 3 full and column 0 not
+	    		{
+	    			int cell=game.BP.countBlanks(game.BC.getBitCol(0, "UP"));
+	    			if (cb.charAt(3)==cb.charAt(2) && cb.charAt(3)==game.BC.getBit(cell,0) && game.BP.checkSeq(game.BC.getBitRow(game.BC.getRow()-1),0) && game.BP.checkSeq(game.BP.shiftblanks(game.BC.getBitCol(0,"UP")),cell))
+	    			{
+	    				return true;
+	    			}
+	    		}
+	    		if(c[0]==1 && c[1]==2)		//column 0 full and row 3 not
+	    		{
+	    			int cell=game.BC.getColumn()-(game.BP.countBlanks(game.BC.getBitRow(game.BC.getRow()-1)))-1;
+	    			if (cb.charAt(0)==cb.charAt(3) && cb.charAt(0)==game.BC.getBit(game.BC.getRow()-1,cell) && game.BP.checkSeq(game.BC.getBitCol(0, "UP"),0) && game.BP.checkSeq(game.BC.getBitRow(game.BC. getRow()-1),game.BP.countBlanks(game.BC.getBitRow(game.BC.getRow()-1))))
+	    			{
+	    				return true;
+	    			}
+	    		}
+	    		if(c[0]==2 && c[1]==3)
+	    		{
+	    			int cell=game.BC.getRow()-game.BP.countBlanks(game.BC.getBitCol(0, "UP"))-1;
+	    			if (cb.charAt(1)==cb.charAt(0) && cb.charAt(1)==game.BC.getBit(cell,0) && game.BP.checkSeq(game.BC.getBitRow(0),0) && game.BP.checkSeq(game.BP.shiftblanks(game.BC.getBitCol(0,"UP")),game.BP.countBlanks(game.BC.getBitCol(0, "UP"))))
+	    			{
+	    				return true;
+	    			}
+	    		}
+	    		if(c[0]==0 && c[1]==3)
+	    		{
+	    			int cell=game.BP.countBlanks(game.BC.getBitRow(game.BC.getRow()-1));
+	    			if (cb.charAt(2)==cb.charAt(1) && cb.charAt(2)==game.BC.getBit(game.BC.getRow()-1,cell) && game.BP.checkSeq(game.BC.getBitCol(game.BC.getColumn()-1, "UP"),0) && game.BP.checkSeq(game.BP.shiftblanks(game.BC.getBitRow(game.BC. getRow()-1)),cell))
+	    			{
+	    				return true;
+	    			}
+	    		}
+				break;
+			case 3:
+			case 4:
+			}
+		}
+		return false;*/
+		//23 JAN 2015
+				//Made it independent of gravity, because gravity is getting set as zero after each animation cycle.
+				
+				//check for up,if no then check for left and right from up
+				//check for left, if no then check for up and down
+				//check for right, if no then check for up and down
+				//check for down, if no then check for left and right
+				/*go for above logic*/
+				
+				//First write a common method to transpose existing bit container based on gravity.No
+				//form a temp bit array
+				int r=game.BC.getRow();
+				int c=game.BC.getColumn();
+				String seq;
+				boolean go=true;
+				
+				//Apply LEFT and RIGHT both by removing blanks in rows
+				for (int i=0;i<r;i++)
+				{
+					if(game.BP.getNonBlanks(game.BC.getBitRow(i))!=0)
+					{
+					seq=game.BP.removeBlanks(game.BC.getBitRow(i));
+					if (!game.BP.checkSeq(seq, 0))
+						go=false;
+					}
+				}
+				//Apply UP and DOWN both by removing blanks in columns
+				for (int i=0;i<c;i++)
+				{
+					if(game.BP.getNonBlanks(game.BC.getBitCol(i, "DOWN"))!=0)
+					{
+					seq=game.BP.removeBlanks(game.BC.getBitCol(i, "DOWN"));
+					if (!game.BP.checkSeq(seq, 0))
+						go=false;
+					}
+				}
+				//Check UP and DOWN after applying LEFT gravity, It can be done simultaneously by removing blanks and checking columns
+				//LEFT
+				if(go)
+				{
+				//Forming temp bit array after removing blanks
+					String temp[]=new String[r];
+					for (int i=0;i<r;i++)
+						temp[i]=game.BP.shiftblanks(game.BC.getBitRow(i));
+						//temp[i]=game.BP.removeBlanks(game.BC.getBitRow(i));
+					for (int i=0;i<c;i++)
+					{
+						String tempC="";
+						for (int j=0;j<r;j++)
+						{
+							tempC=tempC+temp[j].charAt(i);
+						}
+						
+						if(game.BP.getNonBlanks(tempC)!=0)
+						{
+						seq=game.BP.removeBlanks(tempC);
+						if (!game.BP.checkSeq(seq, 0))
+							go=false;
+						}
+					}
+				}
+				
+				//RIGHT
+				if(go)
+				{
+					//Forming temp bit array after removing blanks
+					String temp[]=new String[r];
+					for (int i=0;i<r;i++)
+						temp[i]=game.BP.shiftblanksLeft(game.BC.getBitRow(i));
+					
+					for (int i=0;i<c;i++)
+					{
+						String tempC="";
+						for (int j=0;j<r;j++)
+						{
+							tempC=tempC+temp[j].charAt(i);
+						}
+						
+						if(game.BP.getNonBlanks(tempC)!=0)
+						{
+						seq=game.BP.removeBlanks(tempC);
+						if (!game.BP.checkSeq(seq, 0))
+							go=false;
+						}
+					}
+					
+				}
+				
+				//DOWN
+				if(go)
+				{
+					String temp[]=new String[c];
+					for (int i=0;i<c;i++)
+					{
+							temp[i]=game.BP.shiftblanks(game.BC.getBitCol(i, "DOWN"));
+					}
+					
+					String tempR[]=new String[r];
+					for (int i=0;i<r;i++)
+					{
+						tempR[i]="";
+						for(int j=0;j<c;j++)
+						tempR[i]=tempR[i]+temp[j].charAt(i);
+					}
+					//Two for loop above is kind of transposing your bit container from column to row and vice versa. Look out for this
+					for (int i=0;i<r;i++)
+					{
+						if(game.BP.getNonBlanks(tempR[i])!=0)
+						{
+							seq=game.BP.removeBlanks(tempR[i]);
+							if (!game.BP.checkSeq(seq, 0))
+								go=false;
+						}
+					}
+					
+				}
+				
+				//UP
+				if(go)
+				{
+					String temp[]=new String[c];
+					for (int i=0;i<c;i++)
+					{
+							temp[i]=game.BP.shiftblanksLeft(game.BC.getBitCol(i, "UP"));
+					}
+					
+					String tempR[]=new String[r];
+					for (int i=0;i<r;i++)
+					{
+						tempR[i]="";
+						for(int j=0;j<c;j++)
+						tempR[i]=tempR[i]+temp[j].charAt(i);
+					}
+					//Two for loop above is kind of transposing your bit container from column to row and vice versa. Look out for this
+					for (int i=0;i<r;i++)
+					{
+						if(game.BP.getNonBlanks(tempR[i])!=0)
+						{
+							seq=game.BP.removeBlanks(tempR[i]);
+							if (!game.BP.checkSeq(seq, 0))
+								go=false;
+						}
+					}
+				}
+				
+				return go;
+				
+	}
+	
+	@Override
+	public void show() {
+		game.camera.setToOrtho(false,game.getBitSize()*game.BC.getColumn(), game.getBitSize()*game.BC.getRow());
+	    game.camera.update();
+	    //Game over mechanism , watch gameOver method
+	  		if (game.BC.getBitCount()<=2)
+	  		{
+	  			System.out.println("winner");
+	  			// show winner screen here
+	  			game.setScreen(game.GOS);
+	  		}
+	  		else if(gameOver())
+	  		{
+	  			System.out.println("looser");
+	  			// show game over screen here
+	  			game.setScreen(game.LGOS);
+	  		}
+	//Gdx.input.setInputProcessor(this);
+    Gdx.graphics.setContinuousRendering(false);
+    Gdx.graphics.requestRendering();
+	}
+
+	@Override
+	public void render(float delta) {
+		//System.out.println("input screen");
+		Gdx.gl.glClearColor(107/255f, 107/255f,107/255f, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		game.batch.setProjectionMatrix(game.camera.combined);
+		game.camera.update();
+		
+		game.batch.begin();
+		for (int i=0; i < game.BC.getRow();i++)		//row i
+		{	
+			for (int j=0;j < game.BC.getColumn();j++)		//column j
+			{
+				if (game.BC.getBit(i, j)=='0')
+				game.batch.draw(game.tbitI0,j*game.getBitSize(),i*game.getBitSize());
+				else if(game.BC.getBit(i, j)=='1')
+				game.batch.draw(game.tbitI1,j*game.getBitSize(),i*game.getBitSize());
+			}
+		}
+		game.batch.end();
+		
+		if (game.getAnima())
+		{
+			//System.out.println("Input screen flag:"+game.getAnima());
+			game.setScreen(game.ANS);
+		}
+		if (Gdx.input.justTouched())
+		{
+			Gdx.input.setInputProcessor(this);
+			tx=Gdx.input.getX();
+			ty=Gdx.input.getY();
+		}
+		//Gdx.input.setInputProcessor(this);
+		//game.fpslog.log();
+	}
+
+	@Override
+	public void resize(int width, int height) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void pause() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void resume() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void hide() {
+		 //System.out.println("hide input screen");
+		Gdx.input.setInputProcessor(null);
+	}
+
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean keyDown(int keycode) {
+		if(keycode==Keys.LEFT)
+		{
+			game.setGravity(Gravity.LEFT);
+			game.setAnima(true);
+		}
+		if(keycode==Keys.RIGHT)
+		{
+			game.setGravity(Gravity.RIGHT);
+			game.setAnima(true);
+		}
+		if(keycode==Keys.UP)
+		{
+			game.setGravity(Gravity.UP);
+			game.setAnima(true);
+		}
+		if(keycode==Keys.DOWN)
+		{
+			game.setGravity(Gravity.DOWN);
+			game.setAnima(true);
+		}
+		return true;
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean keyTyped(char character) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		//tx=screenX;
+		//ty=screenY;
+		return false;
+	}
+
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		if (screenX-tx > 10 && screenY-ty < screenX-tx)
+		{	//right
+			game.setGravity(Gravity.RIGHT);
+			game.setAnima(true);
+			//tx=screenX;
+			//ty=screenY;
+		}
+		if (tx-screenX >10 && tx-screenX> ty-screenY )
+			{	//left
+			game.setGravity(Gravity.LEFT);
+			game.setAnima(true);
+			//tx=screenX;
+			//ty=screenY;
+			}
+		if(screenY-ty>10 && screenY-ty >screenX-tx)
+		{	//down
+			game.setGravity(Gravity.DOWN);
+			game.setAnima(true);	
+			//tx=screenX;
+			//ty=screenY;
+		}
+		if(ty-screenY>10 && ty-screenY > tx-screenX)
+		{	//up
+			game.setGravity(Gravity.UP);
+			game.setAnima(true);
+			//tx=screenX;
+			//ty=screenY;
+		}
+		return true;
+	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean scrolled(int amount) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<all>
+   <MinDragPixel>10</MinDragPixel>
+   <AnimationSpeed>
+       <RIGHT>500</RIGHT>
+       <LEFT>500</LEFT>
+       <DOWN>500</DOWN>
+       <UP>500</UP>
+    </AnimationSpeed>
+    <CurrentStage>3</CurrentStage>
+</all>
