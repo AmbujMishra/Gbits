@@ -1,12 +1,11 @@
-package com.Gbits.Screens;
+package com.Gbits.Solver;
 
 /*
  *Ambuj Mishra
- *1-1-2015 
+ *23-02-2015 
  */
 public class BitProcessing {
 	
-
 	//11 JAN 2015
 	//Remove blanks (2) in a string
 	public String removeBlanks(String seq)
@@ -42,6 +41,7 @@ public class BitProcessing {
 	
 	private String thiscodeSeq(String thisSeq) {
 		
+		// In case of 22222 i.e blank row it will fail, Need correction, so never pass blank row in this function.
 		String codeSeq="";
 		if (thisSeq.charAt(0)=='0')
 		{
@@ -72,7 +72,7 @@ public class BitProcessing {
 		return codeSeq;
 
 }
-	
+	// This will always shift blanks towards right, write for left, up and down also
 	public String shiftblanks(String seq) {
 
 		String bitseq="";
@@ -87,7 +87,7 @@ public class BitProcessing {
 				
 		return bitseq+blankseq;		//example: 10110022222
 	}
-//24 JAN 2015
+	//Shift blanks towards LEFT 
 	public String shiftblanksLeft(String seq) {
 
 		String bitseq="";
@@ -100,9 +100,9 @@ public class BitProcessing {
 				bitseq=bitseq+seq.charAt(i);
 		}
 				
-		return blankseq+bitseq;		//example: 222221111110111
+		return blankseq+bitseq;		//example: 2222101100
 	}
-	
+
 	public int countBlanks(String bitseq) {
 		int count=0;
 		for (int i=0; i<bitseq.length();i++)
