@@ -1,4 +1,4 @@
-package com.Gbits.Screens;
+package com.Gbits.Solver;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
