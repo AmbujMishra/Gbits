@@ -1,4 +1,4 @@
-package com.Gbits.Screens;
+package com.Gbits.Solver;
 /*
  *Ambuj Mishra
  *1-1-2015 
@@ -10,7 +10,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.Gbits.Screens.BitContainer;
+import com.Gbits.Solver.BitContainer;
+
 
 public class GbitsGame extends Game{
 	
@@ -31,14 +32,14 @@ public class GbitsGame extends Game{
 	InputScreen INS;
 	AnimaScreen ANS;
 	GameOverScreen GOS;
-	LooserGameOverScreen LGOS;
 	StageScreen STS;
-
+	LooserGameOverScreen LGOS;
+	
 	BitContainer BC;
 	BitProcessing BP;
 	
 	private Gravity g=Gravity.ZERO;
-	private Gravity pg;		//previous gravity
+	private Gravity pg=Gravity.ZERO;		//previous gravity
 	public SpriteBatch batch;
     public BitmapFont font;
 	public Texture tbitI0;
@@ -46,24 +47,33 @@ public class GbitsGame extends Game{
 	public Texture tstage;
 	public FPSLogger fpslog;
 	public OrthographicCamera camera;
-	
-	//bitsize in pixel,20/1/2015
-	private int bitSize=32;
+	//bitsize of each bit, it will be used in cameras (in pixel)
+	//public int bitSize=256;
 	//public int bitSize=64;
-	//animation speed for animation screen
-	 private final int animaspeed=400;
+	public int bitSize=32;
+	//offset space between bits (in pixel)
+	public int bitOffset=5;
+	private final int animaspeed=400;
 	 public int getAnimaSpeed()
 	 {
 		 return animaspeed;
 	 }
 	
+	public int getOffset()
+	{
+		return bitOffset;
+	}
 	public int getBitSize()
 	{
 		return bitSize;
 	}
 	public void setGravity(Gravity g)
 	{
-		this.pg=getGravity();
+		if(g== Gravity.ZERO)	// This will ignore the zero gravity which is being set after completion of each animation.
+			this.pg=getGravity();
+			//this.pg=g;
+			
+		
 		this.g=g;
 	}
 	
@@ -71,7 +81,7 @@ public class GbitsGame extends Game{
 	{
 		return g;
 	}
-	//11 JAN 2015	getting garivity previously set
+	//11 JAN 2015	getting gravity previously set
 	public Gravity getPreviousGravity()
 	{
 		return pg;
@@ -102,12 +112,13 @@ public class GbitsGame extends Game{
         //Use LibGDX's default Arial font.
         font = new BitmapFont();
         //loading texture
-      	//tbitI0=new Texture(Gdx.files.internal("bit0.jpg"));	
-      	//tbitI1=new Texture(Gdx.files.internal("bit1.jpg"));
-      	
+      	//tbitI0=new Texture(Gdx.files.internal("bit0.png"));	
+      	//tbitI1=new Texture(Gdx.files.internal("bit1.png"));
+      	//tbitI0=new Texture(Gdx.files.internal("LED0.jpg"));	
+      	//tbitI1=new Texture(Gdx.files.internal("LED1.jpg"));
       	tbitI0=new Texture(Gdx.files.internal("grey0.png"));	
       	tbitI1=new Texture(Gdx.files.internal("grey1.png"));
-      	tstage= new Texture(Gdx.files.internal("stage1.jpg"));
+      	tstage= new Texture(Gdx.files.internal("stage1.png"));
       	fpslog=new FPSLogger();
         setScreen(MMS);
     }
